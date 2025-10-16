@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,maximum-scale=1" />
   <title>Exotix | Advanced Crypto Trading Platform</title>
-  <link rel="icon" href="https://github.com/s42144/Shark-Bounty/blob/dc7c6b7451be7e4767f4c84bdecf7dfed3082bed/HOME.png?raw=true" />
+  <link rel="icon" href="https://i.postimg.cc/kG1SJTf9/Screenshot-2025-10-09-23-39-32-878-com-ton-keeper-edit.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -12,18 +12,40 @@
   <!-- Telegram WebApp SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   
-  <!-- Monetag SDK -->
-  <script src="//libtl.com/sdk.js" data-zone="9970324" data-sdk="show_9970324"></script>
+  <!-- Firebase v9 Modular SDK -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getDatabase, ref, set, get, update, onValue, push, remove, query, orderByChild, equalTo } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+    
+    const firebaseConfig = {
+      apiKey: "AIzaSyBfR97veh6idxb81mH6N5_Gq8-CpW2D7bE",
+      authDomain: "jbhigfi.firebaseapp.com",
+      databaseURL: "https://jbhigfi-default-rtdb.firebaseio.com",
+      projectId: "jbhigfi",
+      storageBucket: "jbhigfi.firebasestorage.app",
+      messagingSenderId: "736760492095",
+      appId: "1:736760492095:web:47b94412495e21c561c88a",
+      measurementId: "G-ZZMHC9RTVT"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    
+    window.firebaseDB = database;
+    window.firebaseRef = ref;
+    window.firebaseSet = set;
+    window.firebaseGet = get;
+    window.firebaseUpdate = update;
+    window.firebaseOnValue = onValue;
+    window.firebasePush = push;
+    window.firebaseRemove = remove;
+    window.firebaseQuery = query;
+    window.firebaseOrderByChild = orderByChild;
+    window.firebaseEqualTo = equalTo;
+  </script>
   
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
-  <!-- TradingView Widget -->
-  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  <!-- Lightweight Charts -->
+  <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
   
   <style>
     * {
@@ -37,8 +59,8 @@
       --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
       --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      --dark-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
       --gold-gradient: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+      --dark-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 100%);
       --card-bg: rgba(255, 255, 255, 0.08);
       --card-border: rgba(255, 255, 255, 0.15);
       --text-primary: #ffffff;
@@ -49,10 +71,10 @@
       --accent-cyan: #00f2fe;
       --accent-gold: #ffd700;
       --accent-green: #00ff88;
+      --accent-red: #ff4444;
       --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
       --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
       --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
-      --shadow-glow: 0 0 20px rgba(79, 172, 254, 0.3);
     }
     
     html, body {
@@ -63,7 +85,6 @@
       color: var(--text-primary);
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
     
     /* Loading Screen */
@@ -96,7 +117,7 @@
     }
     
     .loading-text {
-      font-size: 32px;
+      font-size: 28px;
       font-weight: 800;
       color: var(--text-primary);
       margin-bottom: 10px;
@@ -134,121 +155,11 @@
       font-weight: 600;
     }
     
-    /* Referral Welcome Screen */
-    #referral-welcome {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9998;
-      padding: 20px;
-    }
-    
-    .welcome-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 24px;
-      padding: 40px 30px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-lg);
-      text-align: center;
-      max-width: 400px;
-      width: 100%;
-      animation: slideUp 0.5s ease;
-    }
-    
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    .welcome-icon {
-      font-size: 64px;
-      margin-bottom: 20px;
-    }
-    
-    .welcome-title {
-      font-size: 28px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 16px;
-    }
-    
-    .welcome-message {
-      font-size: 16px;
-      color: var(--text-secondary);
-      margin-bottom: 24px;
-      line-height: 1.6;
-    }
-    
-    .referrer-info {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 20px;
-      border: 1px solid var(--card-border);
-    }
-    
-    .referrer-label {
-      font-size: 12px;
-      color: var(--text-secondary);
-      font-weight: 600;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-    
-    .referrer-details {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    
-    .referrer-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: 2px solid var(--accent-cyan);
-    }
-    
-    .referrer-name {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-    
-    .referrer-id {
-      font-size: 12px;
-      color: var(--text-secondary);
-    }
-    
-    .welcome-countdown {
-      font-size: 14px;
-      color: var(--accent-cyan);
-      font-weight: 600;
-    }
-    
-    /* Main App Container */
+    /* Main App */
     #app {
       display: none;
       min-height: 100vh;
       padding-bottom: 80px;
-      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-      background-attachment: fixed;
     }
     
     #main-content {
@@ -256,192 +167,6 @@
       max-width: 480px;
       margin: 0 auto;
       padding: 0 16px;
-    }
-    
-    /* Home Section */
-    .home-main {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: calc(100vh - 80px);
-      padding: 20px 0;
-    }
-    
-    .balance-card {
-      width: 100%;
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 24px;
-      padding: 24px;
-      margin-bottom: 20px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-lg);
-      text-align: center;
-    }
-    
-    .balance-label {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-    }
-    
-    .balance-amount {
-      font-size: 48px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1.2;
-      margin-bottom: 4px;
-    }
-    
-    .balance-currency {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--accent-cyan);
-      letter-spacing: 2px;
-    }
-    
-    /* Coin Tap Area */
-    .coin-container {
-      position: relative;
-      width: 280px;
-      height: 280px;
-      margin: 30px 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .coin-glow {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(79, 172, 254, 0.4) 0%, transparent 70%);
-      animation: pulse 2s ease-in-out infinite;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.6; }
-      50% { transform: scale(1.1); opacity: 1; }
-    }
-    
-    .coin-image {
-      position: relative;
-      width: 240px;
-      height: 240px;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: transform 0.1s ease;
-      z-index: 2;
-      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
-    }
-    
-    .coin-image:active {
-      transform: scale(0.95);
-    }
-    
-    .tap-indicator {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 48px;
-      font-weight: 800;
-      color: #fff;
-      opacity: 0;
-      pointer-events: none;
-      z-index: 3;
-      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-      transition: all 0.3s ease;
-    }
-    
-    .tap-indicator.show {
-      opacity: 1;
-      transform: translate(-50%, -70%);
-    }
-    
-    /* Stats Grid */
-    .stats-grid {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-    
-    .stat-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 16px;
-      padding: 16px 12px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-md);
-      text-align: center;
-    }
-    
-    .stat-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 6px;
-    }
-    
-    .stat-value {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 2px;
-    }
-    
-    .stat-desc {
-      font-size: 10px;
-      color: var(--text-secondary);
-      font-weight: 400;
-    }
-    
-    /* Income Status Warning */
-    .income-status-warning {
-      width: 100%;
-      background: rgba(245, 87, 108, 0.15);
-      backdrop-filter: blur(20px);
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 20px;
-      border: 2px solid var(--accent-pink);
-      box-shadow: 0 0 20px rgba(245, 87, 108, 0.3);
-      text-align: center;
-      animation: warningPulse 2s ease-in-out infinite;
-    }
-    
-    @keyframes warningPulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.02); }
-    }
-    
-    .income-status-icon {
-      font-size: 32px;
-      margin-bottom: 8px;
-    }
-    
-    .income-status-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--accent-pink);
-      margin-bottom: 8px;
-    }
-    
-    .income-status-message {
-      font-size: 13px;
-      color: var(--text-secondary);
-      line-height: 1.5;
     }
     
     /* Navigation Bar */
@@ -457,7 +182,7 @@
       justify-content: space-around;
       padding: 12px 0 8px;
       z-index: 1000;
-      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.3);
     }
     
     .nav-btn {
@@ -471,27 +196,25 @@
       cursor: pointer;
       transition: all 0.3s ease;
       padding: 8px;
-      border-radius: 12px;
     }
     
     .nav-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
+      width: 28px;
+      height: 28px;
       transition: all 0.3s ease;
-      filter: grayscale(100%) brightness(0.7);
+      fill: #666;
     }
     
     .nav-label {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
       color: var(--text-secondary);
       transition: all 0.3s ease;
     }
     
     .nav-btn.active .nav-icon {
-      filter: grayscale(0%) brightness(1);
-      box-shadow: 0 4px 12px rgba(79, 172, 254, 0.4);
+      fill: var(--accent-cyan);
+      transform: scale(1.1);
     }
     
     .nav-btn.active .nav-label {
@@ -521,95 +244,66 @@
       font-weight: 400;
     }
     
-    /* Trading Section */
-    .trading-main {
-      padding: 20px 0 40px;
-    }
-    
-    .wallet-balance-header {
+    /* Balance Display */
+    .balance-header {
       background: var(--card-bg);
       backdrop-filter: blur(20px);
       border-radius: 20px;
       padding: 20px;
       margin-bottom: 20px;
       border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-md);
+      box-shadow: var(--shadow-lg);
       display: flex;
       align-items: center;
-      gap: 16px;
+      justify-content: space-between;
+    }
+    
+    .balance-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
     
     .usdt-icon {
-      width: 56px;
-      height: 56px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
-      border: 3px solid var(--accent-green);
-      box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+      border: 2px solid var(--accent-cyan);
     }
     
-    .wallet-balance-info {
-      flex: 1;
+    .balance-details {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
     
-    .wallet-balance-label {
+    .balance-label {
       font-size: 12px;
       color: var(--text-secondary);
       font-weight: 600;
       text-transform: uppercase;
-      margin-bottom: 4px;
     }
     
-    .wallet-balance-amount {
-      font-size: 32px;
+    .balance-amount {
+      font-size: 24px;
       font-weight: 800;
-      background: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: var(--accent-cyan);
     }
     
-    .trading-tabs {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 20px;
-      overflow-x: auto;
-      padding-bottom: 8px;
-    }
-    
-    .trading-tab-btn {
-      padding: 12px 24px;
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      color: var(--text-secondary);
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      white-space: nowrap;
-    }
-    
-    .trading-tab-btn.active {
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      color: #fff;
-      border-color: transparent;
-      box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
-    }
-    
-    /* Trading Plan Card - Mastercard Style */
-    .trading-plan-card {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    /* Trading Card */
+    .trading-card {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
       border-radius: 20px;
       padding: 24px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       border: 1px solid var(--card-border);
       box-shadow: var(--shadow-lg);
       position: relative;
       overflow: hidden;
+      transition: all 0.3s ease;
     }
     
-    .trading-plan-card::before {
+    .trading-card::before {
       content: '';
       position: absolute;
       top: -50%;
@@ -617,70 +311,99 @@
       width: 200%;
       height: 200%;
       background: radial-gradient(circle, rgba(79, 172, 254, 0.1) 0%, transparent 70%);
-      animation: rotate 20s linear infinite;
+      animation: pulse 3s ease-in-out infinite;
     }
     
-    @keyframes rotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.1); opacity: 1; }
     }
     
-    .trading-plan-card > * {
+    .trading-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .trading-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
       position: relative;
       z-index: 2;
     }
     
-    .plan-header {
+    .trading-pair {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 16px;
+      align-items: center;
+      gap: 12px;
     }
     
-    .plan-pair {
+    .crypto-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-gold);
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 24px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
     
-    .plan-badge {
-      padding: 6px 12px;
-      background: rgba(0, 255, 136, 0.2);
-      border: 1px solid var(--accent-green);
-      border-radius: 8px;
-      font-size: 11px;
+    .pair-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    
+    .pair-name {
+      font-size: 18px;
       font-weight: 700;
+      color: var(--text-primary);
+    }
+    
+    .pair-price {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent-cyan);
+    }
+    
+    .price-change {
+      font-size: 14px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 8px;
+      background: rgba(0, 255, 136, 0.2);
       color: var(--accent-green);
-      text-transform: uppercase;
     }
     
-    .plan-chart-container {
-      width: 100%;
-      height: 150px;
+    .price-change.negative {
+      background: rgba(255, 68, 68, 0.2);
+      color: var(--accent-red);
+    }
+    
+    .trading-card-body {
+      position: relative;
+      z-index: 2;
       margin-bottom: 16px;
-      border-radius: 12px;
-      overflow: hidden;
-      background: rgba(0, 0, 0, 0.3);
     }
     
-    .plan-details {
+    .trading-stats {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
       margin-bottom: 16px;
     }
     
-    .plan-detail-item {
+    .stat-item {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 12px;
       padding: 12px;
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
     
-    .plan-detail-label {
+    .stat-label {
       font-size: 11px;
       color: var(--text-secondary);
       font-weight: 600;
@@ -688,273 +411,219 @@
       margin-bottom: 4px;
     }
     
-    .plan-detail-value {
-      font-size: 18px;
+    .stat-value {
+      font-size: 16px;
       font-weight: 700;
       color: var(--text-primary);
     }
     
-    .plan-detail-value.price {
-      color: var(--accent-cyan);
-    }
-    
-    .plan-detail-value.earning {
-      color: var(--accent-green);
-    }
-    
-    .plan-progress-bar {
+    .chart-container {
       width: 100%;
-      height: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 4px;
-      overflow: hidden;
+      height: 150px;
       margin-bottom: 16px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.2);
     }
     
-    .plan-progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
-      border-radius: 4px;
-      transition: width 0.3s ease;
-    }
-    
-    .plan-action-btn {
+    .btn-trade {
       width: 100%;
       padding: 14px;
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
       border: none;
       border-radius: 12px;
       font-size: 16px;
       font-weight: 700;
-      color: #fff;
+      color: #0f0c29;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+      position: relative;
+      z-index: 2;
     }
     
-    .plan-action-btn:hover {
+    .btn-trade:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(79, 172, 254, 0.4);
+      box-shadow: 0 6px 16px rgba(255, 215, 0, 0.4);
     }
     
-    .plan-action-btn:disabled {
+    .btn-trade:disabled {
       background: rgba(255, 255, 255, 0.1);
       color: rgba(255, 255, 255, 0.4);
       cursor: not-allowed;
       box-shadow: none;
     }
     
-    .plan-action-btn.purchased {
-      background: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
+    .btn-trade.purchased {
+      background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+      color: #0f0c29;
     }
     
-    .plan-action-btn.claim {
-      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-      color: #1a1a2e;
-      animation: glow 2s ease-in-out infinite;
-    }
-    
-    @keyframes glow {
-      0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
-      50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
-    }
-    
-    /* My Trades Section */
-    .my-trades-empty {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--text-secondary);
-    }
-    
-    .my-trades-empty-icon {
-      font-size: 64px;
-      margin-bottom: 16px;
-      opacity: 0.5;
-    }
-    
+    /* Active Trade Card */
     .active-trade-card {
       background: var(--card-bg);
       backdrop-filter: blur(20px);
       border-radius: 20px;
-      padding: 24px;
+      padding: 20px;
       margin-bottom: 16px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-md);
+      border: 2px solid var(--accent-cyan);
+      box-shadow: 0 0 20px rgba(79, 172, 254, 0.3);
     }
     
-    .trade-card-header {
+    .trade-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    
+    .trade-pair-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .trade-status {
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+      color: #0f0c29;
+    }
+    
+    .trade-progress {
+      margin-bottom: 16px;
+    }
+    
+    .progress-label {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-    
-    .trade-pair-name {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-    
-    .trade-status-badge {
-      padding: 6px 12px;
-      background: rgba(0, 255, 136, 0.2);
-      border: 1px solid var(--accent-green);
-      border-radius: 8px;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--accent-green);
-      text-transform: uppercase;
-    }
-    
-    .trade-stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    
-    .trade-stat-box {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      padding: 12px;
-      text-align: center;
-    }
-    
-    .trade-stat-label {
-      font-size: 11px;
-      color: var(--text-secondary);
-      font-weight: 600;
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-    
-    .trade-stat-value {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--accent-cyan);
-    }
-    
-    .claim-countdown-container {
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 16px;
-      text-align: center;
-    }
-    
-    .claim-countdown-label {
+      margin-bottom: 8px;
       font-size: 12px;
       color: var(--text-secondary);
-      font-weight: 600;
-      text-transform: uppercase;
-      margin-bottom: 8px;
     }
     
-    .claim-countdown-timer {
+    .progress-bar-container {
+      width: 100%;
+      height: 24px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--card-border);
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+      border-radius: 12px;
+      transition: width 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    
+    .countdown-timer {
+      text-align: center;
+      padding: 16px;
+      background: rgba(255, 215, 0, 0.1);
+      border-radius: 12px;
+      margin-bottom: 16px;
+      border: 1px solid var(--accent-gold);
+    }
+    
+    .countdown-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    
+    .countdown-display {
       font-size: 32px;
       font-weight: 800;
       background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 12px;
+      font-family: 'Courier New', monospace;
     }
     
-    .claim-progress-bar-3d {
+    .btn-claim {
       width: 100%;
-      height: 20px;
+      padding: 14px;
+      background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f0c29;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .btn-claim:disabled {
       background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      overflow: hidden;
-      position: relative;
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-    
-    .claim-progress-fill-3d {
-      height: 100%;
-      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
-      border-radius: 10px;
-      position: relative;
-      transition: width 1s linear;
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-      animation: shimmer 2s ease-in-out infinite;
-    }
-    
-    @keyframes shimmer {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.8; }
-    }
-    
-    .claim-progress-fill-3d::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 50%;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, transparent 100%);
-      border-radius: 10px 10px 0 0;
+      color: rgba(255, 255, 255, 0.4);
+      cursor: not-allowed;
     }
     
     /* Wallet Section */
-    .wallet-main {
-      padding: 20px 0 40px;
-    }
-    
-    .wallet-action-grid {
+    .wallet-tabs {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
       margin-bottom: 20px;
     }
     
-    .wallet-action-card {
+    .wallet-tab {
+      padding: 12px;
       background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 16px;
-      padding: 20px;
       border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-md);
-      text-align: center;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
       cursor: pointer;
       transition: all 0.3s ease;
+      text-align: center;
     }
     
-    .wallet-action-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
+    .wallet-tab.active {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      color: #fff;
+      border-color: var(--accent-cyan);
     }
     
-    .wallet-action-icon {
-      font-size: 40px;
-      margin-bottom: 12px;
-    }
-    
-    .wallet-action-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-    
-    /* Deposit Form */
-    .deposit-form-container {
+    .wallet-form {
       background: var(--card-bg);
       backdrop-filter: blur(20px);
       border-radius: 20px;
       padding: 24px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       border: 1px solid var(--card-border);
       box-shadow: var(--shadow-md);
-    }
-    
-    .form-title {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 20px;
-      text-align: center;
     }
     
     .form-group {
@@ -962,10 +631,9 @@
     }
     
     .form-label {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--text-secondary);
       font-weight: 600;
-      text-transform: uppercase;
       margin-bottom: 8px;
       display: block;
     }
@@ -976,7 +644,7 @@
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--card-border);
       border-radius: 10px;
-      font-size: 16px;
+      font-size: 14px;
       color: var(--text-primary);
       font-family: 'Poppins', sans-serif;
       outline: none;
@@ -988,100 +656,58 @@
       background: rgba(255, 255, 255, 0.08);
     }
     
-    .form-input::placeholder {
-      color: var(--text-secondary);
-    }
-    
-    .form-note {
-      font-size: 11px;
-      color: var(--accent-pink);
-      margin-top: 4px;
-    }
-    
-    .qr-code-container {
-      background: #fff;
-      border-radius: 16px;
-      padding: 20px;
+    .qr-container {
       text-align: center;
-      margin-bottom: 20px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      margin-bottom: 16px;
     }
     
-    .qr-code-image {
+    .qr-code {
       width: 200px;
       height: 200px;
-      margin: 0 auto;
-    }
-    
-    .deposit-info-box {
-      background: rgba(255, 255, 255, 0.05);
+      margin: 0 auto 16px;
+      background: #fff;
+      padding: 10px;
       border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 16px;
-      border: 1px solid var(--card-border);
     }
     
-    .deposit-info-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    
-    .deposit-info-row:last-child {
-      margin-bottom: 0;
-    }
-    
-    .deposit-info-label {
-      font-size: 12px;
-      color: var(--text-secondary);
-      font-weight: 600;
-    }
-    
-    .deposit-info-value {
-      font-size: 14px;
-      color: var(--text-primary);
-      font-weight: 700;
+    .copy-box {
       display: flex;
       align-items: center;
       gap: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    
+    .copy-text {
+      flex: 1;
+      font-size: 12px;
+      color: var(--accent-cyan);
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-family: 'Courier New', monospace;
     }
     
     .copy-btn {
-      width: 24px;
-      height: 24px;
+      padding: 8px 16px;
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      border: none;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
       cursor: pointer;
-      opacity: 0.7;
-      transition: opacity 0.3s ease;
+      transition: all 0.3s ease;
     }
     
-    .copy-btn:hover {
-      opacity: 1;
-    }
-    
-    .timer-warning {
-      background: rgba(245, 87, 108, 0.15);
-      border: 1px solid var(--accent-pink);
-      border-radius: 12px;
-      padding: 12px;
-      text-align: center;
-      margin-bottom: 16px;
-    }
-    
-    .timer-text {
-      font-size: 14px;
-      color: var(--accent-pink);
-      font-weight: 600;
-    }
-    
-    .timer-countdown {
-      font-size: 24px;
-      font-weight: 800;
-      color: var(--accent-pink);
-      margin-top: 4px;
-    }
-    
-    /* Transaction History */
-    .transaction-card {
+    .transaction-item {
       background: var(--card-bg);
       backdrop-filter: blur(20px);
       border-radius: 16px;
@@ -1099,35 +725,32 @@
     }
     
     .transaction-type {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 700;
       color: var(--text-primary);
     }
     
     .transaction-status {
-      padding: 4px 10px;
-      border-radius: 6px;
+      padding: 4px 12px;
+      border-radius: 8px;
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
     }
     
     .transaction-status.pending {
-      background: rgba(255, 193, 7, 0.2);
-      color: #ffc107;
-      border: 1px solid #ffc107;
+      background: rgba(255, 215, 0, 0.2);
+      color: var(--accent-gold);
     }
     
     .transaction-status.approved {
       background: rgba(0, 255, 136, 0.2);
       color: var(--accent-green);
-      border: 1px solid var(--accent-green);
     }
     
     .transaction-status.rejected {
-      background: rgba(245, 87, 108, 0.2);
-      color: var(--accent-pink);
-      border: 1px solid var(--accent-pink);
+      background: rgba(255, 68, 68, 0.2);
+      color: var(--accent-red);
     }
     
     .transaction-details {
@@ -1136,102 +759,30 @@
       gap: 8px;
     }
     
-    .transaction-detail-row {
+    .transaction-row {
       display: flex;
       justify-content: space-between;
-      font-size: 13px;
+      font-size: 12px;
     }
     
-    .transaction-detail-label {
+    .transaction-label {
       color: var(--text-secondary);
     }
     
-    .transaction-detail-value {
+    .transaction-value {
       color: var(--text-primary);
       font-weight: 600;
     }
     
     /* Referral Section */
-    .referral-main {
-      padding: 20px 0 40px;
-    }
-    
-    .referral-rules-card {
+    .referral-card {
       background: var(--card-bg);
       backdrop-filter: blur(20px);
       border-radius: 20px;
       padding: 24px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       border: 1px solid var(--card-border);
       box-shadow: var(--shadow-md);
-    }
-    
-    .referral-rules-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 16px;
-      text-align: center;
-    }
-    
-    .referral-rule-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 12px;
-      padding: 12px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-    }
-    
-    .referral-rule-icon {
-      font-size: 24px;
-      flex-shrink: 0;
-    }
-    
-    .referral-rule-text {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
-    
-    .referral-link-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 20px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-md);
-    }
-    
-    .referral-link-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 16px;
-      text-align: center;
-    }
-    
-    .referral-link-box {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
-      border-radius: 10px;
-      padding: 12px;
-      margin-bottom: 16px;
-    }
-    
-    .referral-link {
-      flex: 1;
-      font-size: 12px;
-      color: var(--accent-cyan);
-      font-weight: 600;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
     
     .referral-stats-grid {
@@ -1241,7 +792,7 @@
       margin-bottom: 16px;
     }
     
-    .referral-stat-card {
+    .referral-stat-box {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 12px;
       padding: 16px;
@@ -1260,257 +811,12 @@
     .referral-stat-value {
       font-size: 24px;
       font-weight: 800;
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
     
-    .btn-primary {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      color: #fff;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 12px;
-    }
-    
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(79, 172, 254, 0.4);
-    }
-    
-    .btn-secondary {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      color: #fff;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    
-    .btn-secondary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
-    }
-    
-    /* Profile Section */
-    .profile-main {
-      padding: 20px 0 40px;
-    }
-    
-    .profile-header {
-      text-align: center;
-      padding: 24px 0 20px;
-    }
-    
-    .avatar-container {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 16px;
-      position: relative;
-    }
-    
-    .avatar-glow {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(79, 172, 254, 0.4) 0%, transparent 70%);
-      animation: pulse 2s ease-in-out infinite;
-    }
-    
-    .avatar-image {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      border: 4px solid var(--accent-cyan);
-      object-fit: cover;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    }
-    
-    .user-info-box {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 12px;
-      padding: 12px 16px;
-      border: 1px solid var(--card-border);
-      margin-bottom: 8px;
-    }
-    
-    .user-name {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-    
-    .user-id-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    .user-id-label {
-      font-size: 12px;
-      color: var(--text-secondary);
-      font-weight: 600;
-    }
-    
-    .user-id-value {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--accent-cyan);
-    }
-    
-    .copy-icon {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-      opacity: 0.7;
-      transition: opacity 0.3s ease;
-    }
-    
-    .copy-icon:hover {
-      opacity: 1;
-    }
-    
-    .profile-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 16px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-md);
-    }
-    
-    .card-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 16px;
-      text-align: center;
-    }
-    
-    .redeem-form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    
-    .redeem-input {
-      width: 100%;
-      padding: 12px 16px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
-      border-radius: 10px;
-      font-size: 18px;
-      color: var(--text-primary);
-      font-family: 'Poppins', sans-serif;
-      outline: none;
-      transition: all 0.3s ease;
-      text-align: center;
-      letter-spacing: 4px;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-    
-    .redeem-input:focus {
-      border-color: var(--accent-cyan);
-      background: rgba(255, 255, 255, 0.08);
-    }
-    
-    .redeem-input::placeholder {
-      color: var(--text-secondary);
-      letter-spacing: normal;
-      font-weight: 400;
-      text-transform: none;
-    }
-    
-    /* Modal */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.8);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      padding: 20px;
-    }
-    
-    .modal-content {
-      background: linear-gradient(135deg, #0f0c29 0%, #302b63 100%);
-      border-radius: 24px;
-      padding: 24px;
-      max-width: 480px;
-      width: 100%;
-      max-height: 80vh;
-      overflow-y: auto;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-lg);
-      animation: slideUp 0.3s ease;
-    }
-    
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-    
-    .modal-title {
-      font-size: 24px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    .modal-close {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      border: none;
-      color: var(--text-primary);
-      font-size: 20px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-    }
-    
-    .modal-close:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-    
-    /* Referral List */
     .referral-list-item {
       background: var(--card-bg);
       backdrop-filter: blur(20px);
@@ -1524,48 +830,102 @@
       gap: 12px;
     }
     
-    .referral-list-avatar {
+    .referral-avatar {
       width: 56px;
       height: 56px;
       border-radius: 50%;
       border: 2px solid var(--accent-cyan);
       object-fit: cover;
-      flex-shrink: 0;
     }
     
-    .referral-list-info {
+    .referral-info {
       flex: 1;
-      min-width: 0;
     }
     
-    .referral-list-name {
+    .referral-name {
       font-size: 16px;
       font-weight: 700;
       color: var(--text-primary);
       margin-bottom: 4px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
     
-    .referral-list-balance {
+    .referral-balance {
       font-size: 14px;
       font-weight: 600;
       color: var(--accent-cyan);
     }
     
-    .referral-commission {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--accent-gold);
-      margin-top: 4px;
+    /* Profile Section */
+    .profile-header {
+      text-align: center;
+      padding: 24px 0;
     }
     
-    .referral-list-empty {
-      text-align: center;
-      padding: 40px 20px;
-      color: var(--text-secondary);
+    .profile-avatar-container {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 16px;
+      position: relative;
+    }
+    
+    .profile-avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 4px solid var(--accent-cyan);
+      object-fit: cover;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+    
+    .profile-name {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    
+    .profile-id {
       font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+    
+    /* Buttons */
+    .btn-primary {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(79, 172, 254, 0.4);
+    }
+    
+    .btn-share {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 12px;
     }
     
     /* Notification */
@@ -1598,302 +958,21 @@
       }
     }
     
-    /* Booster Section */
-    .booster-main {
-      padding: 20px 0 40px;
-    }
-    
-    .booster-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 16px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-md);
-      position: relative;
-      overflow: hidden;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-    
-    .booster-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.3);
-      z-index: 1;
-    }
-    
-    .booster-card > * {
-      position: relative;
-      z-index: 2;
-    }
-    
-    .booster-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 16px;
-    }
-    
-    .booster-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      box-shadow: var(--shadow-md);
-      backdrop-filter: blur(10px);
-    }
-    
-    .booster-info {
-      flex: 1;
-    }
-    
-    .booster-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 4px;
-    }
-    
-    .booster-price {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--accent-cyan);
-    }
-    
-    .booster-desc {
-      font-size: 13px;
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
       color: var(--text-secondary);
-      line-height: 1.5;
+    }
+    
+    .empty-icon {
+      font-size: 64px;
       margin-bottom: 16px;
+      opacity: 0.5;
     }
     
-    .booster-progress {
-      font-size: 12px;
-      color: var(--accent-pink);
-      font-weight: 600;
-      margin-bottom: 12px;
-    }
-    
-    /* Earn Section */
-    .earn-main {
-      padding: 20px 0 40px;
-    }
-    
-    .chart-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 20px;
-      padding: 20px;
-      margin-bottom: 16px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-md);
-    }
-    
-    .chart-title {
+    .empty-text {
       font-size: 16px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 16px;
-      text-align: center;
-    }
-    
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-    
-    .stat-box {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      padding: 12px 8px;
-      text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .stat-box-label {
-      font-size: 10px;
-      color: var(--text-secondary);
       font-weight: 600;
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-    
-    .stat-box-value {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--accent-cyan);
-    }
-    
-    .ad-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 16px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-md);
-      text-align: center;
-    }
-    
-    .ad-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 12px;
-    }
-    
-    .ad-reward {
-      font-size: 14px;
-      color: var(--accent-cyan);
-      font-weight: 600;
-      margin-bottom: 16px;
-    }
-    
-    /* Ranking Section */
-    .ranking-main {
-      padding: 20px 0 40px;
-    }
-    
-    .ranking-position {
-      text-align: center;
-      padding: 20px;
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 16px;
-      margin-bottom: 16px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-md);
-    }
-    
-    .ranking-position-label {
-      font-size: 14px;
-      color: var(--text-secondary);
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-    
-    .ranking-position-value {
-      font-size: 32px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    .ranking-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 8px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-sm);
-    }
-    
-    .ranking-position-num {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      font-weight: 800;
-      color: #fff;
-      flex-shrink: 0;
-    }
-    
-    .ranking-position-num.top3 {
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    }
-    
-    .ranking-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: 2px solid var(--accent-cyan);
-      object-fit: cover;
-      flex-shrink: 0;
-    }
-    
-    .ranking-user-info {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      min-width: 0;
-    }
-    
-    .ranking-user-name {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-primary);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    
-    .ranking-user-id {
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    
-    .ranking-balance {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--accent-cyan);
-      flex-shrink: 0;
-    }
-    
-    /* Responsive Design */
-    @media (max-width: 360px) {
-      .balance-amount {
-        font-size: 36px;
-      }
-      
-      .coin-container {
-        width: 240px;
-        height: 240px;
-      }
-      
-      .coin-image {
-        width: 200px;
-        height: 200px;
-      }
-      
-      .stats-grid {
-        gap: 8px;
-      }
-      
-      .stat-card {
-        padding: 12px 8px;
-      }
-      
-      .stat-value {
-        font-size: 18px;
-      }
     }
   </style>
 <script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
@@ -1901,33 +980,13 @@
 <body>
   <!-- Loading Screen -->
   <div id="loading-screen">
-    <img src="https://github.com/akhterefti-del/Shark/blob/eec9a5de183800435c0f781a44b5da5722479f20/sharkcoin.png?raw=true" 
+    <img src="https://i.postimg.cc/kG1SJTf9/Screenshot-2025-10-09-23-39-32-878-com-ton-keeper-edit.jpg" 
          class="loading-logo" 
          alt="Exotix" />
     <div class="loading-text">EXOTIX</div>
     <div class="loading-subtext">Advanced Crypto Trading Platform</div>
     <div class="loading-spinner"></div>
-    <div class="loading-progress" id="loadingProgress">Connecting to Telegram...</div>
-  </div>
-  
-  <!-- Referral Welcome Screen -->
-  <div id="referral-welcome">
-    <div class="welcome-card">
-      <div class="welcome-icon">🎉</div>
-      <div class="welcome-title">Welcome to Exotix!</div>
-      <div class="welcome-message">You've been invited to join the most advanced crypto trading platform</div>
-      <div class="referrer-info">
-        <div class="referrer-label">Your Referrer</div>
-        <div class="referrer-details">
-          <img id="referrerAvatar" src="" class="referrer-avatar" alt="Referrer" />
-          <div>
-            <div class="referrer-name" id="referrerName">Loading...</div>
-            <div class="referrer-id" id="referrerId">ID: ...</div>
-          </div>
-        </div>
-      </div>
-      <div class="welcome-countdown" id="welcomeCountdown">Starting in 5 seconds...</div>
-    </div>
+    <div class="loading-progress" id="loadingProgress">Initializing...</div>
   </div>
   
   <!-- Main App -->
@@ -1936,40 +995,857 @@
     
     <!-- Navigation Bar -->
     <div class="nav-bar">
-      <button class="nav-btn active" data-tab="home">
-        <img src="https://github.com/s42144/mettg/blob/ea86468991e3cb26f300a18ef0d3d49158b5f4af/hme.png?raw=true" alt="Home" class="nav-icon" />
-        <span class="nav-label">Home</span>
-      </button>
-      <button class="nav-btn" data-tab="trade">
-        <img src="https://github.com/s42144/mettg/blob/ea86468991e3cb26f300a18ef0d3d49158b5f4af/bst.png?raw=true" alt="Trade" class="nav-icon" />
+      <button class="nav-btn active" data-tab="trade">
+        <svg class="nav-icon" viewBox="0 0 24 24">
+          <path d="M3.5 18.5L9.5 12.5L13.5 16.5L22 6.92L20.59 5.5L13.5 13.5L9.5 9.5L2 17L3.5 18.5Z"/>
+        </svg>
         <span class="nav-label">Trade</span>
       </button>
+      <button class="nav-btn" data-tab="mytrades">
+        <svg class="nav-icon" viewBox="0 0 24 24">
+          <path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3M19 19H5V5H19V19M17 12H15V17H17V12M13 7H11V17H13V7M9 14H7V17H9V14Z"/>
+        </svg>
+        <span class="nav-label">My Trades</span>
+      </button>
       <button class="nav-btn" data-tab="wallet">
-        <img src="https://github.com/s42144/mettg/blob/ea86468991e3cb26f300a18ef0d3d49158b5f4af/ern.png?raw=true" alt="Wallet" class="nav-icon" />
+        <svg class="nav-icon" viewBox="0 0 24 24">
+          <path d="M21 18V19C21 20.1 20.1 21 19 21H5C3.89 21 3 20.1 3 19V5C3 3.9 3.89 3 5 3H19C20.1 3 21 3.9 21 5V6H12C10.89 6 10 6.9 10 8V16C10 17.1 10.89 18 12 18H21M12 16H22V8H12V16M16 13.5C15.17 13.5 14.5 12.83 14.5 12S15.17 10.5 16 10.5 17.5 11.17 17.5 12 16.83 13.5 16 13.5Z"/>
+        </svg>
         <span class="nav-label">Wallet</span>
       </button>
-      <button class="nav-btn" data-tab="referral">
-        <img src="https://github.com/s42144/mettg/blob/ea86468991e3cb26f300a18ef0d3d49158b5f4af/pfl.png?raw=true" alt="Referral" class="nav-icon" />
-        <span class="nav-label">Referral</span>
+      <button class="nav-btn" data-tab="referrals">
+        <svg class="nav-icon" viewBox="0 0 24 24">
+          <path d="M16 17V19H2V17S2 13 9 13 16 17 16 17M12.5 7.5A3.5 3.5 0 1 0 9 11A3.5 3.5 0 0 0 12.5 7.5M15.94 13A5.32 5.32 0 0 1 18 17V19H22V17S22 13.37 15.94 13M15 4A3.39 3.39 0 0 0 13.07 4.59A5 5 0 0 1 13.07 10.41A3.39 3.39 0 0 0 15 11A3.5 3.5 0 0 0 15 4Z"/>
+        </svg>
+        <span class="nav-label">Referrals</span>
       </button>
       <button class="nav-btn" data-tab="profile">
-        <img src="https://github.com/s42144/mettg/blob/ea86468991e3cb26f300a18ef0d3d49158b5f4af/rnkng.png?raw=true" alt="Profile" class="nav-icon" />
+        <svg class="nav-icon" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2M12 5C13.66 5 15 6.34 15 8S13.66 11 12 11 9 9.66 9 8 10.34 5 12 5M12 19.2C9.5 19.2 7.29 17.92 6 15.98C6.03 13.99 10 12.9 12 12.9S17.97 13.99 18 15.98C16.71 17.92 14.5 19.2 12 19.2Z"/>
+        </svg>
         <span class="nav-label">Profile</span>
       </button>
     </div>
   </div>
   
-  <!-- Modals -->
-  <div class="modal-overlay" id="referralModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title">My Referrals</div>
-        <button class="modal-close" id="closeReferralModal">×</button>
-      </div>
-      <div id="referralListContent"></div>
-    </div>
-  </div>
-  
-  <script src="exotix-app.js"></script>
+  <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBfR97veh6idxb81mH6N5_Gq8-CpW2D7bE",
+      authDomain: "jbhigfi.firebaseapp.com",
+      databaseURL: "https://jbhigfi-default-rtdb.firebaseio.com",
+      projectId: "jbhigfi",
+      storageBucket: "jbhigfi.firebasestorage.app",
+      messagingSenderId: "736760492095",
+      appId: "1:736760492095:web:47b94412495e21c561c88a",
+      measurementId: "G-ZZMHC9RTVT"
+    };
+    
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    
+    // Telegram
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+    tg.ready();
+    
+    const BOT_TOKEN = '8237387201:AAFI98932KS3M5uJDLaTbu27FCFOJ40wwxI';
+    
+    // Global State
+    let userId, userName, userAvatar, userData, usdtBalance = 0;
+    let countdownIntervals = {};
+    
+    // Trading Plans
+    const tradingPlans = [
+      { id: 'btc_usdt', pair: 'BTC/USDT', icon: '₿', price: 3000, daily: 300, duration: 30 },
+      { id: 'eth_usdt', pair: 'ETH/USDT', icon: 'Ξ', price: 2000, daily: 200, duration: 30 },
+      { id: 'bnb_usdt', pair: 'BNB/USDT', icon: '🔶', price: 1500, daily: 150, duration: 30 },
+      { id: 'sol_usdt', pair: 'SOL/USDT', icon: '◎', price: 1200, daily: 120, duration: 30 },
+      { id: 'ada_usdt', pair: 'ADA/USDT', icon: '₳', price: 1000, daily: 100, duration: 30 },
+      { id: 'xrp_usdt', pair: 'XRP/USDT', icon: '✕', price: 900, daily: 90, duration: 30 },
+      { id: 'dot_usdt', pair: 'DOT/USDT', icon: '●', price: 800, daily: 80, duration: 30 },
+      { id: 'doge_usdt', pair: 'DOGE/USDT', icon: 'Ð', price: 700, daily: 70, duration: 30 },
+      { id: 'avax_usdt', pair: 'AVAX/USDT', icon: '🔺', price: 650, daily: 65, duration: 30 },
+      { id: 'matic_usdt', pair: 'MATIC/USDT', icon: '⬡', price: 600, daily: 60, duration: 30 },
+      { id: 'link_usdt', pair: 'LINK/USDT', icon: '⬢', price: 550, daily: 55, duration: 30 },
+      { id: 'uni_usdt', pair: 'UNI/USDT', icon: '🦄', price: 500, daily: 50, duration: 30 },
+      { id: 'ltc_usdt', pair: 'LTC/USDT', icon: 'Ł', price: 450, daily: 45, duration: 30 },
+      { id: 'atom_usdt', pair: 'ATOM/USDT', icon: '⚛', price: 400, daily: 40, duration: 30 },
+      { id: 'etc_usdt', pair: 'ETC/USDT', icon: 'ξ', price: 350, daily: 35, duration: 30 },
+      { id: 'xlm_usdt', pair: 'XLM/USDT', icon: '✦', price: 300, daily: 30, duration: 30 },
+      { id: 'algo_usdt', pair: 'ALGO/USDT', icon: '△', price: 250, daily: 25, duration: 30 },
+      { id: 'vet_usdt', pair: 'VET/USDT', icon: 'V', price: 200, daily: 20, duration: 30 },
+      { id: 'icp_usdt', pair: 'ICP/USDT', icon: '∞', price: 150, daily: 15, duration: 30 },
+      { id: 'fil_usdt', pair: 'FIL/USDT', icon: '⨎', price: 100, daily: 10, duration: 30 },
+      { id: 'trx_usdt', pair: 'TRX/USDT', icon: '◬', price: 80, daily: 8, duration: 30 },
+      { id: 'near_usdt', pair: 'NEAR/USDT', icon: 'Ⓝ', price: 60, daily: 6, duration: 30 },
+      { id: 'ftm_usdt', pair: 'FTM/USDT', icon: '👻', price: 50, daily: 5, duration: 30 },
+      { id: 'sand_usdt', pair: 'SAND/USDT', icon: '🏖', price: 40, daily: 4, duration: 30 }
+    ];
+    
+    // Utility Functions
+    function now() { return Math.floor(Date.now() / 1000); }
+    
+    function notify(msg) {
+      const n = document.createElement('div');
+      n.className = 'notification';
+      n.textContent = msg;
+      document.body.appendChild(n);
+      setTimeout(() => n.remove(), 2500);
+    }
+    
+    function getTelegramUserData() {
+      const user = tg.initDataUnsafe?.user;
+      if (user && user.id) {
+        userId = user.id.toString();
+        userName = user.first_name + (user.last_name ? ' ' + user.last_name : '');
+        userAvatar = user.photo_url || "https://i.postimg.cc/kG1SJTf9/Screenshot-2025-10-09-23-39-32-878-com-ton-keeper-edit.jpg";
+        return true;
+      }
+      userId = 'test_' + Math.floor(10000 + Math.random() * 89999);
+      userName = 'Test User';
+      userAvatar = "https://i.postimg.cc/kG1SJTf9/Screenshot-2025-10-09-23-39-32-878-com-ton-keeper-edit.jpg";
+      return true;
+    }
+    
+    async function sendTelegramNotification(message) {
+      try {
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chat_id: userId, text: message, parse_mode: 'HTML' })
+        });
+      } catch (e) {}
+    }
+    
+    async function loadUserData() {
+      const snap = await db.ref('exotix_users/' + userId).once('value');
+      
+      if (snap.exists()) {
+        userData = snap.val();
+      } else {
+        userData = {
+          name: userName,
+          avatar: userAvatar,
+          usdtBalance: 0,
+          activeTrades: {},
+          tradeHistory: [],
+          deposits: [],
+          withdrawals: [],
+          referrals: [],
+          referredBy: null,
+          referralEarnings: 0,
+          createdAt: now()
+        };
+        await db.ref('exotix_users/' + userId).set(userData);
+      }
+      
+      usdtBalance = userData.usdtBalance || 0;
+      
+      // Process referral
+      const startParam = tg.initDataUnsafe?.start_param;
+      if (startParam && !userData.referredBy && startParam !== userId) {
+        const refSnap = await db.ref('exotix_users/' + startParam).once('value');
+        if (refSnap.exists()) {
+          const refData = refSnap.val();
+          await db.ref('exotix_users/' + startParam).update({
+            usdtBalance: (refData.usdtBalance || 0) + 0.20,
+            referralEarnings: (refData.referralEarnings || 0) + 0.20,
+            referrals: [...(refData.referrals || []), userId]
+          });
+          await db.ref('exotix_users/' + userId).update({ referredBy: startParam });
+          userData.referredBy = startParam;
+          notify('Welcome! Your referrer earned $0.20!');
+        }
+      }
+      
+      document.getElementById('loading-screen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      showTab('trade');
+    }
+    
+    async function updateUserData(updates) {
+      Object.assign(userData, updates);
+      await db.ref('exotix_users/' + userId).update(updates);
+      if (updates.usdtBalance !== undefined) {
+        usdtBalance = updates.usdtBalance;
+        const el = document.getElementById('usdtBalance');
+        if (el) el.textContent = usdtBalance.toFixed(2);
+      }
+    }
+    
+    function showTab(tab) {
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === tab);
+      });
+      
+      Object.values(countdownIntervals).forEach(i => clearInterval(i));
+      countdownIntervals = {};
+      
+      if (tab === 'trade') renderTrade();
+      if (tab === 'mytrades') renderMyTrades();
+      if (tab === 'wallet') renderWallet();
+      if (tab === 'referrals') renderReferrals();
+      if (tab === 'profile') renderProfile();
+    }
+    
+    function renderTrade() {
+      let html = `
+        <div class="section-title">Trading Plans</div>
+        <div class="section-subtitle">Choose your investment plan</div>
+        
+        <div class="balance-header">
+          <img src="https://i.postimg.cc/kG1SJTf9/Screenshot-2025-10-09-23-39-32-878-com-ton-keeper-edit.jpg" class="usdt-icon" />
+          <div>
+            <div class="balance-label">USDT Balance</div>
+            <div class="balance-amount" id="usdtBalance">${usdtBalance.toFixed(2)}</div>
+          </div>
+        </div>
+      `;
+      
+      tradingPlans.forEach(plan => {
+        const isPurchased = userData.activeTrades && userData.activeTrades[plan.id];
+        const roi = ((plan.daily * plan.duration) / plan.price * 100).toFixed(2);
+        
+        html += `
+          <div class="trading-card">
+            <div class="card-header">
+              <div class="pair-info">
+                <div class="crypto-icon">${plan.icon}</div>
+                <div>
+                  <div class="pair-name">${plan.pair}</div>
+                  <div class="pair-price">$${plan.price}</div>
+                </div>
+              </div>
+              <div class="price-change positive">+${Math.random() * 10 | 0}%</div>
+            </div>
+            
+            <div class="stats-grid">
+              <div class="stat-item">
+                <div class="stat-label">Investment</div>
+                <div class="stat-value">$${plan.price}</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Daily Profit</div>
+                <div class="stat-value">$${plan.daily}</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Duration</div>
+                <div class="stat-value">${plan.duration} Days</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Total ROI</div>
+                <div class="stat-value">${roi}%</div>
+              </div>
+            </div>
+            
+            <button class="btn-trade ${isPurchased ? 'purchased' : ''}" 
+                    onclick="buyPlan('${plan.id}')"
+                    ${isPurchased || usdtBalance < plan.price ? 'disabled' : ''}>
+              ${isPurchased ? '✓ Purchased' : (usdtBalance < plan.price ? 'Insufficient Balance' : 'Buy Now')}
+            </button>
+          </div>
+        `;
+      });
+      
+      document.getElementById('main-content').innerHTML = html;
+    }
+    
+    async function buyPlan(planId) {
+      const plan = tradingPlans.find(p => p.id === planId);
+      if (!plan || usdtBalance < plan.price) return notify('Insufficient balance!');
+      if (userData.activeTrades && userData.activeTrades[planId]) return notify('Already purchased!');
+      
+      const trade = {
+        planId: plan.id,
+        pair: plan.pair,
+        investment: plan.price,
+        dailyProfit: plan.daily,
+        duration: plan.duration,
+        daysRemaining: plan.duration,
+        totalEarned: 0,
+        purchaseDate: now(),
+        lastClaimDate: now(),
+        nextClaimDate: now() + 86400,
+        status: 'active'
+      };
+      
+      await updateUserData({
+        usdtBalance: usdtBalance - plan.price,
+        activeTrades: { ...(userData.activeTrades || {}), [planId]: trade },
+        tradeHistory: [...(userData.tradeHistory || []), {
+          type: 'purchase',
+          planId: plan.id,
+          pair: plan.pair,
+          amount: plan.price,
+          timestamp: now()
+        }]
+      });
+      
+      notify(`Successfully purchased ${plan.pair}!`);
+      await sendTelegramNotification(`✅ Trade Activated!\\n\\nPlan: ${plan.pair}\\nInvestment: $${plan.price}\\nDaily: $${plan.daily}`);
+      renderTrade();
+    }
+    
+    function renderMyTrades() {
+      let html = `
+        <div class="section-title">My Active Trades</div>
+        <div class="section-subtitle">Manage your investments</div>
+      `;
+      
+      const activeTrades = userData.activeTrades || {};
+      const keys = Object.keys(activeTrades);
+      
+      if (keys.length === 0) {
+        html += `<div class="empty-state"><div class="empty-icon">📊</div><div>No active trades yet</div></div>`;
+      } else {
+        keys.forEach(planId => {
+          const trade = activeTrades[planId];
+          const plan = tradingPlans.find(p => p.id === planId);
+          if (!plan) return;
+          
+          const progress = ((plan.duration - trade.daysRemaining) / plan.duration * 100).toFixed(1);
+          const canClaim = now() >= trade.nextClaimDate;
+          const timeLeft = trade.nextClaimDate - now();
+          
+          html += `
+            <div class="active-trade-card">
+              <div class="card-header">
+                <div class="pair-info">
+                  <div class="crypto-icon">${plan.icon}</div>
+                  <div>
+                    <div class="pair-name">${plan.pair}</div>
+                    <div class="pair-price">Investment: $${trade.investment}</div>
+                  </div>
+                </div>
+                <div class="trade-status">Active</div>
+              </div>
+              
+              <div class="progress-bar-container">
+                <div class="progress-bar" style="width: ${progress}%"></div>
+              </div>
+              
+              <div class="stats-grid">
+                <div class="stat-item">
+                  <div class="stat-label">Daily Profit</div>
+                  <div class="stat-value">$${trade.dailyProfit}</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-label">Total Earned</div>
+                  <div class="stat-value">$${trade.totalEarned}</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-label">Days Left</div>
+                  <div class="stat-value">${trade.daysRemaining}</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-label">Progress</div>
+                  <div class="stat-value">${plan.duration - trade.daysRemaining}/${plan.duration}</div>
+                </div>
+              </div>
+              
+              <div class="countdown-timer">
+                <div class="stat-label">Next Claim In</div>
+                <div class="countdown-display" id="countdown-${planId}">
+                  ${canClaim ? 'Ready!' : formatTime(timeLeft)}
+                </div>
+              </div>
+              
+              <button class="btn-claim" onclick="claimProfit('${planId}')" ${canClaim ? '' : 'disabled'}>
+                ${canClaim ? 'Claim $' + trade.dailyProfit : 'Claim Locked'}
+              </button>
+            </div>
+          `;
+        });
+        
+        setTimeout(() => {
+          keys.forEach(planId => {
+            const trade = activeTrades[planId];
+            startCountdown(planId, trade.nextClaimDate);
+          });
+        }, 100);
+      }
+      
+      document.getElementById('main-content').innerHTML = html;
+    }
+    
+    function formatTime(sec) {
+      if (sec <= 0) return 'Ready!';
+      const h = Math.floor(sec / 3600);
+      const m = Math.floor((sec % 3600) / 60);
+      const s = sec % 60;
+      return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+    
+    function startCountdown(planId, targetTime) {
+      const el = document.getElementById(`countdown-${planId}`);
+      if (!el) return;
+      
+      countdownIntervals[planId] = setInterval(() => {
+        const timeLeft = targetTime - now();
+        if (timeLeft <= 0) {
+          el.textContent = 'Ready!';
+          clearInterval(countdownIntervals[planId]);
+          const btn = el.closest('.active-trade-card').querySelector('.btn-claim');
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = `Claim $${userData.activeTrades[planId].dailyProfit}`;
+          }
+        } else {
+          el.textContent = formatTime(timeLeft);
+        }
+      }, 1000);
+    }
+    
+    async function claimProfit(planId) {
+      const trade = userData.activeTrades[planId];
+      if (!trade || now() < trade.nextClaimDate) return notify('Not ready yet!');
+      
+      trade.totalEarned += trade.dailyProfit;
+      trade.daysRemaining -= 1;
+      trade.lastClaimDate = now();
+      trade.nextClaimDate = now() + 86400;
+      
+      const activeTrades = { ...userData.activeTrades };
+      
+      if (trade.daysRemaining <= 0) {
+        delete activeTrades[planId];
+        notify(`Trade completed! Total: $${trade.totalEarned}`);
+      } else {
+        activeTrades[planId] = trade;
+        notify(`Claimed $${trade.dailyProfit}!`);
+      }
+      
+      await updateUserData({
+        usdtBalance: usdtBalance + trade.dailyProfit,
+        activeTrades: activeTrades,
+        tradeHistory: [...(userData.tradeHistory || []), {
+          type: 'claim',
+          planId: planId,
+          amount: trade.dailyProfit,
+          timestamp: now()
+        }]
+      });
+      
+      await sendTelegramNotification(`💰 Claimed $${trade.dailyProfit}!\\nNew Balance: $${usdtBalance.toFixed(2)}`);
+      
+      // Award referral commission
+      if (userData.referredBy) {
+        const commission = trade.dailyProfit * 0.2;
+        const refSnap = await db.ref('exotix_users/' + userData.referredBy).once('value');
+        if (refSnap.exists()) {
+          const refData = refSnap.val();
+          await db.ref('exotix_users/' + userData.referredBy).update({
+            usdtBalance: (refData.usdtBalance || 0) + commission,
+            referralEarnings: (refData.referralEarnings || 0) + commission
+          });
+        }
+      }
+      
+      renderMyTrades();
+    }
+    
+    function renderWallet() {
+      let html = `
+        <div class="section-title">Wallet</div>
+        <div class="section-subtitle">Manage your funds</div>
+        
+        <div class="balance-header">
+          <img src="https://i.postimg.cc/kG1SJTf9/Screenshot-2025-10-09-23-39-32-878-com-ton-keeper-edit.jpg" class="usdt-icon" />
+          <div>
+            <div class="balance-label">USDT Balance</div>
+            <div class="balance-amount" id="usdtBalance">${usdtBalance.toFixed(2)}</div>
+          </div>
+        </div>
+        
+        <div class="wallet-tabs">
+          <div class="wallet-tab active" onclick="showWalletTab('deposit')">Deposit</div>
+          <div class="wallet-tab" onclick="showWalletTab('withdraw')">Withdraw</div>
+          <div class="wallet-tab" onclick="showWalletTab('history')">History</div>
+          <div class="wallet-tab" onclick="showWalletTab('activities')">Activities</div>
+        </div>
+        
+        <div id="walletContent"></div>
+      `;
+      
+      document.getElementById('main-content').innerHTML = html;
+      showWalletTab('deposit');
+    }
+    
+    function showWalletTab(tab) {
+      document.querySelectorAll('.wallet-tab').forEach(t => {
+        t.classList.toggle('active', t.textContent.toLowerCase() === tab);
+      });
+      
+      if (tab === 'deposit') renderDepositTab();
+      if (tab === 'withdraw') renderWithdrawTab();
+      if (tab === 'history') renderHistoryTab();
+      if (tab === 'activities') renderActivitiesTab();
+    }
+    
+    function renderDepositTab() {
+      document.getElementById('walletContent').innerHTML = `
+        <div class="wallet-form">
+          <div class="form-group">
+            <label class="form-label">Deposit Amount (Min: $30)</label>
+            <input type="number" class="form-input" id="depositAmount" placeholder="Enter amount" min="30" />
+          </div>
+          <button class="btn-primary" onclick="initiateDeposit()">Continue</button>
+        </div>
+      `;
+    }
+    
+    function initiateDeposit() {
+      const amount = parseFloat(document.getElementById('depositAmount').value);
+      if (!amount || amount < 30) return notify('Minimum $30');
+      
+      const address = 'UQBWOgFgB4B8qBCo8CNjDUNAtvUSosw4v7v9gkt0GVOaNLSz';
+      const memo = `ExotixDP_${userId}`;
+      
+      document.getElementById('walletContent').innerHTML = `
+        <div class="wallet-form">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${address}" class="qr-code" />
+          
+          <div class="copy-box">
+            <span class="copy-text">${address}</span>
+            <button class="copy-btn" onclick="copyText('${address}', 'Address')">Copy</button>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Amount</label>
+            <div class="copy-box">
+              <span class="copy-text">$${amount.toFixed(2)}</span>
+              <button class="copy-btn" onclick="copyText('${amount.toFixed(2)}', 'Amount')">Copy</button>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Memo (Required)</label>
+            <div class="copy-box">
+              <span class="copy-text">${memo}</span>
+              <button class="copy-btn" onclick="copyText('${memo}', 'Memo')">Copy</button>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Transaction Hash</label>
+            <input type="text" class="form-input" id="txHash" placeholder="Enter tx hash" />
+          </div>
+          
+          <button class="btn-primary" onclick="submitDeposit(${amount})">Confirm</button>
+        </div>
+      `;
+    }
+    
+    async function submitDeposit(amount) {
+      const txHash = document.getElementById('txHash').value.trim();
+      if (!txHash) return notify('Enter tx hash');
+      
+      const deposit = {
+        id: 'dep_' + now() + '_' + Math.random().toString(36).substr(2, 9),
+        amount: amount,
+        address: 'UQBWOgFgB4B8qBCo8CNjDUNAtvUSosw4v7v9gkt0GVOaNLSz',
+        memo: `ExotixDP_${userId}`,
+        txHash: txHash,
+        status: 'pending',
+        timestamp: now()
+      };
+      
+      await updateUserData({
+        deposits: [...(userData.deposits || []), deposit]
+      });
+      
+      await db.ref('exotix_admin/deposits/' + deposit.id).set({
+        ...deposit,
+        userId: userId,
+        userName: userName
+      });
+      
+      notify('Deposit submitted!');
+      await sendTelegramNotification(`📥 Deposit: $${amount}\\nStatus: Pending`);
+      renderDepositTab();
+    }
+    
+    function renderWithdrawTab() {
+      document.getElementById('walletContent').innerHTML = `
+        <div class="wallet-form">
+          <div class="form-group">
+            <label class="form-label">USDT TON Address</label>
+            <input type="text" class="form-input" id="withdrawAddress" placeholder="Enter address" />
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Amount (Min: $0.10)</label>
+            <input type="number" class="form-input" id="withdrawAmount" placeholder="Enter amount" min="0.10" />
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Memo (Optional)</label>
+            <input type="text" class="form-input" id="withdrawMemo" placeholder="Enter memo" />
+          </div>
+          
+          <button class="btn-primary" onclick="submitWithdraw()">Submit</button>
+        </div>
+      `;
+    }
+    
+    async function submitWithdraw() {
+      const address = document.getElementById('withdrawAddress').value.trim();
+      const amount = parseFloat(document.getElementById('withdrawAmount').value);
+      const memo = document.getElementById('withdrawMemo').value.trim();
+      
+      if (!address) return notify('Enter address');
+      if (!amount || amount < 0.10) return notify('Minimum $0.10');
+      if (amount > usdtBalance) return notify('Insufficient balance');
+      
+      const withdrawal = {
+        id: 'wd_' + now() + '_' + Math.random().toString(36).substr(2, 9),
+        amount: amount,
+        address: address,
+        memo: memo,
+        status: 'pending',
+        timestamp: now()
+      };
+      
+      await updateUserData({
+        withdrawals: [...(userData.withdrawals || []), withdrawal]
+      });
+      
+      await db.ref('exotix_admin/withdrawals/' + withdrawal.id).set({
+        ...withdrawal,
+        userId: userId,
+        userName: userName
+      });
+      
+      notify('Withdrawal submitted!');
+      await sendTelegramNotification(`📤 Withdrawal: $${amount}\\nStatus: Pending`);
+      renderWithdrawTab();
+    }
+    
+    function renderHistoryTab() {
+      const deposits = userData.deposits || [];
+      const withdrawals = userData.withdrawals || [];
+      
+      let html = '';
+      
+      if (deposits.length === 0 && withdrawals.length === 0) {
+        html = `<div class="empty-state"><div class="empty-icon">📜</div><div>No transactions</div></div>`;
+      } else {
+        const all = [
+          ...deposits.map(d => ({ ...d, type: 'Deposit' })),
+          ...withdrawals.map(w => ({ ...w, type: 'Withdrawal' }))
+        ].sort((a, b) => b.timestamp - a.timestamp);
+        
+        all.forEach(tx => {
+          html += `
+            <div class="transaction-item">
+              <div class="transaction-header">
+                <div class="transaction-type">${tx.type}</div>
+                <div class="transaction-status ${tx.status}">${tx.status.toUpperCase()}</div>
+              </div>
+              <div style="font-size: 12px; color: var(--text-secondary); margin-top: 8px;">
+                Amount: $${tx.amount.toFixed(2)}<br>
+                Date: ${new Date(tx.timestamp * 1000).toLocaleString()}
+              </div>
+            </div>
+          `;
+        });
+      }
+      
+      document.getElementById('walletContent').innerHTML = html;
+    }
+    
+    function renderActivitiesTab() {
+      const history = userData.tradeHistory || [];
+      
+      let html = '';
+      
+      if (history.length === 0) {
+        html = `<div class="empty-state"><div class="empty-icon">📊</div><div>No activities</div></div>`;
+      } else {
+        history.slice().reverse().forEach(act => {
+          const icon = act.type === 'purchase' ? '🛒' : '💰';
+          const label = act.type === 'purchase' ? 'Purchased' : 'Claimed';
+          
+          html += `
+            <div class="transaction-item">
+              <div class="transaction-header">
+                <div class="transaction-type">${icon} ${label}</div>
+              </div>
+              <div style="font-size: 12px; color: var(--text-secondary); margin-top: 8px;">
+                Plan: ${act.pair}<br>
+                Amount: $${act.amount}<br>
+                Date: ${new Date(act.timestamp * 1000).toLocaleString()}
+              </div>
+            </div>
+          `;
+        });
+      }
+      
+      document.getElementById('walletContent').innerHTML = html;
+    }
+    
+    async function renderReferrals() {
+      const link = `https://t.me/SharkBountybot/myapp?startapp=${userId}`;
+      const referrals = userData.referrals || [];
+      const earnings = userData.referralEarnings || 0;
+      
+      let html = `
+        <div class="section-title">Referral Program</div>
+        <div class="section-subtitle">Earn 20% + $0.20 per referral</div>
+        
+        <div class="referral-card">
+          <div class="referral-stats-grid">
+            <div class="referral-stat-box">
+              <div class="referral-stat-label">Referrals</div>
+              <div class="referral-stat-value">${referrals.length}</div>
+            </div>
+            <div class="referral-stat-box">
+              <div class="referral-stat-label">Earnings</div>
+              <div class="referral-stat-value">$${earnings.toFixed(2)}</div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Your Link</label>
+            <div class="copy-box">
+              <span class="copy-text">${link}</span>
+              <button class="copy-btn" onclick="copyText('${link}', 'Link')">Copy</button>
+            </div>
+          </div>
+          
+          <button class="btn-share" onclick="shareOnTelegram()">📱 Share on Telegram</button>
+        </div>
+        
+        <div class="referral-card">
+          <div style="font-size: 18px; font-weight: 700; margin-bottom: 12px; text-align: center;">💡 How It Works</div>
+          <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.8;">
+            • Earn $0.20 for each signup<br>
+            • Get 20% on all deposits<br>
+            • Get 20% on trading profits<br>
+            • Instant payouts to balance
+          </div>
+        </div>
+      `;
+      
+      if (referrals.length > 0) {
+        html += `<div class="referral-card"><div style="font-size: 18px; font-weight: 700; margin-bottom: 12px; text-align: center;">👥 My Referrals</div>`;
+        
+        for (const refId of referrals) {
+          const snap = await db.ref('exotix_users/' + refId).once('value');
+          if (snap.exists()) {
+            const ref = snap.val();
+            html += `
+              <div class="referral-list-item">
+                <img src="${ref.avatar}" class="referral-avatar" />
+                <div>
+                  <div class="referral-name">${ref.name}</div>
+                  <div class="referral-balance">$${(ref.usdtBalance || 0).toFixed(2)}</div>
+                </div>
+              </div>
+            `;
+          }
+        }
+        
+        html += '</div>';
+      }
+      
+      document.getElementById('main-content').innerHTML = html;
+    }
+    
+    function shareOnTelegram() {
+      const link = `https://t.me/SharkBountybot/myapp?startapp=${userId}`;
+      const msg = `🚀 Join Exotix - Crypto Trading!\\n\\n💰 Daily profits from trading\\n📈 Multiple plans\\n🎁 Signup bonus!\\n\\n${link}`;
+      window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(msg)}`, '_blank');
+    }
+    
+    function renderProfile() {
+      let html = `
+        <div class="profile-header">
+          <img src="${userAvatar}" class="profile-avatar" />
+          <div class="profile-name">${userName}</div>
+          <div class="profile-id">ID: ${userId}</div>
+        </div>
+        
+        <div class="referral-card">
+          <div style="font-size: 18px; font-weight: 700; margin-bottom: 16px; text-align: center;">🎁 Redeem Code</div>
+          <div class="form-group">
+            <input type="text" class="form-input" id="redeemCode" placeholder="Enter 8-digit code" maxlength="8" style="text-align: center; letter-spacing: 4px; font-weight: 700;" />
+          </div>
+          <button class="btn-primary" onclick="redeemCode()">Redeem</button>
+        </div>
+        
+        <div class="referral-card">
+          <div style="font-size: 18px; font-weight: 700; margin-bottom: 16px; text-align: center;">📊 Statistics</div>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="stat-label">Deposits</div>
+              <div class="stat-value">$${(userData.totalDeposits || 0).toFixed(2)}</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Withdrawals</div>
+              <div class="stat-value">$${(userData.totalWithdrawals || 0).toFixed(2)}</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Active Trades</div>
+              <div class="stat-value">${Object.keys(userData.activeTrades || {}).length}</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Referral Earnings</div>
+              <div class="stat-value">$${(userData.referralEarnings || 0).toFixed(2)}</div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('main-content').innerHTML = html;
+    }
+    
+    async function redeemCode() {
+      const code = document.getElementById('redeemCode').value.trim().toUpperCase();
+      if (code.length !== 8) return notify('Enter 8-digit code');
+      
+      const snap = await db.ref('exotix_admin/redeemCodes/' + code).once('value');
+      if (!snap.exists()) return notify('Invalid code');
+      
+      const data = snap.val();
+      if (data.used) return notify('Already used');
+      
+      const amount = Math.random() * (data.maxAmount - data.minAmount) + data.minAmount;
+      const rounded = Math.round(amount * 100) / 100;
+      
+      await updateUserData({ usdtBalance: usdtBalance + rounded });
+      await db.ref('exotix_admin/redeemCodes/' + code).update({
+        used: true,
+        usedBy: userId,
+        usedAt: now(),
+        amount: rounded
+      });
+      
+      notify(`Redeemed $${rounded.toFixed(2)}!`);
+      await sendTelegramNotification(`🎁 Redeemed $${rounded.toFixed(2)}!`);
+      document.getElementById('redeemCode').value = '';
+    }
+    
+    function copyText(text, label) {
+      navigator.clipboard.writeText(text).then(() => notify(`${label} copied!`));
+    }
+    
+    window.showTab = showTab;
+    window.buyPlan = buyPlan;
+    window.claimProfit = claimProfit;
+    window.showWalletTab = showWalletTab;
+    window.initiateDeposit = initiateDeposit;
+    window.submitDeposit = submitDeposit;
+    window.submitWithdraw = submitWithdraw;
+    window.shareOnTelegram = shareOnTelegram;
+    window.redeemCode = redeemCode;
+    window.copyText = copyText;
+    
+    // Initialize
+    if (getTelegramUserData()) {
+      loadUserData();
+    }
+  </script>
 </body>
 </html>
