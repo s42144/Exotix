@@ -1,10 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exotix - Crypto Trading Platform</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -13,48 +13,48 @@
         }
 
         :root {
-            --primary-color: #6366f1;
-            --secondary-color: #8b5cf6;
-            --success-color: #10b981;
-            --danger-color: #ef4444;
-            --warning-color: #f59e0b;
-            --dark-bg: #0f172a;
-            --card-bg: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --border-color: #334155;
+            --primary: #6C5CE7;
+            --secondary: #00B894;
+            --danger: #FF7675;
+            --warning: #FDCB6E;
+            --dark: #2D3436;
+            --light: #DFE6E9;
+            --bg: #0F1419;
+            --card-bg: #1A1F26;
+            --text: #FFFFFF;
+            --text-secondary: #8899A6;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: var(--text-primary);
-            min-height: 100vh;
-            padding-bottom: 80px;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            padding-bottom: 80px;
         }
 
         /* Header */
         .header {
-            background: var(--card-bg);
-            padding: 15px 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 15px 20px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -63,22 +63,22 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            background: rgba(99, 102, 241, 0.1);
+            background: rgba(108, 92, 231, 0.1);
             padding: 10px 20px;
-            border-radius: 10px;
-            border: 1px solid var(--primary-color);
+            border-radius: 25px;
+            border: 2px solid var(--primary);
         }
 
-        .balance-display img {
+        .balance-icon {
             width: 30px;
             height: 30px;
             border-radius: 50%;
         }
 
         .balance-amount {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
-            color: var(--success-color);
+            color: var(--secondary);
         }
 
         /* Navigation */
@@ -91,7 +91,7 @@
             display: flex;
             justify-content: space-around;
             padding: 10px 0;
-            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.3);
             z-index: 1000;
         }
 
@@ -100,24 +100,27 @@
             flex-direction: column;
             align-items: center;
             gap: 5px;
-            cursor: pointer;
             padding: 10px 15px;
-            border-radius: 10px;
+            cursor: pointer;
             transition: all 0.3s;
+            border-radius: 10px;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(108, 92, 231, 0.2);
+        }
+
+        .nav-icon {
+            font-size: 24px;
+        }
+
+        .nav-label {
+            font-size: 12px;
             color: var(--text-secondary);
         }
 
-        .nav-item.active {
-            background: rgba(99, 102, 241, 0.2);
-            color: var(--primary-color);
-        }
-
-        .nav-item i {
-            font-size: 20px;
-        }
-
-        .nav-item span {
-            font-size: 12px;
+        .nav-item.active .nav-label {
+            color: var(--primary);
         }
 
         /* Sections */
@@ -131,7 +134,7 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -144,30 +147,33 @@
         }
 
         .plan-card {
-            background: linear-gradient(135deg, var(--card-bg) 0%, #2d3748 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            border: 2px solid transparent;
-            transition: all 0.3s;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-5px);
         }
 
         .plan-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
         }
 
-        .plan-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-color);
-            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.3);
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
         }
 
         .plan-header {
@@ -178,102 +184,87 @@
         }
 
         .plan-pair {
-            font-size: 20px;
+            font-size: 24px;
             font-weight: bold;
-            color: var(--primary-color);
         }
 
-        .plan-badge {
-            background: var(--success-color);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-        }
-
-        .plan-chart {
-            width: 100%;
-            height: 150px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            margin: 15px 0;
+        .plan-logo {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
+            font-size: 20px;
         }
 
         .plan-price {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: bold;
-            color: var(--success-color);
-            text-align: center;
-        }
-
-        .price-change {
-            font-size: 14px;
-            color: var(--success-color);
-            text-align: center;
-            margin-top: 5px;
+            margin: 15px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .plan-details {
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 10px;
             margin: 15px 0;
         }
 
-        .detail-row {
+        .plan-detail-row {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border-color);
+            margin: 8px 0;
         }
 
-        .detail-label {
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        .detail-value {
-            color: var(--text-primary);
-            font-weight: bold;
+        .plan-chart {
+            height: 150px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
         }
 
         .buy-button {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(135deg, var(--secondary), #00D2A0);
             border: none;
             border-radius: 10px;
             color: white;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .buy-button:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.5);
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0, 184, 148, 0.4);
         }
 
         .buy-button:disabled {
-            background: var(--border-color);
+            background: linear-gradient(135deg, #636e72, #b2bec3);
             cursor: not-allowed;
             transform: none;
         }
 
         /* My Trades */
-        .active-trades {
-            display: grid;
-            gap: 20px;
+        .trades-container {
+            margin-top: 20px;
         }
 
         .trade-card {
             background: var(--card-bg);
             border-radius: 15px;
             padding: 20px;
-            border-left: 4px solid var(--success-color);
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary);
         }
 
         .trade-header {
@@ -283,79 +274,82 @@
             margin-bottom: 15px;
         }
 
-        .countdown-timer {
-            background: rgba(99, 102, 241, 0.2);
+        .countdown-container {
+            background: rgba(108, 92, 231, 0.1);
             padding: 15px;
             border-radius: 10px;
             text-align: center;
             margin: 15px 0;
         }
 
-        .timer-display {
-            font-size: 24px;
+        .countdown-timer {
+            font-size: 32px;
             font-weight: bold;
-            color: var(--primary-color);
+            color: var(--secondary);
+            margin: 10px 0;
         }
 
         .progress-bar-3d {
             width: 100%;
             height: 30px;
-            background: rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to bottom, #2d3436, #1a1f26);
             border-radius: 15px;
             overflow: hidden;
             position: relative;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
         }
 
-        .progress-fill {
+        .progress-fill-3d {
             height: 100%;
-            background: linear-gradient(135deg, var(--success-color), #34d399);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             border-radius: 15px;
-            transition: width 1s;
             position: relative;
-            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.5);
+            transition: width 0.3s;
+            box-shadow: 0 2px 10px rgba(108, 92, 231, 0.5);
         }
 
-        .progress-fill::after {
+        .progress-fill-3d::after {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 50%;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), transparent);
+            background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
             border-radius: 15px 15px 0 0;
         }
 
         .claim-button {
             width: 100%;
             padding: 15px;
-            background: var(--success-color);
+            background: linear-gradient(135deg, var(--warning), #FFA502);
             border: none;
             border-radius: 10px;
-            color: white;
+            color: var(--dark);
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             margin-top: 15px;
+            transition: all 0.3s;
         }
 
         .claim-button:disabled {
-            background: var(--border-color);
+            background: #636e72;
+            color: #b2bec3;
             cursor: not-allowed;
         }
 
         /* Wallet */
-        .wallet-options {
+        .wallet-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
-            margin: 20px 0;
+            margin-top: 20px;
         }
 
         .wallet-option {
             background: var(--card-bg);
-            padding: 30px 20px;
+            padding: 30px;
             border-radius: 15px;
             text-align: center;
             cursor: pointer;
@@ -364,19 +358,23 @@
         }
 
         .wallet-option:hover {
-            border-color: var(--primary-color);
+            border-color: var(--primary);
             transform: translateY(-5px);
         }
 
-        .wallet-option i {
-            font-size: 40px;
-            color: var(--primary-color);
+        .wallet-icon {
+            font-size: 48px;
             margin-bottom: 10px;
         }
 
-        .wallet-form {
+        .wallet-label {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .form-container {
             background: var(--card-bg);
-            padding: 25px;
+            padding: 30px;
             border-radius: 15px;
             margin-top: 20px;
         }
@@ -385,71 +383,34 @@
             margin-bottom: 20px;
         }
 
-        .form-group label {
+        .form-label {
             display: block;
             margin-bottom: 8px;
             color: var(--text-secondary);
             font-size: 14px;
         }
 
-        .form-group input,
-        .form-group textarea {
+        .form-input {
             width: 100%;
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-primary);
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: var(--text);
             font-size: 16px;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
-        .qr-section {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .qr-section img {
-            max-width: 250px;
-            margin: 15px auto;
-        }
-
-        .copy-field {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .copy-field input {
-            flex: 1;
-        }
-
-        .copy-btn {
-            padding: 12px 20px;
-            background: var(--primary-color);
-            border: none;
-            border-radius: 8px;
-            color: white;
-            cursor: pointer;
             transition: all 0.3s;
         }
 
-        .copy-btn:hover {
-            background: var(--secondary-color);
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255,255,255,0.08);
         }
 
-        .submit-btn {
+        .submit-button {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(135deg, var(--primary), #5F4DD1);
             border: none;
             border-radius: 10px;
             color: white;
@@ -459,62 +420,103 @@
             transition: all 0.3s;
         }
 
-        .submit-btn:hover {
+        .submit-button:hover {
             transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(108, 92, 231, 0.4);
         }
 
-        /* History Table */
-        .history-table {
-            background: var(--card-bg);
+        .qr-container {
+            background: white;
+            padding: 20px;
             border-radius: 15px;
-            overflow: hidden;
-            margin-top: 20px;
+            text-align: center;
+            margin: 20px 0;
         }
 
-        .history-table table {
-            width: 100%;
-            border-collapse: collapse;
+        .qr-image {
+            max-width: 250px;
+            margin: 0 auto;
         }
 
-        .history-table th {
-            background: rgba(99, 102, 241, 0.2);
-            padding: 15px;
-            text-align: left;
+        .copy-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.05);
+            padding: 12px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        .copy-text {
+            flex: 1;
+            color: var(--text);
+            word-break: break-all;
+        }
+
+        .copy-button {
+            padding: 8px 15px;
+            background: var(--primary);
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .copy-button:hover {
+            background: #5F4DD1;
+        }
+
+        .timer-display {
+            font-size: 24px;
             font-weight: bold;
-            color: var(--primary-color);
+            color: var(--danger);
+            text-align: center;
+            margin: 15px 0;
         }
 
-        .history-table td {
+        /* History */
+        .history-item {
+            background: var(--card-bg);
             padding: 15px;
-            border-bottom: 1px solid var(--border-color);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
         }
 
         .status-badge {
-            padding: 5px 10px;
+            padding: 5px 15px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: bold;
         }
 
         .status-pending {
-            background: rgba(245, 158, 11, 0.2);
-            color: var(--warning-color);
+            background: rgba(253, 203, 110, 0.2);
+            color: var(--warning);
         }
 
         .status-approved {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--success-color);
+            background: rgba(0, 184, 148, 0.2);
+            color: var(--secondary);
         }
 
         .status-rejected {
-            background: rgba(239, 68, 68, 0.2);
-            color: var(--danger-color);
+            background: rgba(255, 118, 117, 0.2);
+            color: var(--danger);
         }
 
         /* Referrals */
         .referral-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             margin: 20px 0;
         }
@@ -524,13 +526,12 @@
             padding: 20px;
             border-radius: 15px;
             text-align: center;
-            border-left: 4px solid var(--primary-color);
         }
 
         .stat-value {
             font-size: 32px;
             font-weight: bold;
-            color: var(--primary-color);
+            color: var(--secondary);
             margin: 10px 0;
         }
 
@@ -553,31 +554,26 @@
             margin-top: 20px;
         }
 
-        .share-btn {
+        .share-button {
             padding: 15px;
-            border: none;
             border-radius: 10px;
+            border: none;
             color: white;
-            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            transition: all 0.3s;
         }
 
-        .share-btn.telegram {
-            background: #0088cc;
+        .share-telegram {
+            background: linear-gradient(135deg, #0088cc, #00a0e9);
         }
 
-        .share-btn.twitter {
-            background: #1da1f2;
-        }
-
-        .share-btn:hover {
-            transform: scale(1.02);
+        .share-twitter {
+            background: linear-gradient(135deg, #1DA1F2, #0d8bd9);
         }
 
         .referral-list {
@@ -598,11 +594,7 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
+            background: var(--primary);
         }
 
         .referral-info {
@@ -615,7 +607,7 @@
         }
 
         .referral-earnings {
-            color: var(--success-color);
+            color: var(--secondary);
             font-size: 14px;
         }
 
@@ -638,26 +630,14 @@
         }
 
         .task-card:hover {
-            border-color: var(--primary-color);
-            transform: translateX(5px);
+            border-color: var(--primary);
         }
 
         .task-icon {
             width: 60px;
             height: 60px;
             border-radius: 10px;
-            background: var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-        }
-
-        .task-icon img {
-            width: 100%;
-            height: 100%;
             object-fit: cover;
-            border-radius: 10px;
         }
 
         .task-info {
@@ -676,13 +656,13 @@
         }
 
         .task-reward {
-            color: var(--success-color);
+            color: var(--secondary);
             font-weight: bold;
         }
 
         .task-button {
             padding: 10px 20px;
-            background: var(--primary-color);
+            background: var(--primary);
             border: none;
             border-radius: 8px;
             color: white;
@@ -691,20 +671,20 @@
         }
 
         .task-button:hover {
-            background: var(--secondary-color);
+            background: #5F4DD1;
         }
 
         .task-button:disabled {
-            background: var(--border-color);
+            background: #636e72;
             cursor: not-allowed;
         }
 
         /* Profile */
         .profile-header {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 15px;
             text-align: center;
+            padding: 30px;
+            background: var(--card-bg);
+            border-radius: 15px;
             margin-bottom: 20px;
         }
 
@@ -713,19 +693,7 @@
             height: 100px;
             border-radius: 50%;
             margin: 0 auto 15px;
-            background: var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-            border: 4px solid var(--primary-color);
-        }
-
-        .profile-avatar img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
+            border: 4px solid var(--primary);
         }
 
         .profile-name {
@@ -739,13 +707,55 @@
             font-size: 14px;
         }
 
-        .redeem-section {
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
             background: var(--card-bg);
-            padding: 25px;
-            border-radius: 15px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            z-index: 2000;
+            animation: slideIn 0.3s;
+            max-width: 350px;
+            border-left: 4px solid var(--secondary);
         }
 
-        /* Modal */
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .notification.error {
+            border-left-color: var(--danger);
+        }
+
+        .notification.warning {
+            border-left-color: var(--warning);
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -753,11 +763,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 2000;
+            background: rgba(0,0,0,0.8);
+            z-index: 3000;
             align-items: center;
             justify-content: center;
-            padding: 20px;
         }
 
         .modal.active {
@@ -767,17 +776,11 @@
         .modal-content {
             background: var(--card-bg);
             padding: 30px;
-            border-radius: 20px;
+            border-radius: 15px;
             max-width: 500px;
-            width: 100%;
-            max-height: 90vh;
+            width: 90%;
+            max-height: 80vh;
             overflow-y: auto;
-            animation: slideUp 0.3s;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
         }
 
         .modal-header {
@@ -792,71 +795,29 @@
             font-weight: bold;
         }
 
-        .close-modal {
+        .close-button {
             background: none;
             border: none;
-            color: var(--text-primary);
-            font-size: 24px;
+            color: var(--text);
+            font-size: 28px;
             cursor: pointer;
         }
 
-        /* Notifications */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--card-bg);
-            padding: 15px 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            z-index: 3000;
-            animation: slideIn 0.3s;
-            border-left: 4px solid var(--success-color);
-            max-width: 300px;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(400px); }
-            to { transform: translateX(0); }
-        }
-
-        .notification.error {
-            border-left-color: var(--danger-color);
-        }
-
-        .notification.warning {
-            border-left-color: var(--warning-color);
-        }
-
-        /* Loading */
-        .loading {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 4000;
+        .back-button {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
+            gap: 8px;
         }
 
-        .loading.active {
-            display: flex;
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid var(--border-color);
-            border-top-color: var(--primary-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .back-button:hover {
+            background: rgba(255,255,255,0.2);
         }
 
         /* Responsive */
@@ -865,312 +826,121 @@
                 grid-template-columns: 1fr;
             }
 
-            .wallet-options {
-                grid-template-columns: 1fr;
-            }
-
-            .share-buttons {
+            .wallet-grid {
                 grid-template-columns: 1fr;
             }
 
             .referral-stats {
                 grid-template-columns: 1fr;
             }
+
+            .share-buttons {
+                grid-template-columns: 1fr;
+            }
         }
 
-        .back-button {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 10px 20px;
-            border-radius: 8px;
-            color: var(--text-primary);
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            transition: all 0.3s;
+        /* Chart Styles */
+        .chart-canvas {
+            width: 100%;
+            height: 100%;
         }
 
-        .back-button:hover {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
-        .section-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: var(--text-primary);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-secondary);
-        }
-
-        .empty-state i {
-            font-size: 64px;
-            margin-bottom: 20px;
-            opacity: 0.5;
-        }
-
-        .info-box {
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid var(--primary-color);
+        /* Rules Box */
+        .rules-box {
+            background: rgba(108, 92, 231, 0.1);
+            padding: 20px;
             border-radius: 10px;
-            padding: 15px;
-            margin: 15px 0;
+            margin: 20px 0;
+            border-left: 4px solid var(--primary);
         }
 
-        .info-box i {
-            color: var(--primary-color);
-            margin-right: 10px;
-        }
-
-        .timer-countdown {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid var(--danger-color);
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            margin: 15px 0;
-        }
-
-        .timer-countdown .time {
-            font-size: 24px;
+        .rules-title {
             font-weight: bold;
-            color: var(--danger-color);
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .rules-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .rules-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .rules-list li::before {
+            content: '\u2713';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
         }
     </style>
-<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
 </head>
 <body>
-    <!-- Header -->
     <div class="container">
+        <!-- Header -->
         <div class="header">
-            <div class="logo">
-                <i class="fas fa-chart-line"></i> Exotix
-            </div>
+            <div class="logo">\u26a1 EXOTIX</div>
             <div class="balance-display">
-                <img src="https://i.postimg.cc/85tyqGqs/images-6.jpg" alt="USDT">
-                <div>
-                    <div style="font-size: 12px; color: var(--text-secondary);">Balance</div>
-                    <div class="balance-amount" id="userBalance">$0.00</div>
-                </div>
+                <img src="https://i.postimg.cc/85tyqGqs/images-6.jpg" alt="USDT" class="balance-icon">
+                <span class="balance-amount" id="userBalance">0.00</span>
             </div>
         </div>
 
         <!-- Trade Section -->
         <div id="tradeSection" class="section active">
-            <h2 class="section-title">Trading Plans</h2>
-            <div class="plans-grid" id="plansGrid">
-                <!-- Plans will be loaded here -->
-            </div>
+            <h2 style="margin-bottom: 20px;">\ud83d\udd25 Trading Plans</h2>
+            <div class="plans-grid" id="plansGrid"></div>
         </div>
 
         <!-- My Trades Section -->
         <div id="myTradesSection" class="section">
-            <h2 class="section-title">My Active Trades</h2>
-            <div class="active-trades" id="activeTrades">
-                <!-- Active trades will be loaded here -->
-            </div>
+            <h2 style="margin-bottom: 20px;">\ud83d\udcca My Active Trades</h2>
+            <div class="trades-container" id="tradesContainer"></div>
         </div>
 
         <!-- Wallet Section -->
         <div id="walletSection" class="section">
-            <h2 class="section-title">Wallet</h2>
-            <div class="wallet-options">
-                <div class="wallet-option" onclick="showDeposit()">
-                    <i class="fas fa-arrow-down"></i>
-                    <div>Deposit</div>
-                </div>
-                <div class="wallet-option" onclick="showWithdraw()">
-                    <i class="fas fa-arrow-up"></i>
-                    <div>Withdraw</div>
-                </div>
-                <div class="wallet-option" onclick="showHistory()">
-                    <i class="fas fa-history"></i>
-                    <div>History</div>
-                </div>
-                <div class="wallet-option" onclick="showActivities()">
-                    <i class="fas fa-list"></i>
-                    <div>Activities</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Deposit Form -->
-        <div id="depositForm" class="section">
-            <button class="back-button" onclick="showSection('walletSection')">
-                <i class="fas fa-arrow-left"></i> Back
-            </button>
-            <h2 class="section-title">Deposit USDT</h2>
-            <div class="wallet-form">
-                <div class="info-box">
-                    <i class="fas fa-info-circle"></i>
-                    Minimum deposit: $30
-                </div>
-                <div class="form-group">
-                    <label>Enter Amount (USD)</label>
-                    <input type="number" id="depositAmount" placeholder="Enter amount" min="30">
-                </div>
-                <button class="submit-btn" onclick="initiateDeposit()">Continue</button>
-            </div>
-        </div>
-
-        <!-- Deposit Details -->
-        <div id="depositDetails" class="section">
-            <button class="back-button" onclick="showSection('depositForm')">
-                <i class="fas fa-arrow-left"></i> Back
-            </button>
-            <h2 class="section-title">Complete Deposit</h2>
-            
-            <div class="timer-countdown">
-                <div style="font-size: 14px; margin-bottom: 5px;">Time Remaining</div>
-                <div class="time" id="depositTimer">15:00</div>
-            </div>
-
-            <div class="qr-section">
-                <img src="https://i.postimg.cc/g2mgknm3/Screenshot-2025-10-17-16-28-28-211-com-ton-keeper-edit.jpg" alt="QR Code">
-                <div style="color: #000; margin-top: 10px; font-weight: bold;">Scan QR Code to Pay</div>
-            </div>
-
-            <div class="wallet-form">
-                <div class="form-group">
-                    <label>Network</label>
-                    <div class="copy-field">
-                        <input type="text" value="TON" readonly>
-                        <button class="copy-btn" onclick="copyText('TON')">
-                            <i class="fas fa-copy"></i>
-                        </button>
+            <h2 style="margin-bottom: 20px;">\ud83d\udcb0 Wallet</h2>
+            <div id="walletMain">
+                <div class="wallet-grid">
+                    <div class="wallet-option" onclick="showDeposit()">
+                        <div class="wallet-icon">\ud83d\udcb3</div>
+                        <div class="wallet-label">Deposit</div>
+                    </div>
+                    <div class="wallet-option" onclick="showWithdraw()">
+                        <div class="wallet-icon">\ud83d\udcb8</div>
+                        <div class="wallet-label">Withdraw</div>
+                    </div>
+                    <div class="wallet-option" onclick="showHistory()">
+                        <div class="wallet-icon">\ud83d\udcdc</div>
+                        <div class="wallet-label">History</div>
+                    </div>
+                    <div class="wallet-option" onclick="showActivities()">
+                        <div class="wallet-icon">\u26a1</div>
+                        <div class="wallet-label">Activities</div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label>Wallet Address</label>
-                    <div class="copy-field">
-                        <input type="text" id="depositAddress" value="UQBWOgFgB4B8qBCo8CNjDUNAtvUSosw4v7v9gkt0GVOaNLSz" readonly>
-                        <button class="copy-btn" onclick="copyText(document.getElementById('depositAddress').value)">
-                            <i class="fas fa-copy"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Amount</label>
-                    <div class="copy-field">
-                        <input type="text" id="depositAmountDisplay" readonly>
-                        <button class="copy-btn" onclick="copyText(document.getElementById('depositAmountDisplay').value)">
-                            <i class="fas fa-copy"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Memo/Comment (Required)</label>
-                    <div class="copy-field">
-                        <input type="text" id="depositMemo" readonly>
-                        <button class="copy-btn" onclick="copyText(document.getElementById('depositMemo').value)">
-                            <i class="fas fa-copy"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="info-box">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    Please include the memo/comment in your transaction. Without it, we cannot identify your deposit.
-                </div>
-
-                <div class="form-group">
-                    <label>Transaction Hash</label>
-                    <input type="text" id="depositTxHash" placeholder="Enter transaction hash">
-                </div>
-
-                <button class="submit-btn" onclick="submitDeposit()">Confirm Deposit</button>
             </div>
-        </div>
-
-        <!-- Withdraw Form -->
-        <div id="withdrawForm" class="section">
-            <button class="back-button" onclick="showSection('walletSection')">
-                <i class="fas fa-arrow-left"></i> Back
-            </button>
-            <h2 class="section-title">Withdraw USDT</h2>
-            <div class="wallet-form">
-                <div class="info-box">
-                    <i class="fas fa-info-circle"></i>
-                    Minimum withdrawal: $0.10
-                </div>
-                <div class="form-group">
-                    <label>USDT TON Address</label>
-                    <input type="text" id="withdrawAddress" placeholder="Enter your USDT TON address">
-                </div>
-                <div class="form-group">
-                    <label>Amount (USD)</label>
-                    <input type="number" id="withdrawAmount" placeholder="Enter amount" min="0.10" step="0.01">
-                </div>
-                <div class="form-group">
-                    <label>Memo/Comment (Optional)</label>
-                    <input type="text" id="withdrawMemo" placeholder="Enter memo (optional)">
-                </div>
-                <button class="submit-btn" onclick="submitWithdraw()">Submit Withdrawal</button>
-            </div>
-        </div>
-
-        <!-- History Section -->
-        <div id="historySection" class="section">
-            <button class="back-button" onclick="showSection('walletSection')">
-                <i class="fas fa-arrow-left"></i> Back
-            </button>
-            <h2 class="section-title">Transaction History</h2>
-            <div class="history-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Type</th>
-                            <th>Amount</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody id="historyTableBody">
-                        <!-- History will be loaded here -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Activities Section -->
-        <div id="activitiesSection" class="section">
-            <button class="back-button" onclick="showSection('walletSection')">
-                <i class="fas fa-arrow-left"></i> Back
-            </button>
-            <h2 class="section-title">All Activities</h2>
-            <div class="history-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Activity</th>
-                            <th>Details</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody id="activitiesTableBody">
-                        <!-- Activities will be loaded here -->
-                    </tbody>
-                </table>
-            </div>
+            <div id="walletContent"></div>
         </div>
 
         <!-- Referrals Section -->
         <div id="referralsSection" class="section">
-            <h2 class="section-title">Referral Program</h2>
+            <h2 style="margin-bottom: 20px;">\ud83d\udc65 Referral Program</h2>
             
-            <div class="info-box">
-                <i class="fas fa-gift"></i>
-                <strong>Earn $0.20</strong> for each referral + <strong>20% commission</strong> on all their deposits and earnings!
+            <div class="rules-box">
+                <div class="rules-title">\ud83c\udf81 Referral Benefits</div>
+                <ul class="rules-list">
+                    <li>Earn $0.20 for each referral</li>
+                    <li>Get 20% commission on all referral deposits</li>
+                    <li>Earn 20% commission on referral trading profits</li>
+                    <li>Lifetime earnings from your referrals</li>
+                </ul>
             </div>
 
             <div class="referral-stats">
@@ -1180,77 +950,56 @@
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Total Earnings</div>
-                    <div class="stat-value" id="totalReferralEarnings">$0.00</div>
+                    <div class="stat-value">$<span id="totalReferralEarnings">0.00</span></div>
                 </div>
             </div>
 
             <div class="referral-link-box">
-                <label style="display: block; margin-bottom: 10px; color: var(--text-secondary);">Your Referral Link</label>
-                <div class="copy-field">
-                    <input type="text" id="referralLink" readonly>
-                    <button class="copy-btn" onclick="copyText(document.getElementById('referralLink').value)">
-                        <i class="fas fa-copy"></i>
-                    </button>
+                <div class="form-label">Your Referral Link</div>
+                <div class="copy-box">
+                    <span class="copy-text" id="referralLink">Loading...</span>
+                    <button class="copy-button" onclick="copyReferralLink()">\ud83d\udccb Copy</button>
                 </div>
             </div>
 
             <div class="share-buttons">
-                <button class="share-btn telegram" onclick="shareOnTelegram()">
-                    <i class="fab fa-telegram"></i>
-                    Share on Telegram
+                <button class="share-button share-telegram" onclick="shareOnTelegram()">
+                    <span>\ud83d\udcf1</span> Share on Telegram
                 </button>
-                <button class="share-btn twitter" onclick="shareOnTwitter()">
-                    <i class="fab fa-twitter"></i>
-                    Share on Twitter
+                <button class="share-button share-twitter" onclick="shareOnTwitter()">
+                    <span>\ud83d\udc26</span> Share on Twitter
                 </button>
             </div>
 
-            <div style="margin-top: 30px;">
-                <button class="submit-btn" onclick="showReferralList()">
-                    <i class="fas fa-users"></i> View My Referrals
-                </button>
-            </div>
+            <button class="submit-button" style="margin-top: 20px;" onclick="showReferralList()">
+                \ud83d\udc65 Show My Referrals
+            </button>
 
-            <div id="referralListContainer" style="display: none; margin-top: 20px;">
-                <h3 style="margin-bottom: 15px;">My Referrals</h3>
-                <div class="referral-list" id="referralList">
-                    <!-- Referrals will be loaded here -->
-                </div>
-            </div>
+            <div class="referral-list" id="referralList"></div>
         </div>
 
         <!-- Tasks Section -->
         <div id="tasksSection" class="section">
-            <h2 class="section-title">Complete Tasks & Earn</h2>
-            <div class="tasks-grid" id="tasksGrid">
-                <!-- Tasks will be loaded here -->
-            </div>
+            <h2 style="margin-bottom: 20px;">\u2705 Tasks</h2>
+            <div class="tasks-grid" id="tasksGrid"></div>
         </div>
 
         <!-- Profile Section -->
         <div id="profileSection" class="section">
-            <h2 class="section-title">Profile</h2>
-            
             <div class="profile-header">
-                <div class="profile-avatar" id="profileAvatar">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div class="profile-name" id="profileName">User</div>
-                <div class="profile-id">ID: <span id="profileUserId"></span></div>
+                <img src="" alt="Profile" class="profile-avatar" id="profileAvatar">
+                <div class="profile-name" id="profileName">Loading...</div>
+                <div class="profile-id">ID: <span id="profileId">-</span></div>
             </div>
 
-            <div class="redeem-section">
-                <h3 style="margin-bottom: 15px;">Redeem Code</h3>
-                <div class="info-box">
-                    <i class="fas fa-gift"></i>
-                    Enter an 8-digit redemption code to claim your reward!
-                </div>
+            <div class="form-container">
+                <h3 style="margin-bottom: 20px;">\ud83c\udf81 Redeem Code</h3>
                 <div class="form-group">
-                    <label>Redemption Code</label>
-                    <input type="text" id="redeemCode" placeholder="Enter 8-digit code" maxlength="8">
+                    <label class="form-label">Enter 8-Digit Code</label>
+                    <input type="text" class="form-input" id="redeemCode" maxlength="8" placeholder="XXXXXXXX">
                 </div>
-                <button class="submit-btn" onclick="redeemCode()">
-                    <i class="fas fa-gift"></i> Redeem Now
+                <button class="submit-button" onclick="redeemCode()">
+                    \ud83c\udf89 Redeem Now
                 </button>
             </div>
         </div>
@@ -1258,41 +1007,36 @@
 
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
-        <div class="nav-item active" onclick="showSection('tradeSection')">
-            <i class="fas fa-chart-line"></i>
-            <span>Trade</span>
+        <div class="nav-item active" onclick="switchSection('trade')">
+            <div class="nav-icon">\ud83d\udcc8</div>
+            <div class="nav-label">Trade</div>
         </div>
-        <div class="nav-item" onclick="showSection('myTradesSection')">
-            <i class="fas fa-briefcase"></i>
-            <span>My Trades</span>
+        <div class="nav-item" onclick="switchSection('myTrades')">
+            <div class="nav-icon">\ud83d\udcbc</div>
+            <div class="nav-label">My Trades</div>
         </div>
-        <div class="nav-item" onclick="showSection('walletSection')">
-            <i class="fas fa-wallet"></i>
-            <span>Wallet</span>
+        <div class="nav-item" onclick="switchSection('wallet')">
+            <div class="nav-icon">\ud83d\udcb0</div>
+            <div class="nav-label">Wallet</div>
         </div>
-        <div class="nav-item" onclick="showSection('referralsSection')">
-            <i class="fas fa-users"></i>
-            <span>Referrals</span>
+        <div class="nav-item" onclick="switchSection('referrals')">
+            <div class="nav-icon">\ud83d\udc65</div>
+            <div class="nav-label">Referrals</div>
         </div>
-        <div class="nav-item" onclick="showSection('tasksSection')">
-            <i class="fas fa-tasks"></i>
-            <span>Tasks</span>
+        <div class="nav-item" onclick="switchSection('tasks')">
+            <div class="nav-icon">\u2705</div>
+            <div class="nav-label">Tasks</div>
         </div>
-        <div class="nav-item" onclick="showSection('profileSection')">
-            <i class="fas fa-user"></i>
-            <span>Profile</span>
+        <div class="nav-item" onclick="switchSection('profile')">
+            <div class="nav-icon">\ud83d\udc64</div>
+            <div class="nav-label">Profile</div>
         </div>
-    </div>
-
-    <!-- Loading Overlay -->
-    <div class="loading" id="loadingOverlay">
-        <div class="spinner"></div>
     </div>
 
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getDatabase, ref, set, get, update, push, onValue, query, orderByChild, equalTo } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+        import { getDatabase, ref, set, get, update, onValue, push, remove } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyBfR97veh6idxb81mH6N5_Gq8-CpW2D7bE",
@@ -1307,208 +1051,365 @@
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
-
-        // Telegram Bot Configuration
-        const TELEGRAM_BOT_TOKEN = '7930967027:AAG3AkEZrkKGxTFOyVHwN8VpA9HgusAdRmw';
-        const TELEGRAM_API = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}`;
-
-        // Global variables
         window.db = database;
         window.dbRef = ref;
         window.dbSet = set;
         window.dbGet = get;
         window.dbUpdate = update;
-        window.dbPush = push;
         window.dbOnValue = onValue;
-        window.dbQuery = query;
-        window.dbOrderByChild = orderByChild;
-        window.dbEqualTo = equalTo;
+        window.dbPush = push;
+        window.dbRemove = remove;
 
-        // Get user ID from Telegram WebApp or generate one
-        let userId = 'user_' + Math.random().toString(36).substr(2, 9);
-        let userChatId = null;
+        // Telegram Bot API
+        const BOT_TOKEN = '7930967027:AAG3AkEZrkKGxTFOyVHwN8VpA9HgusAdRmw';
+        window.BOT_TOKEN = BOT_TOKEN;
 
-        // Try to get Telegram user data
-        if (window.Telegram && window.Telegram.WebApp) {
-            const tg = window.Telegram.WebApp;
-            if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-                userId = tg.initDataUnsafe.user.id.toString();
-                userChatId = userId;
-                document.getElementById('profileName').textContent = tg.initDataUnsafe.user.first_name || 'User';
-                if (tg.initDataUnsafe.user.photo_url) {
-                    document.getElementById('profileAvatar').innerHTML = `<img src="${tg.initDataUnsafe.user.photo_url}" alt="Avatar">`;
-                }
-            }
+        // Initialize user
+        initializeUser();
+    </script>
+
+    <script>
+        // Global variables
+        let currentUser = null;
+        let tradingPlans = [];
+        let userTrades = [];
+
+        // Telegram WebApp
+        const tg = window.Telegram?.WebApp;
+        if (tg) {
+            tg.ready();
+            tg.expand();
         }
-
-        window.userId = userId;
-        window.userChatId = userChatId;
-        document.getElementById('profileUserId').textContent = userId;
-
-        // Send Telegram notification
-        window.sendTelegramNotification = async function(message) {
-            if (!userChatId) return;
-            try {
-                await fetch(`${TELEGRAM_API}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: userChatId,
-                        text: message,
-                        parse_mode: 'HTML'
-                    })
-                });
-            } catch (error) {
-                console.error('Telegram notification error:', error);
-            }
-        };
 
         // Initialize user
         async function initializeUser() {
-            const userRef = ref(database, `users/${userId}`);
-            const snapshot = await get(userRef);
+            try {
+                // Get user from Telegram WebApp or use demo user
+                const telegramUser = tg?.initDataUnsafe?.user;
+                const userId = telegramUser?.id || 'demo_' + Date.now();
+                
+                const userRef = window.dbRef(window.db, `users/${userId}`);
+                const snapshot = await window.dbGet(userRef);
+
+                if (!snapshot.exists()) {
+                    // Create new user
+                    const newUser = {
+                        id: userId,
+                        username: telegramUser?.username || 'DemoUser',
+                        firstName: telegramUser?.first_name || 'Demo',
+                        lastName: telegramUser?.last_name || 'User',
+                        photoUrl: telegramUser?.photo_url || 'https://via.placeholder.com/100',
+                        balance: 0,
+                        totalDeposits: 0,
+                        totalWithdrawals: 0,
+                        totalEarnings: 0,
+                        referralCode: generateReferralCode(),
+                        referredBy: getReferrerFromUrl(),
+                        referrals: [],
+                        referralEarnings: 0,
+                        hasDeposited: false,
+                        createdAt: Date.now(),
+                        lastActive: Date.now()
+                    };
+
+                    await window.dbSet(userRef, newUser);
+                    currentUser = newUser;
+
+                    // Process referral bonus
+                    if (newUser.referredBy) {
+                        await processReferralBonus(newUser.referredBy, userId);
+                    }
+                } else {
+                    currentUser = snapshot.val();
+                    // Update last active
+                    await window.dbUpdate(userRef, { lastActive: Date.now() });
+                }
+
+                // Load user data
+                loadUserData();
+                loadTradingPlans();
+                loadUserTrades();
+                loadTasks();
+                
+                // Setup real-time listeners
+                setupRealtimeListeners();
+
+            } catch (error) {
+                console.error('Error initializing user:', error);
+                showNotification('Error loading user data', 'error');
+            }
+        }
+
+        function generateReferralCode() {
+            return 'EX' + Math.random().toString(36).substr(2, 6).toUpperCase();
+        }
+
+        function getReferrerFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('ref') || null;
+        }
+
+        async function processReferralBonus(referrerId, newUserId) {
+            try {
+                const referrerRef = window.dbRef(window.db, `users/${referrerId}`);
+                const snapshot = await window.dbGet(referrerRef);
+
+                if (snapshot.exists()) {
+                    const referrer = snapshot.val();
+                    const bonus = 0.20;
+                    
+                    await window.dbUpdate(referrerRef, {
+                        balance: (referrer.balance || 0) + bonus,
+                        referralEarnings: (referrer.referralEarnings || 0) + bonus,
+                        referrals: [...(referrer.referrals || []), newUserId]
+                    });
+
+                    // Send notification to referrer
+                    await sendTelegramNotification(referrerId, 
+                        `\ud83c\udf89 New Referral!\
+\
+You earned $${bonus.toFixed(2)} bonus!\
+Total referrals: ${(referrer.referrals?.length || 0) + 1}`
+                    );
+                }
+            } catch (error) {
+                console.error('Error processing referral bonus:', error);
+            }
+        }
+
+        function loadUserData() {
+            document.getElementById('userBalance').textContent = currentUser.balance.toFixed(2);
+            document.getElementById('profileName').textContent = currentUser.firstName + ' ' + currentUser.lastName;
+            document.getElementById('profileId').textContent = currentUser.id;
+            document.getElementById('profileAvatar').src = currentUser.photoUrl;
+            document.getElementById('referralLink').textContent = 
+                `http://t.me/Exotix_Robot/myapp?ref=${currentUser.id}`;
             
-            if (!snapshot.exists()) {
-                await set(userRef, {
-                    userId: userId,
-                    balance: 0,
-                    totalDeposits: 0,
-                    totalWithdrawals: 0,
-                    totalEarnings: 0,
-                    referralCode: userId,
-                    referredBy: null,
-                    referrals: [],
-                    referralEarnings: 0,
-                    createdAt: Date.now(),
-                    hasDeposited: false
-                });
+            loadReferralStats();
+        }
+
+        async function loadReferralStats() {
+            try {
+                const referrals = currentUser.referrals || [];
+                document.getElementById('totalReferrals').textContent = referrals.length;
+                document.getElementById('totalReferralEarnings').textContent = 
+                    (currentUser.referralEarnings || 0).toFixed(2);
+            } catch (error) {
+                console.error('Error loading referral stats:', error);
+            }
+        }
+
+        async function loadTradingPlans() {
+            try {
+                const plansRef = window.dbRef(window.db, 'tradingPlans');
+                const snapshot = await window.dbGet(plansRef);
+
+                if (snapshot.exists()) {
+                    tradingPlans = Object.entries(snapshot.val()).map(([id, plan]) => ({
+                        id,
+                        ...plan
+                    }));
+                } else {
+                    // Create default plans
+                    tradingPlans = createDefaultPlans();
+                    for (const plan of tradingPlans) {
+                        const planRef = window.dbPush(window.dbRef(window.db, 'tradingPlans'));
+                        await window.dbSet(planRef, plan);
+                    }
+                }
+
+                renderTradingPlans();
+            } catch (error) {
+                console.error('Error loading trading plans:', error);
+            }
+        }
+
+        function createDefaultPlans() {
+            const pairs = [
+                { pair: 'BTC/USDT', price: 3000, daily: 300, icon: '\u20bf' },
+                { pair: 'ETH/USDT', price: 2000, daily: 200, icon: '\u039e' },
+                { pair: 'BNB/USDT', price: 500, daily: 50, icon: '\ud83d\udd36' },
+                { pair: 'SOL/USDT', price: 400, daily: 40, icon: '\u25ce' },
+                { pair: 'XRP/USDT', price: 300, daily: 30, icon: '\u2715' },
+                { pair: 'ADA/USDT', price: 250, daily: 25, icon: '\u20b3' },
+                { pair: 'DOGE/USDT', price: 200, daily: 20, icon: '\u00d0' },
+                { pair: 'DOT/USDT', price: 350, daily: 35, icon: '\u25cf' },
+                { pair: 'MATIC/USDT', price: 180, daily: 18, icon: '\u2b21' },
+                { pair: 'AVAX/USDT', price: 450, daily: 45, icon: '\ud83d\udd3a' },
+                { pair: 'LINK/USDT', price: 280, daily: 28, icon: '\ud83d\udd17' },
+                { pair: 'UNI/USDT', price: 220, daily: 22, icon: '\ud83e\udd84' },
+                { pair: 'ATOM/USDT', price: 320, daily: 32, icon: '\u269b' },
+                { pair: 'LTC/USDT', price: 150, daily: 15, icon: '\u0141' },
+                { pair: 'TRX/USDT', price: 100, daily: 10, icon: '\u26a1' },
+                { pair: 'APT/USDT', price: 380, daily: 38, icon: '\ud83c\udd70' },
+                { pair: 'ARB/USDT', price: 160, daily: 16, icon: '\ud83d\udd37' },
+                { pair: 'OP/USDT', price: 190, daily: 19, icon: '\ud83d\udd34' },
+                { pair: 'FTM/USDT', price: 120, daily: 12, icon: '\ud83d\udc7b' },
+                { pair: 'NEAR/USDT', price: 240, daily: 24, icon: '\u24c3' }
+            ];
+
+            return pairs.map(p => ({
+                pair: p.pair,
+                price: p.price,
+                dailyEarning: p.daily,
+                duration: 30,
+                minInvestment: 40,
+                icon: p.icon,
+                active: true,
+                color: getRandomGradient()
+            }));
+        }
+
+        function getRandomGradient() {
+            const gradients = [
+                'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+                'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
+                'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+                'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)',
+                'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
+                'linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%)'
+            ];
+            return gradients[Math.floor(Math.random() * gradients.length)];
+        }
+
+        function renderTradingPlans() {
+            const grid = document.getElementById('plansGrid');
+            grid.innerHTML = '';
+
+            tradingPlans.forEach(plan => {
+                const card = document.createElement('div');
+                card.className = 'plan-card';
+                card.style.background = plan.color;
+
+                const userPlan = userTrades.find(t => t.planId === plan.id);
+                const isPurchased = !!userPlan;
+
+                card.innerHTML = `
+                    <div class="plan-header">
+                        <div class="plan-pair">${plan.pair}</div>
+                        <div class="plan-logo">${plan.icon}</div>
+                    </div>
+                    <div class="plan-price">$${plan.price}</div>
+                    <div class="plan-details">
+                        <div class="plan-detail-row">
+                            <span>Daily Earning:</span>
+                            <span style="color: #00D2A0; font-weight: bold;">$${plan.dailyEarning}</span>
+                        </div>
+                        <div class="plan-detail-row">
+                            <span>Duration:</span>
+                            <span>${plan.duration} Days</span>
+                        </div>
+                        <div class="plan-detail-row">
+                            <span>Min Investment:</span>
+                            <span>$${plan.minInvestment}</span>
+                        </div>
+                        <div class="plan-detail-row">
+                            <span>Total Return:</span>
+                            <span style="color: #FDCB6E; font-weight: bold;">$${plan.dailyEarning * plan.duration}</span>
+                        </div>
+                    </div>
+                    <div class="plan-chart" id="chart-${plan.id}"></div>
+                    <button class="buy-button" 
+                            onclick="buyPlan('${plan.id}')" 
+                            ${isPurchased ? 'disabled' : ''}>
+                        ${isPurchased ? '\u2713 PURCHASED' : '\ud83d\uded2 BUY NOW'}
+                    </button>
+                `;
+
+                grid.appendChild(card);
+
+                // Generate simple chart
+                setTimeout(() => generateMiniChart(`chart-${plan.id}`), 100);
+            });
+        }
+
+        function generateMiniChart(elementId) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+
+            const canvas = document.createElement('canvas');
+            canvas.className = 'chart-canvas';
+            element.appendChild(canvas);
+
+            const ctx = canvas.getContext('2d');
+            canvas.width = element.offsetWidth;
+            canvas.height = element.offsetHeight;
+
+            // Generate random price data
+            const points = 50;
+            const data = [];
+            let price = 100;
+            for (let i = 0; i < points; i++) {
+                price += (Math.random() - 0.5) * 10;
+                data.push(price);
             }
 
-            // Listen to balance changes
-            onValue(userRef, (snapshot) => {
-                if (snapshot.exists()) {
-                    const userData = snapshot.val();
-                    document.getElementById('userBalance').textContent = '$' + (userData.balance || 0).toFixed(2);
-                    window.userData = userData;
+            // Draw chart
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+
+            const xStep = canvas.width / (points - 1);
+            const yMin = Math.min(...data);
+            const yMax = Math.max(...data);
+            const yRange = yMax - yMin;
+
+            data.forEach((value, index) => {
+                const x = index * xStep;
+                const y = canvas.height - ((value - yMin) / yRange) * canvas.height;
+                
+                if (index === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
                 }
             });
 
-            loadPlans();
-            loadActiveTrades();
-            loadReferralData();
-            loadTasks();
+            ctx.stroke();
+
+            // Add gradient fill
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, 'rgba(255, 255, 255, 0.2)');
+            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            ctx.fillStyle = gradient;
+            ctx.lineTo(canvas.width, canvas.height);
+            ctx.lineTo(0, canvas.height);
+            ctx.closePath();
+            ctx.fill();
         }
 
-        // Trading Plans Data
-        const tradingPlans = [
-            { pair: 'BTC/USDT', price: 3000, dailyEarning: 300, duration: 30, minInvest: 40 },
-            { pair: 'ETH/USDT', price: 2000, dailyEarning: 200, duration: 30, minInvest: 40 },
-            { pair: 'BNB/USDT', price: 1500, dailyEarning: 150, duration: 30, minInvest: 40 },
-            { pair: 'SOL/USDT', price: 1200, dailyEarning: 120, duration: 30, minInvest: 40 },
-            { pair: 'ADA/USDT', price: 1000, dailyEarning: 100, duration: 30, minInvest: 40 },
-            { pair: 'DOT/USDT', price: 900, dailyEarning: 90, duration: 30, minInvest: 40 },
-            { pair: 'AVAX/USDT', price: 800, dailyEarning: 80, duration: 30, minInvest: 40 },
-            { pair: 'MATIC/USDT', price: 700, dailyEarning: 70, duration: 30, minInvest: 40 },
-            { pair: 'LINK/USDT', price: 600, dailyEarning: 60, duration: 30, minInvest: 40 },
-            { pair: 'UNI/USDT', price: 500, dailyEarning: 50, duration: 30, minInvest: 40 },
-            { pair: 'ATOM/USDT', price: 450, dailyEarning: 45, duration: 30, minInvest: 40 },
-            { pair: 'XRP/USDT', price: 400, dailyEarning: 40, duration: 30, minInvest: 40 },
-            { pair: 'LTC/USDT', price: 350, dailyEarning: 35, duration: 30, minInvest: 40 },
-            { pair: 'ALGO/USDT', price: 300, dailyEarning: 30, duration: 30, minInvest: 40 },
-            { pair: 'VET/USDT', price: 250, dailyEarning: 25, duration: 30, minInvest: 40 },
-            { pair: 'FTM/USDT', price: 200, dailyEarning: 20, duration: 30, minInvest: 40 },
-            { pair: 'NEAR/USDT', price: 180, dailyEarning: 18, duration: 30, minInvest: 40 },
-            { pair: 'SAND/USDT', price: 150, dailyEarning: 15, duration: 30, minInvest: 40 },
-            { pair: 'MANA/USDT', price: 120, dailyEarning: 12, duration: 30, minInvest: 40 },
-            { pair: 'DOGE/USDT', price: 100, dailyEarning: 10, duration: 30, minInvest: 40 }
-        ];
-
-        // Load trading plans
-        async function loadPlans() {
-            const plansGrid = document.getElementById('plansGrid');
-            plansGrid.innerHTML = '';
-
-            // Get user's purchased plans
-            const userTradesRef = ref(database, `trades/${userId}`);
-            const tradesSnapshot = await get(userTradesRef);
-            const purchasedPlans = tradesSnapshot.exists() ? Object.keys(tradesSnapshot.val()) : [];
-
-            for (let i = 0; i < tradingPlans.length; i++) {
-                const plan = tradingPlans[i];
-                const planId = `plan_${i}`;
-                const isPurchased = purchasedPlans.includes(planId);
-
-                // Simulate price change
-                const priceChange = (Math.random() * 10 - 5).toFixed(2);
-                const changeClass = priceChange >= 0 ? 'var(--success-color)' : 'var(--danger-color)';
-
-                const planCard = document.createElement('div');
-                planCard.className = 'plan-card';
-                planCard.innerHTML = `
-                    <div class="plan-header">
-                        <div class="plan-pair">${plan.pair}</div>
-                        <div class="plan-badge">Active</div>
-                    </div>
-                    <div class="plan-chart">
-                        <div>
-                            <div class="plan-price">$${plan.price.toFixed(2)}</div>
-                            <div class="price-change" style="color: ${changeClass}">
-                                ${priceChange >= 0 ? '+' : ''}${priceChange}%
-                            </div>
-                        </div>
-                    </div>
-                    <div class="plan-details">
-                        <div class="detail-row">
-                            <span class="detail-label">Investment</span>
-                            <span class="detail-value">$${plan.price.toFixed(2)}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Daily Earning</span>
-                            <span class="detail-value" style="color: var(--success-color)">$${plan.dailyEarning.toFixed(2)}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Duration</span>
-                            <span class="detail-value">${plan.duration} Days</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Total Return</span>
-                            <span class="detail-value" style="color: var(--success-color)">$${(plan.dailyEarning * plan.duration).toFixed(2)}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Min. Investment</span>
-                            <span class="detail-value">$${plan.minInvest.toFixed(2)}</span>
-                        </div>
-                    </div>
-                    <button class="buy-button" ${isPurchased ? 'disabled' : ''} onclick="buyPlan('${planId}', ${i})">
-                        ${isPurchased ? 'Purchased' : 'Buy Plan'}
-                    </button>
-                `;
-                plansGrid.appendChild(planCard);
-            }
-        }
-
-        // Buy plan
-        window.buyPlan = async function(planId, planIndex) {
-            const plan = tradingPlans[planIndex];
-            
-            if (window.userData.balance < plan.price) {
-                showNotification('Insufficient balance!', 'error');
-                return;
-            }
-
-            showLoading(true);
-
+        async function buyPlan(planId) {
             try {
+                const plan = tradingPlans.find(p => p.id === planId);
+                if (!plan) return;
+
+                if (currentUser.balance < plan.price) {
+                    showNotification('Insufficient balance! Please deposit first.', 'error');
+                    return;
+                }
+
+                // Check if already purchased
+                const existingTrade = userTrades.find(t => t.planId === planId);
+                if (existingTrade) {
+                    showNotification('You have already purchased this plan!', 'warning');
+                    return;
+                }
+
                 // Deduct balance
-                const newBalance = window.userData.balance - plan.price;
-                await update(ref(database, `users/${userId}`), {
+                const newBalance = currentUser.balance - plan.price;
+                await window.dbUpdate(window.dbRef(window.db, `users/${currentUser.id}`), {
                     balance: newBalance
                 });
 
                 // Create trade
-                const tradeData = {
+                const trade = {
+                    userId: currentUser.id,
                     planId: planId,
-                    pair: plan.pair,
+                    planName: plan.pair,
                     investment: plan.price,
                     dailyEarning: plan.dailyEarning,
                     duration: plan.duration,
@@ -1517,197 +1418,296 @@
                     lastClaimTime: Date.now(),
                     nextClaimTime: Date.now() + (24 * 60 * 60 * 1000),
                     purchaseDate: Date.now(),
-                    status: 'active'
+                    active: true
                 };
 
-                await set(ref(database, `trades/${userId}/${planId}`), tradeData);
+                const tradeRef = window.dbPush(window.dbRef(window.db, `trades/${currentUser.id}`));
+                await window.dbSet(tradeRef, trade);
 
-                // Add activity
-                await push(ref(database, `activities/${userId}`), {
-                    type: 'purchase',
-                    description: `Purchased ${plan.pair} plan`,
-                    amount: plan.price,
-                    timestamp: Date.now()
-                });
+                // Update user balance locally
+                currentUser.balance = newBalance;
+                document.getElementById('userBalance').textContent = newBalance.toFixed(2);
 
                 // Send Telegram notification
-                await sendTelegramNotification(
-                    `🎉 <b>Plan Purchased Successfully!</b>\n\n` +
-                    `💼 Plan: ${plan.pair}\n` +
-                    `💰 Investment: $${plan.price.toFixed(2)}\n` +
-                    `📈 Daily Earning: $${plan.dailyEarning.toFixed(2)}\n` +
-                    `⏱ Duration: ${plan.duration} days\n` +
-                    `💵 New Balance: $${newBalance.toFixed(2)}`
+                await sendTelegramNotification(currentUser.id, 
+                    `\u2705 Plan Purchased Successfully!\
+\
+` +
+                    `Plan: ${plan.pair}\
+` +
+                    `Investment: $${plan.price}\
+` +
+                    `Daily Earning: $${plan.dailyEarning}\
+` +
+                    `Duration: ${plan.duration} days\
+\
+` +
+                    `Your first claim will be available in 24 hours!`
                 );
 
-                showNotification('Plan purchased successfully!', 'success');
-                loadPlans();
-                loadActiveTrades();
+                showNotification('Plan purchased successfully! \ud83c\udf89', 'success');
+                
+                // Reload data
+                await loadUserTrades();
+                renderTradingPlans();
+
             } catch (error) {
-                console.error('Purchase error:', error);
-                showNotification('Purchase failed. Please try again.', 'error');
+                console.error('Error buying plan:', error);
+                showNotification('Error purchasing plan', 'error');
             }
+        }
 
-            showLoading(false);
-        };
+        async function loadUserTrades() {
+            try {
+                const tradesRef = window.dbRef(window.db, `trades/${currentUser.id}`);
+                const snapshot = await window.dbGet(tradesRef);
 
-        // Load active trades
-        async function loadActiveTrades() {
-            const activeTrades = document.getElementById('activeTrades');
-            const tradesRef = ref(database, `trades/${userId}`);
-            const snapshot = await get(tradesRef);
+                userTrades = [];
+                if (snapshot.exists()) {
+                    Object.entries(snapshot.val()).forEach(([id, trade]) => {
+                        userTrades.push({ id, ...trade });
+                    });
+                }
 
-            if (!snapshot.exists()) {
-                activeTrades.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-briefcase"></i>
-                        <p>No active trades yet</p>
-                        <p style="font-size: 14px;">Purchase a plan to start earning!</p>
+                renderUserTrades();
+            } catch (error) {
+                console.error('Error loading user trades:', error);
+            }
+        }
+
+        function renderUserTrades() {
+            const container = document.getElementById('tradesContainer');
+            
+            if (userTrades.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 50px; color: var(--text-secondary);">
+                        <div style="font-size: 64px; margin-bottom: 20px;">\ud83d\udcca</div>
+                        <h3>No Active Trades</h3>
+                        <p>Purchase a trading plan to get started!</p>
                     </div>
                 `;
                 return;
             }
 
-            activeTrades.innerHTML = '';
-            const trades = snapshot.val();
-
-            for (const [tradeId, trade] of Object.entries(trades)) {
-                if (trade.status !== 'active') continue;
+            container.innerHTML = '';
+            userTrades.forEach(trade => {
+                const plan = tradingPlans.find(p => p.id === trade.planId);
+                if (!plan) return;
 
                 const now = Date.now();
                 const canClaim = now >= trade.nextClaimTime;
                 const timeUntilClaim = trade.nextClaimTime - now;
-                const progress = ((trade.duration - trade.daysRemaining) / trade.duration) * 100;
-
-                const tradeCard = document.createElement('div');
-                tradeCard.className = 'trade-card';
-                tradeCard.innerHTML = `
+                
+                const card = document.createElement('div');
+                card.className = 'trade-card';
+                card.innerHTML = `
                     <div class="trade-header">
                         <div>
-                            <div style="font-size: 20px; font-weight: bold; color: var(--primary-color);">${trade.pair}</div>
-                            <div style="color: var(--text-secondary); font-size: 14px;">Investment: $${trade.investment.toFixed(2)}</div>
+                            <h3>${trade.planName}</h3>
+                            <p style="color: var(--text-secondary); font-size: 14px;">
+                                Investment: $${trade.investment}
+                            </p>
                         </div>
                         <div style="text-align: right;">
-                            <div style="font-size: 18px; font-weight: bold; color: var(--success-color);">$${trade.totalEarned.toFixed(2)}</div>
-                            <div style="color: var(--text-secondary); font-size: 14px;">Total Earned</div>
+                            <div style="color: var(--secondary); font-weight: bold; font-size: 20px;">
+                                $${trade.totalEarned.toFixed(2)}
+                            </div>
+                            <div style="color: var(--text-secondary); font-size: 12px;">
+                                Total Earned
+                            </div>
                         </div>
                     </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Daily Earning</span>
-                        <span class="detail-value" style="color: var(--success-color)">$${trade.dailyEarning.toFixed(2)}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Days Remaining</span>
-                        <span class="detail-value">${trade.daysRemaining} / ${trade.duration}</span>
-                    </div>
-                    <div class="countdown-timer">
-                        <div style="font-size: 14px; margin-bottom: 5px;">Next Claim In</div>
-                        <div class="timer-display" id="timer_${tradeId}">
-                            ${canClaim ? 'Ready to Claim!' : formatTime(timeUntilClaim)}
+
+                    <div class="plan-details">
+                        <div class="plan-detail-row">
+                            <span>Daily Earning:</span>
+                            <span style="color: var(--secondary);">$${trade.dailyEarning}</span>
+                        </div>
+                        <div class="plan-detail-row">
+                            <span>Days Remaining:</span>
+                            <span>${trade.daysRemaining} / ${trade.duration}</span>
                         </div>
                     </div>
-                    <div class="progress-bar-3d">
-                        <div class="progress-fill" style="width: ${progress}%"></div>
+
+                    <div class="countdown-container">
+                        <div style="color: var(--text-secondary); margin-bottom: 5px;">
+                            ${canClaim ? '\u2705 Ready to Claim!' : '\u23f0 Next Claim In'}
+                        </div>
+                        <div class="countdown-timer" id="countdown-${trade.id}">
+                            ${canClaim ? 'CLAIM NOW' : formatTime(timeUntilClaim)}
+                        </div>
+                        <div class="progress-bar-3d">
+                            <div class="progress-fill-3d" style="width: ${canClaim ? 100 : ((24*60*60*1000 - timeUntilClaim) / (24*60*60*1000)) * 100}%"></div>
+                        </div>
                     </div>
-                    <button class="claim-button" id="claim_${tradeId}" ${!canClaim ? 'disabled' : ''} onclick="claimEarnings('${tradeId}')">
-                        ${canClaim ? 'Claim $' + trade.dailyEarning.toFixed(2) : 'Claim Available Soon'}
+
+                    <button class="claim-button" 
+                            onclick="claimEarnings('${trade.id}')"
+                            ${!canClaim ? 'disabled' : ''}>
+                        ${canClaim ? '\ud83d\udcb0 CLAIM $' + trade.dailyEarning : '\u23f3 CLAIM LOCKED'}
                     </button>
                 `;
-                activeTrades.appendChild(tradeCard);
 
-                // Update timer
+                container.appendChild(card);
+
+                // Start countdown
                 if (!canClaim) {
-                    setInterval(() => {
-                        const remaining = trade.nextClaimTime - Date.now();
-                        if (remaining <= 0) {
-                            document.getElementById(`timer_${tradeId}`).textContent = 'Ready to Claim!';
-                            document.getElementById(`claim_${tradeId}`).disabled = false;
-                            document.getElementById(`claim_${tradeId}`).textContent = 'Claim $' + trade.dailyEarning.toFixed(2);
-                        } else {
-                            document.getElementById(`timer_${tradeId}`).textContent = formatTime(remaining);
-                        }
-                    }, 1000);
+                    startCountdown(trade.id, timeUntilClaim);
                 }
-            }
+            });
         }
 
-        // Claim earnings
-        window.claimEarnings = async function(tradeId) {
-            showLoading(true);
+        function startCountdown(tradeId, duration) {
+            const element = document.getElementById(`countdown-${tradeId}`);
+            if (!element) return;
 
-            try {
-                const tradeRef = ref(database, `trades/${userId}/${tradeId}`);
-                const snapshot = await get(tradeRef);
-                const trade = snapshot.val();
-
-                const newBalance = window.userData.balance + trade.dailyEarning;
-                const newTotalEarned = trade.totalEarned + trade.dailyEarning;
-                const newDaysRemaining = trade.daysRemaining - 1;
-
-                // Update balance
-                await update(ref(database, `users/${userId}`), {
-                    balance: newBalance,
-                    totalEarnings: (window.userData.totalEarnings || 0) + trade.dailyEarning
-                });
-
-                // Update trade
-                if (newDaysRemaining <= 0) {
-                    await update(tradeRef, {
-                        status: 'completed',
-                        totalEarned: newTotalEarned,
-                        completedAt: Date.now()
-                    });
+            let remaining = duration;
+            const interval = setInterval(() => {
+                remaining -= 1000;
+                if (remaining <= 0) {
+                    clearInterval(interval);
+                    loadUserTrades(); // Reload to show claim button
+                    
+                    // Send notification
+                    const trade = userTrades.find(t => t.id === tradeId);
+                    if (trade) {
+                        sendTelegramNotification(currentUser.id,
+                            `\u23f0 Time to Claim!\
+\
+` +
+                            `Your ${trade.planName} earnings are ready!\
+` +
+                            `Amount: $${trade.dailyEarning}\
+\
+` +
+                            `Click to claim your rewards now!`
+                        );
+                    }
                 } else {
-                    await update(tradeRef, {
-                        totalEarned: newTotalEarned,
-                        daysRemaining: newDaysRemaining,
-                        lastClaimTime: Date.now(),
-                        nextClaimTime: Date.now() + (24 * 60 * 60 * 1000)
-                    });
+                    element.textContent = formatTime(remaining);
                 }
+            }, 1000);
+        }
 
-                // Add activity
-                await push(ref(database, `activities/${userId}`), {
-                    type: 'claim',
-                    description: `Claimed earnings from ${trade.pair}`,
-                    amount: trade.dailyEarning,
-                    timestamp: Date.now()
-                });
-
-                // Send Telegram notification
-                await sendTelegramNotification(
-                    `💰 <b>Earnings Claimed!</b>\n\n` +
-                    `💼 Plan: ${trade.pair}\n` +
-                    `💵 Amount: $${trade.dailyEarning.toFixed(2)}\n` +
-                    `📊 Total Earned: $${newTotalEarned.toFixed(2)}\n` +
-                    `💳 New Balance: $${newBalance.toFixed(2)}\n` +
-                    `⏱ Days Remaining: ${newDaysRemaining}`
-                );
-
-                showNotification('Earnings claimed successfully!', 'success');
-                loadActiveTrades();
-            } catch (error) {
-                console.error('Claim error:', error);
-                showNotification('Claim failed. Please try again.', 'error');
-            }
-
-            showLoading(false);
-        };
-
-        // Format time
         function formatTime(ms) {
             const hours = Math.floor(ms / (1000 * 60 * 60));
             const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((ms % (1000 * 60)) / 1000);
-            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
         }
 
-        // Deposit functions
-        window.showDeposit = function() {
-            showSection('depositForm');
-        };
+        async function claimEarnings(tradeId) {
+            try {
+                const trade = userTrades.find(t => t.id === tradeId);
+                if (!trade) return;
 
-        window.initiateDeposit = function() {
+                const now = Date.now();
+                if (now < trade.nextClaimTime) {
+                    showNotification('Claim not available yet!', 'warning');
+                    return;
+                }
+
+                // Update trade
+                const newTotalEarned = trade.totalEarned + trade.dailyEarning;
+                const newDaysRemaining = trade.daysRemaining - 1;
+                const newBalance = currentUser.balance + trade.dailyEarning;
+
+                await window.dbUpdate(window.dbRef(window.db, `trades/${currentUser.id}/${tradeId}`), {
+                    totalEarned: newTotalEarned,
+                    daysRemaining: newDaysRemaining,
+                    lastClaimTime: now,
+                    nextClaimTime: now + (24 * 60 * 60 * 1000),
+                    active: newDaysRemaining > 0
+                });
+
+                // Update user balance
+                await window.dbUpdate(window.dbRef(window.db, `users/${currentUser.id}`), {
+                    balance: newBalance,
+                    totalEarnings: (currentUser.totalEarnings || 0) + trade.dailyEarning
+                });
+
+                // Process referral commission
+                if (currentUser.referredBy) {
+                    await processReferralCommission(currentUser.referredBy, trade.dailyEarning);
+                }
+
+                currentUser.balance = newBalance;
+                document.getElementById('userBalance').textContent = newBalance.toFixed(2);
+
+                // Send notification
+                await sendTelegramNotification(currentUser.id,
+                    `\ud83d\udcb0 Earnings Claimed!\
+\
+` +
+                    `Amount: $${trade.dailyEarning}\
+` +
+                    `Plan: ${trade.planName}\
+` +
+                    `New Balance: $${newBalance.toFixed(2)}\
+` +
+                    `Days Remaining: ${newDaysRemaining}\
+\
+` +
+                    `${newDaysRemaining > 0 ? 'Next claim available in 24 hours!' : 'Plan completed! \ud83c\udf89'}`
+                );
+
+                showNotification(`Claimed $${trade.dailyEarning}! \ud83c\udf89`, 'success');
+                
+                await loadUserTrades();
+
+            } catch (error) {
+                console.error('Error claiming earnings:', error);
+                showNotification('Error claiming earnings', 'error');
+            }
+        }
+
+        async function processReferralCommission(referrerId, amount) {
+            try {
+                const commission = amount * 0.20; // 20% commission
+                const referrerRef = window.dbRef(window.db, `users/${referrerId}`);
+                const snapshot = await window.dbGet(referrerRef);
+
+                if (snapshot.exists()) {
+                    const referrer = snapshot.val();
+                    await window.dbUpdate(referrerRef, {
+                        balance: (referrer.balance || 0) + commission,
+                        referralEarnings: (referrer.referralEarnings || 0) + commission
+                    });
+
+                    // Send notification
+                    await sendTelegramNotification(referrerId,
+                        `\ud83d\udcb5 Referral Commission!\
+\
+` +
+                        `You earned $${commission.toFixed(2)} from your referral's trade!\
+` +
+                        `Total referral earnings: $${((referrer.referralEarnings || 0) + commission).toFixed(2)}`
+                    );
+                }
+            } catch (error) {
+                console.error('Error processing referral commission:', error);
+            }
+        }
+
+        // Wallet Functions
+        function showDeposit() {
+            const content = document.getElementById('walletContent');
+            content.innerHTML = `
+                <button class="back-button" onclick="resetWallet()">\u2190 Back</button>
+                <div class="form-container">
+                    <h3 style="margin-bottom: 20px;">\ud83d\udcb3 Deposit USDT</h3>
+                    <div class="form-group">
+                        <label class="form-label">Enter Amount (Min: $30)</label>
+                        <input type="number" class="form-input" id="depositAmount" min="30" placeholder="30.00">
+                    </div>
+                    <button class="submit-button" onclick="processDeposit()">
+                        Continue to Payment
+                    </button>
+                </div>
+            `;
+        }
+
+        async function processDeposit() {
             const amount = parseFloat(document.getElementById('depositAmount').value);
             
             if (!amount || amount < 30) {
@@ -1715,81 +1715,163 @@
                 return;
             }
 
-            document.getElementById('depositAmountDisplay').value = '$' + amount.toFixed(2);
-            document.getElementById('depositMemo').value = `ExotixDP_${userId}`;
-            
-            // Start 15-minute timer
-            let timeLeft = 15 * 60;
-            const timerInterval = setInterval(() => {
-                timeLeft--;
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                document.getElementById('depositTimer').textContent = 
-                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
+            const userId = currentUser.id;
+            const memo = `ExotixDP_${userId}`;
+            const address = 'UQBWOgFgB4B8qBCo8CNjDUNAtvUSosw4v7v9gkt0GVOaNLSz';
+
+            const content = document.getElementById('walletContent');
+            content.innerHTML = `
+                <button class="back-button" onclick="showDeposit()">\u2190 Back</button>
+                <div class="form-container">
+                    <h3 style="margin-bottom: 20px;">\ud83d\udcb3 Complete Deposit</h3>
+                    
+                    <div class="timer-display" id="depositTimer">15:00</div>
+
+                    <div class="qr-container">
+                        <img src="https://i.postimg.cc/g2mgknm3/Screenshot-2025-10-17-16-28-28-211-com-ton-keeper-edit.jpg" 
+                             alt="QR Code" class="qr-image">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Network</label>
+                        <div class="copy-box">
+                            <span class="copy-text">TON</span>
+                            <button class="copy-button" onclick="copyText('TON')">\ud83d\udccb</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Address</label>
+                        <div class="copy-box">
+                            <span class="copy-text">${address}</span>
+                            <button class="copy-button" onclick="copyText('${address}')">\ud83d\udccb</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Amount</label>
+                        <div class="copy-box">
+                            <span class="copy-text">$${amount.toFixed(2)}</span>
+                            <button class="copy-button" onclick="copyText('${amount}')">\ud83d\udccb</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Memo/Comment (Required)</label>
+                        <div class="copy-box">
+                            <span class="copy-text">${memo}</span>
+                            <button class="copy-button" onclick="copyText('${memo}')">\ud83d\udccb</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Transaction Hash</label>
+                        <input type="text" class="form-input" id="txHash" placeholder="Enter transaction hash">
+                    </div>
+
+                    <button class="submit-button" onclick="submitDeposit(${amount})">
+                        Confirm Deposit
+                    </button>
+                </div>
+            `;
+
+            // Start 15 minute timer
+            startDepositTimer(15 * 60);
+        }
+
+        function startDepositTimer(seconds) {
+            const timerElement = document.getElementById('depositTimer');
+            if (!timerElement) return;
+
+            let remaining = seconds;
+            const interval = setInterval(() => {
+                remaining--;
+                const mins = Math.floor(remaining / 60);
+                const secs = remaining % 60;
+                timerElement.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+                if (remaining <= 0) {
+                    clearInterval(interval);
                     showNotification('Deposit time expired. Please try again.', 'warning');
-                    showSection('depositForm');
+                    showDeposit();
                 }
             }, 1000);
+        }
 
-            showSection('depositDetails');
-        };
-
-        window.submitDeposit = async function() {
-            const amount = parseFloat(document.getElementById('depositAmountDisplay').value.replace('$', ''));
-            const txHash = document.getElementById('depositTxHash').value.trim();
-
+        async function submitDeposit(amount) {
+            const txHash = document.getElementById('txHash').value.trim();
+            
             if (!txHash) {
                 showNotification('Please enter transaction hash', 'error');
                 return;
             }
 
-            showLoading(true);
-
             try {
                 const depositData = {
-                    userId: userId,
+                    userId: currentUser.id,
                     amount: amount,
                     txHash: txHash,
-                    address: 'UQBWOgFgB4B8qBCo8CNjDUNAtvUSosw4v7v9gkt0GVOaNLSz',
-                    memo: `ExotixDP_${userId}`,
-                    network: 'TON',
                     status: 'pending',
-                    timestamp: Date.now()
+                    type: 'deposit',
+                    timestamp: Date.now(),
+                    address: 'UQBWOgFgB4B8qBCo8CNjDUNAtvUSosw4v7v9gkt0GVOaNLSz',
+                    memo: `ExotixDP_${currentUser.id}`
                 };
 
-                await push(ref(database, `deposits`), depositData);
-                await push(ref(database, `activities/${userId}`), {
-                    type: 'deposit',
-                    description: 'Deposit request submitted',
-                    amount: amount,
-                    timestamp: Date.now()
-                });
+                const depositRef = window.dbPush(window.dbRef(window.db, 'deposits'));
+                await window.dbSet(depositRef, depositData);
 
-                showNotification('Deposit submitted! Waiting for approval.', 'success');
-                showSection('walletSection');
-                document.getElementById('depositAmount').value = '';
-                document.getElementById('depositTxHash').value = '';
+                // Add to user's transaction history
+                const historyRef = window.dbPush(window.dbRef(window.db, `transactions/${currentUser.id}`));
+                await window.dbSet(historyRef, depositData);
+
+                showNotification('Deposit submitted! Waiting for admin approval.', 'success');
+                resetWallet();
+
             } catch (error) {
-                console.error('Deposit error:', error);
-                showNotification('Deposit submission failed. Please try again.', 'error');
+                console.error('Error submitting deposit:', error);
+                showNotification('Error submitting deposit', 'error');
             }
+        }
 
-            showLoading(false);
-        };
-
-        // Withdraw functions
-        window.showWithdraw = function() {
-            if (!window.userData.hasDeposited) {
-                showNotification('First time deposit required to withdraw', 'warning');
+        function showWithdraw() {
+            if (!currentUser.hasDeposited) {
+                showNotification('First time deposit required to withdraw!', 'error');
                 return;
             }
-            showSection('withdrawForm');
-        };
 
-        window.submitWithdraw = async function() {
+            const content = document.getElementById('walletContent');
+            content.innerHTML = `
+                <button class="back-button" onclick="resetWallet()">\u2190 Back</button>
+                <div class="form-container">
+                    <h3 style="margin-bottom: 20px;">\ud83d\udcb8 Withdraw USDT</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label">USDT TON Address (Required)</label>
+                        <input type="text" class="form-input" id="withdrawAddress" placeholder="Enter your USDT TON address">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Amount (Min: $0.10)</label>
+                        <input type="number" class="form-input" id="withdrawAmount" min="0.10" step="0.01" placeholder="0.10">
+                        <div style="margin-top: 5px; color: var(--text-secondary); font-size: 12px;">
+                            Available: $${currentUser.balance.toFixed(2)}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Memo/Comment (Optional)</label>
+                        <input type="text" class="form-input" id="withdrawMemo" placeholder="Enter memo (optional)">
+                    </div>
+
+                    <button class="submit-button" onclick="submitWithdraw()">
+                        Submit Withdrawal
+                    </button>
+                </div>
+            `;
+        }
+
+        async function submitWithdraw() {
             const address = document.getElementById('withdrawAddress').value.trim();
             const amount = parseFloat(document.getElementById('withdrawAmount').value);
             const memo = document.getElementById('withdrawMemo').value.trim();
@@ -1804,408 +1886,472 @@
                 return;
             }
 
-            if (amount > window.userData.balance) {
+            if (amount > currentUser.balance) {
                 showNotification('Insufficient balance', 'error');
                 return;
             }
 
-            showLoading(true);
-
             try {
                 const withdrawData = {
-                    userId: userId,
+                    userId: currentUser.id,
                     amount: amount,
                     address: address,
                     memo: memo,
-                    network: 'TON',
                     status: 'pending',
+                    type: 'withdraw',
                     timestamp: Date.now()
                 };
 
-                await push(ref(database, `withdrawals`), withdrawData);
-                await push(ref(database, `activities/${userId}`), {
-                    type: 'withdrawal',
-                    description: 'Withdrawal request submitted',
-                    amount: amount,
-                    timestamp: Date.now()
+                const withdrawRef = window.dbPush(window.dbRef(window.db, 'withdrawals'));
+                await window.dbSet(withdrawRef, withdrawData);
+
+                // Add to user's transaction history
+                const historyRef = window.dbPush(window.dbRef(window.db, `transactions/${currentUser.id}`));
+                await window.dbSet(historyRef, withdrawData);
+
+                // Deduct balance temporarily
+                const newBalance = currentUser.balance - amount;
+                await window.dbUpdate(window.dbRef(window.db, `users/${currentUser.id}`), {
+                    balance: newBalance
                 });
 
-                showNotification('Withdrawal submitted! Waiting for approval.', 'success');
-                showSection('walletSection');
-                document.getElementById('withdrawAddress').value = '';
-                document.getElementById('withdrawAmount').value = '';
-                document.getElementById('withdrawMemo').value = '';
+                currentUser.balance = newBalance;
+                document.getElementById('userBalance').textContent = newBalance.toFixed(2);
+
+                showNotification('Withdrawal submitted! Waiting for admin approval.', 'success');
+                resetWallet();
+
             } catch (error) {
-                console.error('Withdrawal error:', error);
-                showNotification('Withdrawal submission failed. Please try again.', 'error');
+                console.error('Error submitting withdrawal:', error);
+                showNotification('Error submitting withdrawal', 'error');
             }
-
-            showLoading(false);
-        };
-
-        // History functions
-        window.showHistory = async function() {
-            showSection('historySection');
-            const tbody = document.getElementById('historyTableBody');
-            tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Loading...</td></tr>';
-
-            try {
-                // Load deposits
-                const depositsRef = query(ref(database, 'deposits'), orderByChild('userId'), equalTo(userId));
-                const depositsSnapshot = await get(depositsRef);
-                
-                // Load withdrawals
-                const withdrawalsRef = query(ref(database, 'withdrawals'), orderByChild('userId'), equalTo(userId));
-                const withdrawalsSnapshot = await get(withdrawalsRef);
-
-                const transactions = [];
-
-                if (depositsSnapshot.exists()) {
-                    Object.values(depositsSnapshot.val()).forEach(deposit => {
-                        transactions.push({
-                            type: 'Deposit',
-                            amount: deposit.amount,
-                            status: deposit.status,
-                            timestamp: deposit.timestamp
-                        });
-                    });
-                }
-
-                if (withdrawalsSnapshot.exists()) {
-                    Object.values(withdrawalsSnapshot.val()).forEach(withdrawal => {
-                        transactions.push({
-                            type: 'Withdrawal',
-                            amount: withdrawal.amount,
-                            status: withdrawal.status,
-                            timestamp: withdrawal.timestamp
-                        });
-                    });
-                }
-
-                transactions.sort((a, b) => b.timestamp - a.timestamp);
-
-                if (transactions.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">No transactions yet</td></tr>';
-                    return;
-                }
-
-                tbody.innerHTML = transactions.map(tx => `
-                    <tr>
-                        <td>${tx.type}</td>
-                        <td>$${tx.amount.toFixed(2)}</td>
-                        <td><span class="status-badge status-${tx.status}">${tx.status}</span></td>
-                        <td>${new Date(tx.timestamp).toLocaleString()}</td>
-                    </tr>
-                `).join('');
-            } catch (error) {
-                console.error('History error:', error);
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Error loading history</td></tr>';
-            }
-        };
-
-        // Activities function
-        window.showActivities = async function() {
-            showSection('activitiesSection');
-            const tbody = document.getElementById('activitiesTableBody');
-            tbody.innerHTML = '<tr><td colspan="3" style="text-align: center;">Loading...</td></tr>';
-
-            try {
-                const activitiesRef = ref(database, `activities/${userId}`);
-                const snapshot = await get(activitiesRef);
-
-                if (!snapshot.exists()) {
-                    tbody.innerHTML = '<tr><td colspan="3" style="text-align: center;">No activities yet</td></tr>';
-                    return;
-                }
-
-                const activities = Object.values(snapshot.val()).sort((a, b) => b.timestamp - a.timestamp);
-
-                tbody.innerHTML = activities.map(activity => `
-                    <tr>
-                        <td>${activity.type}</td>
-                        <td>${activity.description}</td>
-                        <td>${new Date(activity.timestamp).toLocaleString()}</td>
-                    </tr>
-                `).join('');
-            } catch (error) {
-                console.error('Activities error:', error);
-                tbody.innerHTML = '<tr><td colspan="3" style="text-align: center;">Error loading activities</td></tr>';
-            }
-        };
-
-        // Referral functions
-        async function loadReferralData() {
-            const referralLink = `http://t.me/Exotix_Robot/myapp?start=${userId}`;
-            document.getElementById('referralLink').value = referralLink;
-
-            const userRef = ref(database, `users/${userId}`);
-            onValue(userRef, (snapshot) => {
-                if (snapshot.exists()) {
-                    const data = snapshot.val();
-                    document.getElementById('totalReferrals').textContent = (data.referrals || []).length;
-                    document.getElementById('totalReferralEarnings').textContent = '$' + (data.referralEarnings || 0).toFixed(2);
-                }
-            });
         }
 
-        window.shareOnTelegram = function() {
-            const referralLink = document.getElementById('referralLink').value;
-            const text = `🎁 Join Exotix Trading Platform!\n\n💰 Earn $0.20 for signing up\n📈 Get 20% commission on all deposits and earnings\n\n${referralLink}`;
-            window.open(`https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent(text)}`, '_blank');
-        };
+        function showHistory() {
+            loadTransactionHistory();
+        }
 
-        window.shareOnTwitter = function() {
-            const referralLink = document.getElementById('referralLink').value;
-            const text = `🎁 Join Exotix Trading Platform! Earn $0.20 for signing up + 20% commission on all deposits and earnings! ${referralLink}`;
-            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
-        };
-
-        window.showReferralList = async function() {
-            const container = document.getElementById('referralListContainer');
-            const list = document.getElementById('referralList');
-            
-            container.style.display = 'block';
-            list.innerHTML = '<div style="text-align: center; padding: 20px;">Loading...</div>';
-
+        async function loadTransactionHistory() {
             try {
-                const userRef = ref(database, `users/${userId}`);
-                const snapshot = await get(userRef);
-                
-                if (!snapshot.exists() || !snapshot.val().referrals || snapshot.val().referrals.length === 0) {
-                    list.innerHTML = '<div class="empty-state"><i class="fas fa-users"></i><p>No referrals yet</p></div>';
+                const historyRef = window.dbRef(window.db, `transactions/${currentUser.id}`);
+                const snapshot = await window.dbGet(historyRef);
+
+                const content = document.getElementById('walletContent');
+                content.innerHTML = `
+                    <button class="back-button" onclick="resetWallet()">\u2190 Back</button>
+                    <h3 style="margin: 20px 0;">\ud83d\udcdc Transaction History</h3>
+                    <div id="historyList"></div>
+                `;
+
+                const historyList = document.getElementById('historyList');
+
+                if (!snapshot.exists()) {
+                    historyList.innerHTML = `
+                        <div style="text-align: center; padding: 50px; color: var(--text-secondary);">
+                            <div style="font-size: 64px; margin-bottom: 20px;">\ud83d\udcdc</div>
+                            <h3>No Transactions Yet</h3>
+                            <p>Your transaction history will appear here</p>
+                        </div>
+                    `;
                     return;
                 }
 
-                const referrals = snapshot.val().referrals;
-                list.innerHTML = '';
+                const transactions = Object.entries(snapshot.val()).map(([id, tx]) => ({
+                    id,
+                    ...tx
+                })).sort((a, b) => b.timestamp - a.timestamp);
 
-                for (const refId of referrals) {
-                    const refUserRef = ref(database, `users/${refId}`);
-                    const refSnapshot = await get(refUserRef);
+                transactions.forEach(tx => {
+                    const item = document.createElement('div');
+                    item.className = 'history-item';
+                    item.innerHTML = `
+                        <div class="history-header">
+                            <div>
+                                <div style="font-weight: bold; margin-bottom: 5px;">
+                                    ${tx.type === 'deposit' ? '\ud83d\udcb3 Deposit' : '\ud83d\udcb8 Withdrawal'}
+                                </div>
+                                <div style="color: var(--text-secondary); font-size: 12px;">
+                                    ${new Date(tx.timestamp).toLocaleString()}
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 20px; font-weight: bold; color: ${tx.type === 'deposit' ? 'var(--secondary)' : 'var(--danger)'};">
+                                    ${tx.type === 'deposit' ? '+' : '-'}$${tx.amount.toFixed(2)}
+                                </div>
+                                <span class="status-badge status-${tx.status}">
+                                    ${tx.status.toUpperCase()}
+                                </span>
+                            </div>
+                        </div>
+                        ${tx.address ? `<div style="margin-top: 10px; font-size: 12px; color: var(--text-secondary);">
+                            Address: ${tx.address.substring(0, 20)}...
+                        </div>` : ''}
+                        ${tx.txHash ? `<div style="margin-top: 5px; font-size: 12px; color: var(--text-secondary);">
+                            TxHash: ${tx.txHash.substring(0, 20)}...
+                        </div>` : ''}
+                    `;
+                    historyList.appendChild(item);
+                });
+
+            } catch (error) {
+                console.error('Error loading history:', error);
+            }
+        }
+
+        function showActivities() {
+            loadActivities();
+        }
+
+        async function loadActivities() {
+            try {
+                const content = document.getElementById('walletContent');
+                content.innerHTML = `
+                    <button class="back-button" onclick="resetWallet()">\u2190 Back</button>
+                    <h3 style="margin: 20px 0;">\u26a1 Recent Activities</h3>
+                    <div id="activitiesList"></div>
+                `;
+
+                const activitiesList = document.getElementById('activitiesList');
+
+                // Combine all activities
+                const activities = [];
+
+                // Add trades
+                userTrades.forEach(trade => {
+                    activities.push({
+                        type: 'trade',
+                        title: `Purchased ${trade.planName}`,
+                        amount: trade.investment,
+                        timestamp: trade.purchaseDate,
+                        icon: '\ud83d\udcca'
+                    });
+                });
+
+                // Add claims
+                const tradesRef = window.dbRef(window.db, `trades/${currentUser.id}`);
+                const tradesSnapshot = await window.dbGet(tradesRef);
+                if (tradesSnapshot.exists()) {
+                    Object.values(tradesSnapshot.val()).forEach(trade => {
+                        if (trade.totalEarned > 0) {
+                            activities.push({
+                                type: 'claim',
+                                title: `Claimed earnings from ${trade.planName}`,
+                                amount: trade.dailyEarning,
+                                timestamp: trade.lastClaimTime,
+                                icon: '\ud83d\udcb0'
+                            });
+                        }
+                    });
+                }
+
+                // Sort by timestamp
+                activities.sort((a, b) => b.timestamp - a.timestamp);
+
+                if (activities.length === 0) {
+                    activitiesList.innerHTML = `
+                        <div style="text-align: center; padding: 50px; color: var(--text-secondary);">
+                            <div style="font-size: 64px; margin-bottom: 20px;">\u26a1</div>
+                            <h3>No Activities Yet</h3>
+                            <p>Your activities will appear here</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                activities.forEach(activity => {
+                    const item = document.createElement('div');
+                    item.className = 'history-item';
+                    item.innerHTML = `
+                        <div class="history-header">
+                            <div>
+                                <div style="font-weight: bold; margin-bottom: 5px;">
+                                    ${activity.icon} ${activity.title}
+                                </div>
+                                <div style="color: var(--text-secondary); font-size: 12px;">
+                                    ${new Date(activity.timestamp).toLocaleString()}
+                                </div>
+                            </div>
+                            <div style="font-size: 20px; font-weight: bold; color: var(--secondary);">
+                                $${activity.amount.toFixed(2)}
+                            </div>
+                        </div>
+                    `;
+                    activitiesList.appendChild(item);
+                });
+
+            } catch (error) {
+                console.error('Error loading activities:', error);
+            }
+        }
+
+        function resetWallet() {
+            document.getElementById('walletContent').innerHTML = '';
+        }
+
+        // Referral Functions
+        function copyReferralLink() {
+            const link = document.getElementById('referralLink').textContent;
+            navigator.clipboard.writeText(link);
+            showNotification('Referral link copied!', 'success');
+        }
+
+        function shareOnTelegram() {
+            const link = document.getElementById('referralLink').textContent;
+            const text = `\ud83d\ude80 Join Exotix Trading Platform!\
+\
+\ud83d\udcb0 Earn $0.20 for each referral\
+\ud83d\udcc8 Get 20% commission on all deposits & earnings\
+\ud83c\udf81 Lifetime passive income!\
+\
+`;
+            const url = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`;
+            window.open(url, '_blank');
+        }
+
+        function shareOnTwitter() {
+            const link = document.getElementById('referralLink').textContent;
+            const text = `\ud83d\ude80 Join Exotix Trading Platform! \ud83d\udcb0 Earn $0.20 per referral + 20% commission! \ud83d\udcc8`;
+            const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(link)}`;
+            window.open(url, '_blank');
+        }
+
+        async function showReferralList() {
+            try {
+                const referralList = document.getElementById('referralList');
+                
+                if (!currentUser.referrals || currentUser.referrals.length === 0) {
+                    referralList.innerHTML = `
+                        <div style="text-align: center; padding: 50px; color: var(--text-secondary); margin-top: 20px;">
+                            <div style="font-size: 64px; margin-bottom: 20px;">\ud83d\udc65</div>
+                            <h3>No Referrals Yet</h3>
+                            <p>Share your referral link to start earning!</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                referralList.innerHTML = '<h3 style="margin: 20px 0;">\ud83d\udc65 My Referrals</h3>';
+
+                for (const refId of currentUser.referrals) {
+                    const refUserRef = window.dbRef(window.db, `users/${refId}`);
+                    const refSnapshot = await window.dbGet(refUserRef);
                     
                     if (refSnapshot.exists()) {
-                        const refData = refSnapshot.val();
-                        const earnings = (refData.totalDeposits || 0) * 0.2 + 0.20;
-                        
+                        const refUser = refSnapshot.val();
+                        const commission = (refUser.totalDeposits || 0) * 0.20;
+
                         const item = document.createElement('div');
                         item.className = 'referral-item';
                         item.innerHTML = `
-                            <div class="referral-avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
+                            <img src="${refUser.photoUrl}" alt="Avatar" class="referral-avatar">
                             <div class="referral-info">
-                                <div class="referral-name">User ${refId.substr(0, 8)}</div>
-                                <div class="referral-earnings">Balance: $${(refData.balance || 0).toFixed(2)}</div>
-                            </div>
-                            <div style="text-align: right;">
-                                <div style="font-weight: bold; color: var(--success-color);">+$${earnings.toFixed(2)}</div>
-                                <div style="font-size: 12px; color: var(--text-secondary);">Your Earnings</div>
+                                <div class="referral-name">${refUser.firstName} ${refUser.lastName}</div>
+                                <div class="referral-earnings">
+                                    Balance: $${(refUser.balance || 0).toFixed(2)} | 
+                                    Your Commission: $${commission.toFixed(2)}
+                                </div>
                             </div>
                         `;
-                        list.appendChild(item);
+                        referralList.appendChild(item);
                     }
                 }
+
             } catch (error) {
-                console.error('Referral list error:', error);
-                list.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--danger-color);">Error loading referrals</div>';
-            }
-        };
-
-        // Tasks functions
-        async function loadTasks() {
-            const tasksGrid = document.getElementById('tasksGrid');
-            tasksGrid.innerHTML = '<div style="text-align: center; padding: 40px;">Loading tasks...</div>';
-
-            try {
-                const tasksRef = ref(database, 'tasks');
-                const snapshot = await get(tasksRef);
-
-                if (!snapshot.exists()) {
-                    tasksGrid.innerHTML = '<div class="empty-state"><i class="fas fa-tasks"></i><p>No tasks available</p></div>';
-                    return;
-                }
-
-                const tasks = snapshot.val();
-                const userTasksRef = ref(database, `userTasks/${userId}`);
-                const userTasksSnapshot = await get(userTasksRef);
-                const completedTasks = userTasksSnapshot.exists() ? Object.keys(userTasksSnapshot.val()) : [];
-
-                tasksGrid.innerHTML = '';
-
-                for (const [taskId, task] of Object.entries(tasks)) {
-                    const isCompleted = completedTasks.includes(taskId);
-                    
-                    const taskCard = document.createElement('div');
-                    taskCard.className = 'task-card';
-                    taskCard.innerHTML = `
-                        <div class="task-icon">
-                            ${task.logo ? `<img src="${task.logo}" alt="Task">` : '<i class="fas fa-tasks"></i>'}
-                        </div>
-                        <div class="task-info">
-                            <div class="task-title">${task.title}</div>
-                            <div class="task-description">${task.description}</div>
-                            <div class="task-reward">Reward: $${task.reward.toFixed(2)}</div>
-                        </div>
-                        <button class="task-button" ${isCompleted ? 'disabled' : ''} onclick="completeTask('${taskId}', '${task.link}', ${task.reward})">
-                            ${isCompleted ? 'Completed' : 'Start Task'}
-                        </button>
-                    `;
-                    tasksGrid.appendChild(taskCard);
-                }
-            } catch (error) {
-                console.error('Tasks error:', error);
-                tasksGrid.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--danger-color);">Error loading tasks</div>';
+                console.error('Error loading referral list:', error);
             }
         }
 
-        window.completeTask = async function(taskId, link, reward) {
-            window.open(link, '_blank');
-            
-            setTimeout(async () => {
-                showLoading(true);
+        // Tasks Functions
+        async function loadTasks() {
+            try {
+                const tasksRef = window.dbRef(window.db, 'tasks');
+                const snapshot = await window.dbGet(tasksRef);
 
-                try {
-                    const newBalance = window.userData.balance + reward;
-                    await update(ref(database, `users/${userId}`), {
-                        balance: newBalance
-                    });
+                const tasksGrid = document.getElementById('tasksGrid');
 
-                    await set(ref(database, `userTasks/${userId}/${taskId}`), {
-                        completedAt: Date.now(),
-                        reward: reward
-                    });
-
-                    await push(ref(database, `activities/${userId}`), {
-                        type: 'task',
-                        description: 'Completed task',
-                        amount: reward,
-                        timestamp: Date.now()
-                    });
-
-                    await sendTelegramNotification(
-                        `✅ <b>Task Completed!</b>\n\n` +
-                        `💰 Reward: $${reward.toFixed(2)}\n` +
-                        `💵 New Balance: $${newBalance.toFixed(2)}`
-                    );
-
-                    showNotification('Task completed! Reward added to balance.', 'success');
-                    loadTasks();
-                } catch (error) {
-                    console.error('Task completion error:', error);
-                    showNotification('Task completion failed. Please try again.', 'error');
+                if (!snapshot.exists()) {
+                    tasksGrid.innerHTML = `
+                        <div style="text-align: center; padding: 50px; color: var(--text-secondary);">
+                            <div style="font-size: 64px; margin-bottom: 20px;">\u2705</div>
+                            <h3>No Tasks Available</h3>
+                            <p>Check back later for new tasks!</p>
+                        </div>
+                    `;
+                    return;
                 }
 
-                showLoading(false);
-            }, 5000);
-        };
+                tasksGrid.innerHTML = '';
+                const tasks = Object.entries(snapshot.val()).map(([id, task]) => ({
+                    id,
+                    ...task
+                }));
 
-        // Redeem code
-        window.redeemCode = async function() {
-            const code = document.getElementById('redeemCode').value.trim();
+                // Get user's completed tasks
+                const userTasksRef = window.dbRef(window.db, `userTasks/${currentUser.id}`);
+                const userTasksSnapshot = await window.dbGet(userTasksRef);
+                const completedTasks = userTasksSnapshot.exists() ? Object.keys(userTasksSnapshot.val()) : [];
+
+                tasks.forEach(task => {
+                    const isCompleted = completedTasks.includes(task.id);
+
+                    const card = document.createElement('div');
+                    card.className = 'task-card';
+                    card.innerHTML = `
+                        <img src="${task.logo || 'https://via.placeholder.com/60'}" alt="Task" class="task-icon">
+                        <div class="task-info">
+                            <div class="task-title">${task.title}</div>
+                            <div class="task-description">${task.description}</div>
+                            <div class="task-reward">Reward: $${task.reward}</div>
+                        </div>
+                        <button class="task-button" 
+                                onclick="completeTask('${task.id}', '${task.link}', ${task.reward})"
+                                ${isCompleted ? 'disabled' : ''}>
+                            ${isCompleted ? '\u2713 Completed' : 'Start Task'}
+                        </button>
+                    `;
+                    tasksGrid.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error('Error loading tasks:', error);
+            }
+        }
+
+        async function completeTask(taskId, link, reward) {
+            try {
+                // Open task link
+                window.open(link, '_blank');
+
+                // Wait for confirmation
+                setTimeout(async () => {
+                    const confirmed = confirm('Have you completed the task?');
+                    if (confirmed) {
+                        // Mark task as completed
+                        await window.dbSet(
+                            window.dbRef(window.db, `userTasks/${currentUser.id}/${taskId}`),
+                            { completedAt: Date.now(), reward: reward }
+                        );
+
+                        // Add reward to balance
+                        const newBalance = currentUser.balance + reward;
+                        await window.dbUpdate(window.dbRef(window.db, `users/${currentUser.id}`), {
+                            balance: newBalance
+                        });
+
+                        currentUser.balance = newBalance;
+                        document.getElementById('userBalance').textContent = newBalance.toFixed(2);
+
+                        showNotification(`Task completed! Earned $${reward}`, 'success');
+                        loadTasks();
+                    }
+                }, 3000);
+
+            } catch (error) {
+                console.error('Error completing task:', error);
+                showNotification('Error completing task', 'error');
+            }
+        }
+
+        // Profile Functions
+        async function redeemCode() {
+            const code = document.getElementById('redeemCode').value.trim().toUpperCase();
             
-            if (code.length !== 8) {
+            if (!code || code.length !== 8) {
                 showNotification('Please enter a valid 8-digit code', 'error');
                 return;
             }
 
-            showLoading(true);
-
             try {
-                const codesRef = ref(database, 'redeemCodes');
-                const snapshot = await get(codesRef);
+                const codesRef = window.dbRef(window.db, 'redeemCodes');
+                const snapshot = await window.dbGet(codesRef);
 
                 if (!snapshot.exists()) {
-                    showNotification('Invalid redemption code', 'error');
-                    showLoading(false);
+                    showNotification('Invalid code', 'error');
                     return;
                 }
 
                 const codes = snapshot.val();
-                let codeData = null;
-                let codeKey = null;
-
-                for (const [key, data] of Object.entries(codes)) {
-                    if (data.code === code && !data.used) {
-                        codeData = data;
-                        codeKey = key;
-                        break;
-                    }
-                }
+                const codeData = Object.entries(codes).find(([id, data]) => data.code === code);
 
                 if (!codeData) {
-                    showNotification('Invalid or already used code', 'error');
-                    showLoading(false);
+                    showNotification('Invalid code', 'error');
                     return;
                 }
 
-                const reward = codeData.amount;
-                const newBalance = window.userData.balance + reward;
+                const [codeId, codeInfo] = codeData;
 
-                await update(ref(database, `users/${userId}`), {
+                if (codeInfo.used) {
+                    showNotification('Code already used', 'error');
+                    return;
+                }
+
+                if (codeInfo.usedBy && codeInfo.usedBy.includes(currentUser.id)) {
+                    showNotification('You have already used this code', 'error');
+                    return;
+                }
+
+                // Calculate random reward
+                const minReward = codeInfo.minReward || 0.10;
+                const maxReward = codeInfo.maxReward || 1.00;
+                const reward = Math.random() * (maxReward - minReward) + minReward;
+                const roundedReward = Math.round(reward * 100) / 100;
+
+                // Update user balance
+                const newBalance = currentUser.balance + roundedReward;
+                await window.dbUpdate(window.dbRef(window.db, `users/${currentUser.id}`), {
                     balance: newBalance
                 });
 
-                await update(ref(database, `redeemCodes/${codeKey}`), {
+                // Mark code as used
+                await window.dbUpdate(window.dbRef(window.db, `redeemCodes/${codeId}`), {
                     used: true,
-                    usedBy: userId,
+                    usedBy: [...(codeInfo.usedBy || []), currentUser.id],
                     usedAt: Date.now()
                 });
 
-                await push(ref(database, `activities/${userId}`), {
-                    type: 'redeem',
-                    description: 'Redeemed code',
-                    amount: reward,
-                    timestamp: Date.now()
-                });
-
-                await sendTelegramNotification(
-                    `🎁 <b>Code Redeemed!</b>\n\n` +
-                    `💰 Reward: $${reward.toFixed(2)}\n` +
-                    `💵 New Balance: $${newBalance.toFixed(2)}`
-                );
-
-                showNotification(`Code redeemed! You received $${reward.toFixed(2)}`, 'success');
+                currentUser.balance = newBalance;
+                document.getElementById('userBalance').textContent = newBalance.toFixed(2);
                 document.getElementById('redeemCode').value = '';
+
+                showNotification(`\ud83c\udf89 Redeemed $${roundedReward.toFixed(2)}!`, 'success');
+
             } catch (error) {
-                console.error('Redeem error:', error);
-                showNotification('Redemption failed. Please try again.', 'error');
+                console.error('Error redeeming code:', error);
+                showNotification('Error redeeming code', 'error');
             }
+        }
 
-            showLoading(false);
-        };
+        // Utility Functions
+        function switchSection(section) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
 
-        // Utility functions
-        window.showSection = function(sectionId) {
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(sectionId).classList.add('active');
-
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-
-            const navMap = {
-                'tradeSection': 0,
-                'myTradesSection': 1,
-                'walletSection': 2,
-                'referralsSection': 3,
-                'tasksSection': 4,
-                'profileSection': 5
+            // Show selected section
+            const sectionMap = {
+                'trade': 'tradeSection',
+                'myTrades': 'myTradesSection',
+                'wallet': 'walletSection',
+                'referrals': 'referralsSection',
+                'tasks': 'tasksSection',
+                'profile': 'profileSection'
             };
 
-            if (navMap[sectionId] !== undefined) {
-                document.querySelectorAll('.nav-item')[navMap[sectionId]].classList.add('active');
+            document.getElementById(sectionMap[section]).classList.add('active');
+            event.currentTarget.classList.add('active');
+
+            // Reset wallet view
+            if (section === 'wallet') {
+                resetWallet();
             }
-        };
+        }
 
-        window.copyText = function(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                showNotification('Copied to clipboard!', 'success');
-            });
-        };
+        function copyText(text) {
+            navigator.clipboard.writeText(text);
+            showNotification('Copied to clipboard!', 'success');
+        }
 
-        window.showNotification = function(message, type = 'success') {
+        function showNotification(message, type = 'success') {
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
             notification.textContent = message;
@@ -2214,14 +2360,52 @@
             setTimeout(() => {
                 notification.remove();
             }, 3000);
-        };
+        }
 
-        window.showLoading = function(show) {
-            document.getElementById('loadingOverlay').classList.toggle('active', show);
-        };
+        async function sendTelegramNotification(userId, message) {
+            try {
+                const url = `https://api.telegram.org/bot${window.BOT_TOKEN}/sendMessage`;
+                await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: userId,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+            } catch (error) {
+                console.error('Error sending Telegram notification:', error);
+            }
+        }
 
-        // Initialize
-        initializeUser();
+        function setupRealtimeListeners() {
+            // Listen for balance updates
+            const userRef = window.dbRef(window.db, `users/${currentUser.id}`);
+            window.dbOnValue(userRef, (snapshot) => {
+                if (snapshot.exists()) {
+                    const userData = snapshot.val();
+                    currentUser = userData;
+                    document.getElementById('userBalance').textContent = userData.balance.toFixed(2);
+                }
+            });
+
+            // Listen for trade updates
+            const tradesRef = window.dbRef(window.db, `trades/${currentUser.id}`);
+            window.dbOnValue(tradesRef, (snapshot) => {
+                loadUserTrades();
+            });
+        }
+
+        // Initialize on load
+        window.addEventListener('load', () => {
+            // Add loading animation
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
     </script>
 </body>
 </html>
