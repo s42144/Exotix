@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exotix - Admin Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -12,207 +13,54 @@
         }
 
         :root {
-            --primary: #6C63FF;
-            --secondary: #4CAF50;
-            --danger: #FF5252;
-            --warning: #FFC107;
-            --dark: #1a1a2e;
-            --darker: #16213e;
-            --light: #f8f9fa;
-            --card-bg: #ffffff;
-            --text: #333;
-            --text-light: #666;
-            --border: #e0e0e0;
-            --success: #00C853;
-            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: var(--text);
-        }
-
-        .admin-container {
-            display: flex;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: var(--text-primary);
             min-height: 100vh;
         }
 
-        /* Sidebar */
-        .sidebar {
-            width: 280px;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .menu-item {
-            padding: 15px 20px;
-            margin: 5px 0;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            color: var(--text);
-        }
-
-        .menu-item:hover, .menu-item.active {
-            background: var(--gradient);
-            color: white;
-            transform: translateX(5px);
-        }
-
-        .menu-item i {
-            font-size: 20px;
-            width: 25px;
-        }
-
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            margin-left: 280px;
-            padding: 30px;
-        }
-
-        .content-section {
-            display: none;
-            animation: fadeIn 0.3s;
-        }
-
-        .content-section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Dashboard Stats */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        .stat-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 15px;
+        /* Login Screen */
+        .login-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
-            margin-bottom: 15px;
+            min-height: 100vh;
+            padding: 20px;
         }
 
-        .stat-icon.blue { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-        .stat-icon.green { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
-        .stat-icon.orange { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
-        .stat-icon.purple { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; }
-
-        .stat-value {
-            font-size: 32px;
-            font-weight: bold;
-            color: var(--text);
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            color: var(--text-light);
-            font-size: 14px;
-        }
-
-        /* Cards */
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--border);
-        }
-
-        .card-title {
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--text);
-        }
-
-        /* Tables */
-        .table-container {
-            overflow-x: auto;
-        }
-
-        table {
+        .login-box {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
             width: 100%;
-            border-collapse: collapse;
         }
 
-        th {
-            background: var(--gradient);
-            color: white;
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
         }
 
-        td {
-            padding: 15px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        tr:hover {
-            background: #f8f9fa;
-        }
-
-        /* Forms */
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
+        .login-header h1 {
+            font-size: 32px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
         }
 
         .form-group {
@@ -222,99 +70,261 @@
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--text);
+            color: var(--text-secondary);
+            font-size: 14px;
         }
 
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .form-group input {
             width: 100%;
             padding: 12px;
-            border: 2px solid var(--border);
-            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
             font-size: 16px;
-            transition: all 0.3s;
         }
 
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
+        .form-group input:focus {
             outline: none;
-            border-color: var(--primary);
+            border-color: var(--primary-color);
         }
 
-        /* Buttons */
-        .btn {
-            padding: 12px 25px;
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             border: none;
             border-radius: 10px;
+            color: white;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            display: inline-flex;
+        }
+
+        .login-btn:hover {
+            transform: scale(1.02);
+        }
+
+        /* Admin Dashboard */
+        .admin-container {
+            display: none;
+        }
+
+        .admin-container.active {
+            display: block;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 250px;
+            background: var(--card-bg);
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 4px 0 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar-header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            padding: 12px 15px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary-color);
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+        }
+
+        .top-bar {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            padding: 10px 20px;
+            background: var(--danger-color);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .stat-card.success {
+            border-left-color: var(--success-color);
+        }
+
+        .stat-card.warning {
+            border-left-color: var(--warning-color);
+        }
+
+        .stat-card.danger {
+            border-left-color: var(--danger-color);
+        }
+
+        .stat-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .data-table th {
+            background: rgba(99, 102, 241, 0.2);
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .data-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table tr:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            margin-right: 5px;
         }
 
         .btn-primary {
-            background: var(--gradient);
+            background: var(--primary-color);
             color: white;
         }
 
         .btn-success {
-            background: var(--success);
+            background: var(--success-color);
             color: white;
         }
 
         .btn-danger {
-            background: var(--danger);
+            background: var(--danger-color);
             color: white;
         }
 
         .btn-warning {
-            background: var(--warning);
+            background: var(--warning-color);
             color: white;
         }
 
         .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        /* Status Badges */
-        .badge {
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            display: inline-block;
-        }
-
-        .badge-pending {
-            background: #FFF3E0;
-            color: #F57C00;
-        }
-
-        .badge-approved {
-            background: #E8F5E9;
-            color: #2E7D32;
-        }
-
-        .badge-rejected {
-            background: #FFEBEE;
-            color: #C62828;
-        }
-
-        .badge-active {
-            background: #E3F2FD;
-            color: #1976D2;
+            opacity: 0.8;
         }
 
         /* Modal */
@@ -325,10 +335,11 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            justify-content: center;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
             align-items: center;
-            z-index: 10000;
+            justify-content: center;
+            padding: 20px;
         }
 
         .modal.active {
@@ -336,11 +347,11 @@
         }
 
         .modal-content {
-            background: white;
+            background: var(--card-bg);
             padding: 30px;
-            border-radius: 15px;
+            border-radius: 20px;
             max-width: 600px;
-            width: 90%;
+            width: 100%;
             max-height: 90vh;
             overflow-y: auto;
         }
@@ -357,35 +368,43 @@
             font-weight: bold;
         }
 
-        .close-btn {
-            font-size: 28px;
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 24px;
             cursor: pointer;
-            color: var(--text-light);
         }
 
-        .close-btn:hover {
-            color: var(--danger);
+        /* Status Badge */
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
         }
 
-        /* Notification */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-            z-index: 10000;
-            animation: slideIn 0.3s;
-            max-width: 300px;
+        .status-pending {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning-color);
         }
 
-        @keyframes slideIn {
-            from { transform: translateX(400px); }
-            to { transform: translateX(0); }
+        .status-approved {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success-color);
         }
 
+        .status-rejected {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger-color);
+        }
+
+        .status-active {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success-color);
+        }
+
+        /* Loading */
         .loading {
             display: none;
             position: fixed;
@@ -393,10 +412,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            justify-content: center;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 4000;
             align-items: center;
-            z-index: 9999;
+            justify-content: center;
         }
 
         .loading.active {
@@ -406,46 +425,84 @@
         .spinner {
             width: 50px;
             height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid var(--primary);
+            border: 4px solid var(--border-color);
+            border-top-color: var(--primary-color);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { transform: rotate(360deg); }
         }
 
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 3000;
+            animation: slideIn 0.3s;
+            border-left: 4px solid var(--success-color);
+            max-width: 300px;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(400px); }
+            to { transform: translateX(0); }
+        }
+
+        .notification.error {
+            border-left-color: var(--danger-color);
+        }
+
+        .notification.warning {
+            border-left-color: var(--warning-color);
+        }
+
+        .search-box {
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            width: 300px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary-color);
         }
 
         .action-buttons {
             display: flex;
-            gap: 5px;
+            gap: 10px;
         }
 
-        .icon-btn {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s;
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
         }
 
-        .icon-btn:hover {
-            transform: scale(1.1);
+        .empty-state i {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
         }
 
+        /* Responsive */
         @media (max-width: 768px) {
             .sidebar {
-                width: 100%;
-                position: relative;
-                height: auto;
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
             }
 
             .main-content {
@@ -456,349 +513,334 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .info-box {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .info-box i {
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
 </head>
 <body>
-    <div class="admin-container">
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <h1><i class="fas fa-shield-alt"></i> Exotix Admin</h1>
+                <p style="color: var(--text-secondary);">Secure Admin Access</p>
+            </div>
+            <form onsubmit="login(event)">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="adminUsername" placeholder="Enter username" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="adminPassword" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </form>
+            <div class="info-box" style="margin-top: 20px;">
+                <i class="fas fa-info-circle"></i>
+                Default credentials: admin / admin123
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="admin-container">
         <!-- Sidebar -->
         <div class="sidebar">
-            <div class="logo">
-                <i class="fas fa-shield-alt"></i>
-                Admin Panel
+            <div class="sidebar-header">
+                <i class="fas fa-chart-line"></i> Exotix Admin
             </div>
-            <div class="menu-item active" onclick="switchSection('dashboard')">
-                <i class="fas fa-home"></i>
-                <span>Dashboard</span>
-            </div>
-            <div class="menu-item" onclick="switchSection('users')">
-                <i class="fas fa-users"></i>
-                <span>Users Management</span>
-            </div>
-            <div class="menu-item" onclick="switchSection('deposits')">
-                <i class="fas fa-arrow-down"></i>
-                <span>Deposits</span>
-            </div>
-            <div class="menu-item" onclick="switchSection('withdrawals')">
-                <i class="fas fa-arrow-up"></i>
-                <span>Withdrawals</span>
-            </div>
-            <div class="menu-item" onclick="switchSection('trades')">
-                <i class="fas fa-chart-line"></i>
-                <span>Trades Management</span>
-            </div>
-            <div class="menu-item" onclick="switchSection('plans')">
-                <i class="fas fa-briefcase"></i>
-                <span>Plans Management</span>
-            </div>
-            <div class="menu-item" onclick="switchSection('tasks')">
-                <i class="fas fa-tasks"></i>
-                <span>Tasks Management</span>
-            </div>
-            <div class="menu-item" onclick="switchSection('redeem')">
-                <i class="fas fa-gift"></i>
-                <span>Redeem Codes</span>
-            </div>
-            <div class="menu-item" onclick="switchSection('settings')">
-                <i class="fas fa-cog"></i>
-                <span>Settings</span>
-            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active" onclick="showAdminSection('dashboard')">
+                    <i class="fas fa-home"></i> Dashboard
+                </a></li>
+                <li><a href="#" onclick="showAdminSection('users')">
+                    <i class="fas fa-users"></i> Users
+                </a></li>
+                <li><a href="#" onclick="showAdminSection('deposits')">
+                    <i class="fas fa-arrow-down"></i> Deposits
+                </a></li>
+                <li><a href="#" onclick="showAdminSection('withdrawals')">
+                    <i class="fas fa-arrow-up"></i> Withdrawals
+                </a></li>
+                <li><a href="#" onclick="showAdminSection('trades')">
+                    <i class="fas fa-chart-line"></i> Trades
+                </a></li>
+                <li><a href="#" onclick="showAdminSection('tasks')">
+                    <i class="fas fa-tasks"></i> Tasks
+                </a></li>
+                <li><a href="#" onclick="showAdminSection('redeemCodes')">
+                    <i class="fas fa-gift"></i> Redeem Codes
+                </a></li>
+                <li><a href="#" onclick="showAdminSection('settings')">
+                    <i class="fas fa-cog"></i> Settings
+                </a></li>
+            </ul>
         </div>
 
         <!-- Main Content -->
         <div class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="page-title" id="pageTitle">Dashboard</div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+
             <!-- Dashboard Section -->
             <div id="dashboardSection" class="content-section active">
-                <h1 style="color: white; margin-bottom: 30px;">Dashboard Overview</h1>
-                
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-icon blue">
+                        <div class="stat-icon" style="color: var(--primary-color);">
                             <i class="fas fa-users"></i>
                         </div>
                         <div class="stat-value" id="totalUsers">0</div>
                         <div class="stat-label">Total Users</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon green">
+                    <div class="stat-card success">
+                        <div class="stat-icon" style="color: var(--success-color);">
                             <i class="fas fa-dollar-sign"></i>
                         </div>
                         <div class="stat-value" id="totalDeposits">$0</div>
                         <div class="stat-label">Total Deposits</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon orange">
+                    <div class="stat-card warning">
+                        <div class="stat-icon" style="color: var(--warning-color);">
                             <i class="fas fa-chart-line"></i>
                         </div>
                         <div class="stat-value" id="activeTrades">0</div>
                         <div class="stat-label">Active Trades</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon purple">
-                            <i class="fas fa-user-plus"></i>
+                    <div class="stat-card danger">
+                        <div class="stat-icon" style="color: var(--danger-color);">
+                            <i class="fas fa-clock"></i>
                         </div>
-                        <div class="stat-value" id="dailyUsers">0</div>
-                        <div class="stat-label">Today's Users</div>
+                        <div class="stat-value" id="pendingRequests">0</div>
+                        <div class="stat-label">Pending Requests</div>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Recent Activities</h3>
+                        <div class="card-title">Recent Activities</div>
                     </div>
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>User</th>
-                                    <th>Activity</th>
-                                    <th>Amount</th>
-                                    <th>Time</th>
-                                </tr>
-                            </thead>
-                            <tbody id="recentActivities">
-                                <tr>
-                                    <td colspan="4" style="text-align: center;">Loading...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Activity</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentActivities">
+                            <tr><td colspan="4" style="text-align: center;">Loading...</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <!-- Users Management Section -->
+            <!-- Users Section -->
             <div id="usersSection" class="content-section">
-                <h1 style="color: white; margin-bottom: 30px;">Users Management</h1>
-                
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">All Users</h3>
-                        <input type="text" id="userSearch" placeholder="Search users..." style="padding: 10px; border-radius: 5px; border: 1px solid var(--border);">
+                        <div class="card-title">User Management</div>
+                        <input type="text" class="search-box" placeholder="Search users..." id="userSearch" onkeyup="searchUsers()">
                     </div>
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>User</th>
-                                    <th>User ID</th>
-                                    <th>Balance</th>
-                                    <th>Total Deposit</th>
-                                    <th>Referrals</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="usersList">
-                                <tr>
-                                    <td colspan="6" style="text-align: center;">Loading...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Balance</th>
+                                <th>Total Deposits</th>
+                                <th>Referrals</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTable">
+                            <tr><td colspan="6" style="text-align: center;">Loading...</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
             <!-- Deposits Section -->
             <div id="depositsSection" class="content-section">
-                <h1 style="color: white; margin-bottom: 30px;">Deposit Requests</h1>
-                
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Pending Deposits</h3>
+                        <div class="card-title">Deposit Requests</div>
                     </div>
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>User</th>
-                                    <th>Amount</th>
-                                    <th>Memo</th>
-                                    <th>TxHash</th>
-                                    <th>Time</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="depositsList">
-                                <tr>
-                                    <td colspan="7" style="text-align: center;">Loading...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Amount</th>
+                                <th>TX Hash</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="depositsTable">
+                            <tr><td colspan="6" style="text-align: center;">Loading...</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
             <!-- Withdrawals Section -->
             <div id="withdrawalsSection" class="content-section">
-                <h1 style="color: white; margin-bottom: 30px;">Withdrawal Requests</h1>
-                
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Pending Withdrawals</h3>
+                        <div class="card-title">Withdrawal Requests</div>
                     </div>
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>User</th>
-                                    <th>Amount</th>
-                                    <th>Address</th>
-                                    <th>Memo</th>
-                                    <th>Time</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="withdrawalsList">
-                                <tr>
-                                    <td colspan="7" style="text-align: center;">Loading...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Amount</th>
+                                <th>Address</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="withdrawalsTable">
+                            <tr><td colspan="6" style="text-align: center;">Loading...</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <!-- Trades Management Section -->
+            <!-- Trades Section -->
             <div id="tradesSection" class="content-section">
-                <h1 style="color: white; margin-bottom: 30px;">Trades Management</h1>
-                
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">All Active Trades</h3>
+                        <div class="card-title">All Trades</div>
                     </div>
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>User</th>
-                                    <th>Pair</th>
-                                    <th>Investment</th>
-                                    <th>Daily Earning</th>
-                                    <th>Days Left</th>
-                                    <th>Total Earned</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tradesList">
-                                <tr>
-                                    <td colspan="7" style="text-align: center;">Loading...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Plan</th>
+                                <th>Investment</th>
+                                <th>Daily Earning</th>
+                                <th>Days Left</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tradesTable">
+                            <tr><td colspan="7" style="text-align: center;">Loading...</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <!-- Plans Management Section -->
-            <div id="plansSection" class="content-section">
-                <h1 style="color: white; margin-bottom: 30px;">Plans Management</h1>
-                
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Trading Plans</h3>
-                        <button class="btn btn-primary" onclick="openAddPlanModal()">
-                            <i class="fas fa-plus"></i> Add New Plan
-                        </button>
-                    </div>
-                    <div id="plansList"></div>
-                </div>
-            </div>
-
-            <!-- Tasks Management Section -->
+            <!-- Tasks Section -->
             <div id="tasksSection" class="content-section">
-                <h1 style="color: white; margin-bottom: 30px;">Tasks Management</h1>
-                
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">All Tasks</h3>
-                        <button class="btn btn-primary" onclick="openAddTaskModal()">
-                            <i class="fas fa-plus"></i> Add New Task
+                        <div class="card-title">Task Management</div>
+                        <button class="btn btn-primary" onclick="showAddTaskModal()">
+                            <i class="fas fa-plus"></i> Add Task
                         </button>
                     </div>
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Logo</th>
-                                    <th>Heading</th>
-                                    <th>Description</th>
-                                    <th>Reward</th>
-                                    <th>Link</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tasksList">
-                                <tr>
-                                    <td colspan="6" style="text-align: center;">Loading...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Reward</th>
+                                <th>Link</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tasksTable">
+                            <tr><td colspan="5" style="text-align: center;">Loading...</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
             <!-- Redeem Codes Section -->
-            <div id="redeemSection" class="content-section">
-                <h1 style="color: white; margin-bottom: 30px;">Redeem Codes</h1>
-                
+            <div id="redeemCodesSection" class="content-section">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Generate Redeem Code</h3>
+                        <div class="card-title">Redeem Codes</div>
+                        <button class="btn btn-primary" onclick="showGenerateCodeModal()">
+                            <i class="fas fa-plus"></i> Generate Code
+                        </button>
                     </div>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Minimum Amount ($)</label>
-                            <input type="number" id="minAmount" step="0.01" value="0.10">
-                        </div>
-                        <div class="form-group">
-                            <label>Maximum Amount ($)</label>
-                            <input type="number" id="maxAmount" step="0.01" value="1.00">
-                        </div>
-                        <div class="form-group">
-                            <label>Number of Codes</label>
-                            <input type="number" id="numCodes" value="1" min="1">
-                        </div>
-                    </div>
-                    <button class="btn btn-primary" onclick="generateRedeemCodes()">
-                        <i class="fas fa-gift"></i> Generate Codes
-                    </button>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Generated Codes</h3>
-                    </div>
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Code</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
-                                    <th>Used By</th>
-                                    <th>Created</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="redeemCodesList">
-                                <tr>
-                                    <td colspan="6" style="text-align: center;">Loading...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Used By</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="redeemCodesTable">
+                            <tr><td colspan="6" style="text-align: center;">Loading...</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
             <!-- Settings Section -->
             <div id="settingsSection" class="content-section">
-                <h1 style="color: white; margin-bottom: 30px;">Platform Settings</h1>
-                
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">General Settings</h3>
+                        <div class="card-title">Platform Settings</div>
                     </div>
                     <div class="form-group">
                         <label>Platform Name</label>
@@ -810,7 +852,7 @@
                     </div>
                     <div class="form-group">
                         <label>Minimum Withdrawal ($)</label>
-                        <input type="number" id="minWithdraw" value="0.10" step="0.01">
+                        <input type="number" id="minWithdrawal" value="0.10" step="0.01">
                     </div>
                     <div class="form-group">
                         <label>Referral Bonus ($)</label>
@@ -820,25 +862,12 @@
                         <label>Referral Commission (%)</label>
                         <input type="number" id="referralCommission" value="20">
                     </div>
-                    <button class="btn btn-primary" onclick="saveSettings()">
+                    <div class="form-group">
+                        <label>Admin Password</label>
+                        <input type="password" id="newAdminPassword" placeholder="Enter new password">
+                    </div>
+                    <button class="submit-btn" onclick="saveSettings()">
                         <i class="fas fa-save"></i> Save Settings
-                    </button>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Telegram Bot Settings</h3>
-                    </div>
-                    <div class="form-group">
-                        <label>Bot Token</label>
-                        <input type="text" id="botToken" value="7930967027:AAG3AkEZrkKGxTFOyVHwN8VpA9HgusAdRmw">
-                    </div>
-                    <div class="form-group">
-                        <label>Bot Link</label>
-                        <input type="text" id="botLink" value="http://t.me/Exotix_Robot/myapp">
-                    </div>
-                    <button class="btn btn-primary" onclick="saveBotSettings()">
-                        <i class="fas fa-save"></i> Save Bot Settings
                     </button>
                 </div>
             </div>
@@ -849,8 +878,8 @@
     <div id="editUserModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Edit User</h3>
-                <span class="close-btn" onclick="closeModal('editUserModal')">&times;</span>
+                <div class="modal-title">Edit User</div>
+                <button class="close-modal" onclick="closeModal('editUserModal')">&times;</button>
             </div>
             <div class="form-group">
                 <label>User ID</label>
@@ -862,20 +891,15 @@
             </div>
             <div class="form-group">
                 <label>Action</label>
-                <select id="balanceAction">
+                <select id="balanceAction" class="form-group input" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
                     <option value="set">Set Balance</option>
                     <option value="add">Add to Balance</option>
                     <option value="subtract">Subtract from Balance</option>
                 </select>
             </div>
-            <div class="btn-group">
-                <button class="btn btn-primary" onclick="updateUserBalance()">
-                    <i class="fas fa-save"></i> Update
-                </button>
-                <button class="btn btn-danger" onclick="banUser()">
-                    <i class="fas fa-ban"></i> Ban User
-                </button>
-            </div>
+            <button class="submit-btn" onclick="updateUserBalance()">
+                <i class="fas fa-save"></i> Update Balance
+            </button>
         </div>
     </div>
 
@@ -883,37 +907,67 @@
     <div id="addTaskModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Add New Task</h3>
-                <span class="close-btn" onclick="closeModal('addTaskModal')">&times;</span>
+                <div class="modal-title">Add New Task</div>
+                <button class="close-modal" onclick="closeModal('addTaskModal')">&times;</button>
             </div>
             <div class="form-group">
-                <label>Logo URL</label>
-                <input type="text" id="taskLogo" placeholder="https://example.com/logo.png">
-            </div>
-            <div class="form-group">
-                <label>Heading</label>
-                <input type="text" id="taskHeading" placeholder="Task title">
+                <label>Task Title</label>
+                <input type="text" id="taskTitle" placeholder="Enter task title">
             </div>
             <div class="form-group">
                 <label>Description</label>
-                <textarea id="taskDescription" rows="3" placeholder="Task description"></textarea>
+                <textarea id="taskDescription" placeholder="Enter task description" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); min-height: 100px;"></textarea>
             </div>
             <div class="form-group">
                 <label>Reward ($)</label>
-                <input type="number" id="taskReward" step="0.01" placeholder="0.00">
+                <input type="number" id="taskReward" step="0.01" placeholder="Enter reward amount">
             </div>
             <div class="form-group">
                 <label>Task Link</label>
-                <input type="text" id="taskLink" placeholder="https://example.com">
+                <input type="url" id="taskLink" placeholder="Enter task URL">
             </div>
-            <button class="btn btn-primary" onclick="addTask()">
+            <div class="form-group">
+                <label>Logo URL (Optional)</label>
+                <input type="url" id="taskLogo" placeholder="Enter logo URL">
+            </div>
+            <button class="submit-btn" onclick="addTask()">
                 <i class="fas fa-plus"></i> Add Task
             </button>
         </div>
     </div>
 
-    <!-- Loading Spinner -->
-    <div class="loading" id="loading">
+    <!-- Generate Code Modal -->
+    <div id="generateCodeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Generate Redeem Code</div>
+                <button class="close-modal" onclick="closeModal('generateCodeModal')">&times;</button>
+            </div>
+            <div class="form-group">
+                <label>Number of Codes</label>
+                <input type="number" id="numCodes" value="1" min="1">
+            </div>
+            <div class="form-group">
+                <label>Amount Range</label>
+                <div class="grid-2">
+                    <div>
+                        <label style="font-size: 12px;">Min ($)</label>
+                        <input type="number" id="minAmount" value="0.10" step="0.01">
+                    </div>
+                    <div>
+                        <label style="font-size: 12px;">Max ($)</label>
+                        <input type="number" id="maxAmount" value="1.00" step="0.01">
+                    </div>
+                </div>
+            </div>
+            <button class="submit-btn" onclick="generateRedeemCodes()">
+                <i class="fas fa-gift"></i> Generate Codes
+            </button>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading" id="loadingOverlay">
         <div class="spinner"></div>
     </div>
 
@@ -935,7 +989,12 @@
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
-        window.database = database;
+
+        // Telegram Bot Configuration
+        const TELEGRAM_BOT_TOKEN = '7930967027:AAG3AkEZrkKGxTFOyVHwN8VpA9HgusAdRmw';
+        const TELEGRAM_API = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}`;
+
+        window.db = database;
         window.dbRef = ref;
         window.dbSet = set;
         window.dbGet = get;
@@ -944,153 +1003,329 @@
         window.dbOnValue = onValue;
         window.dbRemove = remove;
 
-        const BOT_TOKEN = '7930967027:AAG3AkEZrkKGxTFOyVHwN8VpA9HgusAdRmw';
-        window.BOT_TOKEN = BOT_TOKEN;
-
-        // Load Dashboard Stats
-        async function loadDashboardStats() {
-            const usersRef = dbRef(database, 'users');
-            const usersSnapshot = await dbGet(usersRef);
-            
-            let totalUsers = 0;
-            let totalDeposits = 0;
-            let dailyUsers = 0;
-            const today = new Date().setHours(0, 0, 0, 0);
-
-            if (usersSnapshot.exists()) {
-                const users = usersSnapshot.val();
-                totalUsers = Object.keys(users).length;
-                
-                Object.values(users).forEach(user => {
-                    totalDeposits += user.totalDeposit || 0;
-                    if (user.createdAt >= today) {
-                        dailyUsers++;
-                    }
+        // Send Telegram notification
+        window.sendTelegramNotification = async function(chatId, message) {
+            if (!chatId) return;
+            try {
+                await fetch(`${TELEGRAM_API}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
                 });
+            } catch (error) {
+                console.error('Telegram notification error:', error);
             }
+        };
 
-            // Count active trades
-            let activeTrades = 0;
-            const allUsersSnapshot = await dbGet(usersRef);
-            if (allUsersSnapshot.exists()) {
-                for (const userId of Object.keys(allUsersSnapshot.val())) {
-                    const tradesRef = dbRef(database, `trades/${userId}`);
-                    const tradesSnapshot = await dbGet(tradesRef);
-                    if (tradesSnapshot.exists()) {
-                        const trades = Object.values(tradesSnapshot.val());
-                        activeTrades += trades.filter(t => t.status === 'active').length;
+        // Login
+        window.login = async function(event) {
+            event.preventDefault();
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+
+            showLoading(true);
+
+            try {
+                const adminRef = ref(database, 'admin');
+                const snapshot = await get(adminRef);
+
+                let isValid = false;
+                if (snapshot.exists()) {
+                    const adminData = snapshot.val();
+                    isValid = adminData.username === username && adminData.password === password;
+                } else {
+                    // Set default admin credentials
+                    if (username === 'admin' && password === 'admin123') {
+                        await set(adminRef, {
+                            username: 'admin',
+                            password: 'admin123'
+                        });
+                        isValid = true;
                     }
                 }
+
+                if (isValid) {
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('adminDashboard').classList.add('active');
+                    loadDashboard();
+                } else {
+                    showNotification('Invalid credentials', 'error');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showNotification('Login failed', 'error');
             }
 
-            document.getElementById('totalUsers').textContent = totalUsers;
-            document.getElementById('totalDeposits').textContent = `$${totalDeposits.toFixed(2)}`;
-            document.getElementById('activeTrades').textContent = activeTrades;
-            document.getElementById('dailyUsers').textContent = dailyUsers;
+            showLoading(false);
+        };
+
+        // Logout
+        window.logout = function() {
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('adminDashboard').classList.remove('active');
+        };
+
+        // Load Dashboard
+        async function loadDashboard() {
+            try {
+                // Load stats
+                const usersRef = ref(database, 'users');
+                const usersSnapshot = await get(usersRef);
+                
+                let totalUsers = 0;
+                let totalDeposits = 0;
+                
+                if (usersSnapshot.exists()) {
+                    const users = Object.values(usersSnapshot.val());
+                    totalUsers = users.length;
+                    totalDeposits = users.reduce((sum, user) => sum + (user.totalDeposits || 0), 0);
+                }
+
+                document.getElementById('totalUsers').textContent = totalUsers;
+                document.getElementById('totalDeposits').textContent = '$' + totalDeposits.toFixed(2);
+
+                // Load active trades
+                const tradesRef = ref(database, 'trades');
+                const tradesSnapshot = await get(tradesRef);
+                let activeTrades = 0;
+                
+                if (tradesSnapshot.exists()) {
+                    Object.values(tradesSnapshot.val()).forEach(userTrades => {
+                        Object.values(userTrades).forEach(trade => {
+                            if (trade.status === 'active') activeTrades++;
+                        });
+                    });
+                }
+                
+                document.getElementById('activeTrades').textContent = activeTrades;
+
+                // Load pending requests
+                const depositsRef = ref(database, 'deposits');
+                const withdrawalsRef = ref(database, 'withdrawals');
+                const depositsSnapshot = await get(depositsRef);
+                const withdrawalsSnapshot = await get(withdrawalsRef);
+                
+                let pendingRequests = 0;
+                
+                if (depositsSnapshot.exists()) {
+                    Object.values(depositsSnapshot.val()).forEach(deposit => {
+                        if (deposit.status === 'pending') pendingRequests++;
+                    });
+                }
+                
+                if (withdrawalsSnapshot.exists()) {
+                    Object.values(withdrawalsSnapshot.val()).forEach(withdrawal => {
+                        if (withdrawal.status === 'pending') pendingRequests++;
+                    });
+                }
+                
+                document.getElementById('pendingRequests').textContent = pendingRequests;
+
+                // Load recent activities
+                loadRecentActivities();
+            } catch (error) {
+                console.error('Dashboard load error:', error);
+            }
         }
 
         // Load Recent Activities
         async function loadRecentActivities() {
-            const activitiesTable = document.getElementById('recentActivities');
-            activitiesTable.innerHTML = '';
+            const tbody = document.getElementById('recentActivities');
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Loading...</td></tr>';
 
-            const usersRef = dbRef(database, 'users');
-            const usersSnapshot = await dbGet(usersRef);
-
-            if (!usersSnapshot.exists()) {
-                activitiesTable.innerHTML = '<tr><td colspan="4" style="text-align: center;">No activities yet</td></tr>';
-                return;
-            }
-
-            const allActivities = [];
-            for (const userId of Object.keys(usersSnapshot.val())) {
-                const activitiesRef = dbRef(database, `activities/${userId}`);
-                const activitiesSnapshot = await dbGet(activitiesRef);
+            try {
+                const activities = [];
                 
-                if (activitiesSnapshot.exists()) {
-                    const userRef = dbRef(database, `users/${userId}`);
-                    const userSnapshot = await dbGet(userRef);
-                    const user = userSnapshot.val();
-
-                    Object.values(activitiesSnapshot.val()).forEach(activity => {
-                        allActivities.push({
-                            user: `${user.firstName} ${user.lastName}`,
-                            type: activity.type,
-                            amount: activity.amount,
-                            timestamp: activity.timestamp
-                        });
-                    });
+                // Get all user activities
+                const usersRef = ref(database, 'users');
+                const usersSnapshot = await get(usersRef);
+                
+                if (usersSnapshot.exists()) {
+                    for (const userId of Object.keys(usersSnapshot.val())) {
+                        const activitiesRef = ref(database, `activities/${userId}`);
+                        const activitiesSnapshot = await get(activitiesRef);
+                        
+                        if (activitiesSnapshot.exists()) {
+                            Object.values(activitiesSnapshot.val()).forEach(activity => {
+                                activities.push({
+                                    userId: userId,
+                                    ...activity
+                                });
+                            });
+                        }
+                    }
                 }
+
+                activities.sort((a, b) => b.timestamp - a.timestamp);
+                const recentActivities = activities.slice(0, 10);
+
+                if (recentActivities.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">No activities yet</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = recentActivities.map(activity => `
+                    <tr>
+                        <td>${activity.userId.substr(0, 12)}...</td>
+                        <td>${activity.description}</td>
+                        <td>$${(activity.amount || 0).toFixed(2)}</td>
+                        <td>${new Date(activity.timestamp).toLocaleString()}</td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Activities load error:', error);
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Error loading activities</td></tr>';
             }
-
-            allActivities.sort((a, b) => b.timestamp - a.timestamp);
-            const recent = allActivities.slice(0, 10);
-
-            recent.forEach(activity => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${activity.user}</td>
-                    <td><span class="badge badge-active">${activity.type.toUpperCase()}</span></td>
-                    <td>$${activity.amount.toFixed(2)}</td>
-                    <td>${new Date(activity.timestamp).toLocaleString()}</td>
-                `;
-                activitiesTable.appendChild(row);
-            });
         }
+
+        // Show Admin Section
+        window.showAdminSection = function(section) {
+            document.querySelectorAll('.content-section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.sidebar-menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            event.target.classList.add('active');
+            
+            const sectionMap = {
+                'dashboard': 'dashboardSection',
+                'users': 'usersSection',
+                'deposits': 'depositsSection',
+                'withdrawals': 'withdrawalsSection',
+                'trades': 'tradesSection',
+                'tasks': 'tasksSection',
+                'redeemCodes': 'redeemCodesSection',
+                'settings': 'settingsSection'
+            };
+            
+            const titleMap = {
+                'dashboard': 'Dashboard',
+                'users': 'User Management',
+                'deposits': 'Deposit Requests',
+                'withdrawals': 'Withdrawal Requests',
+                'trades': 'Trade Management',
+                'tasks': 'Task Management',
+                'redeemCodes': 'Redeem Codes',
+                'settings': 'Platform Settings'
+            };
+            
+            document.getElementById(sectionMap[section]).classList.add('active');
+            document.getElementById('pageTitle').textContent = titleMap[section];
+            
+            // Load section data
+            switch(section) {
+                case 'dashboard':
+                    loadDashboard();
+                    break;
+                case 'users':
+                    loadUsers();
+                    break;
+                case 'deposits':
+                    loadDeposits();
+                    break;
+                case 'withdrawals':
+                    loadWithdrawals();
+                    break;
+                case 'trades':
+                    loadTrades();
+                    break;
+                case 'tasks':
+                    loadTasks();
+                    break;
+                case 'redeemCodes':
+                    loadRedeemCodes();
+                    break;
+            }
+        };
 
         // Load Users
-        async function loadUsers() {
-            const usersRef = dbRef(database, 'users');
-            const snapshot = await dbGet(usersRef);
-            const usersList = document.getElementById('usersList');
-            usersList.innerHTML = '';
+        window.loadUsers = async function() {
+            const tbody = document.getElementById('usersTable');
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Loading...</td></tr>';
 
-            if (!snapshot.exists()) {
-                usersList.innerHTML = '<tr><td colspan="6" style="text-align: center;">No users yet</td></tr>';
-                return;
+            try {
+                const usersRef = ref(database, 'users');
+                const snapshot = await get(usersRef);
+
+                if (!snapshot.exists()) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No users yet</td></tr>';
+                    return;
+                }
+
+                const users = Object.entries(snapshot.val());
+                window.allUsers = users;
+
+                tbody.innerHTML = users.map(([userId, user]) => `
+                    <tr>
+                        <td>${userId.substr(0, 12)}...</td>
+                        <td>$${(user.balance || 0).toFixed(2)}</td>
+                        <td>$${(user.totalDeposits || 0).toFixed(2)}</td>
+                        <td>${(user.referrals || []).length}</td>
+                        <td>${new Date(user.createdAt).toLocaleDateString()}</td>
+                        <td>
+                            <button class="btn btn-primary" onclick="editUser('${userId}')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn btn-danger" onclick="banUser('${userId}')">
+                                <i class="fas fa-ban"></i> Ban
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Users load error:', error);
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Error loading users</td></tr>';
             }
+        };
 
-            const users = snapshot.val();
-            Object.entries(users).forEach(([userId, user]) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
+        // Search Users
+        window.searchUsers = function() {
+            const searchTerm = document.getElementById('userSearch').value.toLowerCase();
+            const tbody = document.getElementById('usersTable');
+
+            if (!window.allUsers) return;
+
+            const filtered = window.allUsers.filter(([userId, user]) => 
+                userId.toLowerCase().includes(searchTerm)
+            );
+
+            tbody.innerHTML = filtered.map(([userId, user]) => `
+                <tr>
+                    <td>${userId.substr(0, 12)}...</td>
+                    <td>$${(user.balance || 0).toFixed(2)}</td>
+                    <td>$${(user.totalDeposits || 0).toFixed(2)}</td>
+                    <td>${(user.referrals || []).length}</td>
+                    <td>${new Date(user.createdAt).toLocaleDateString()}</td>
                     <td>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <img src="${user.photoUrl || 'https://via.placeholder.com/40'}" class="user-avatar">
-                            <div>
-                                <strong>${user.firstName} ${user.lastName}</strong><br>
-                                <small>@${user.username || 'N/A'}</small>
-                            </div>
-                        </div>
+                        <button class="btn btn-primary" onclick="editUser('${userId}')">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="btn btn-danger" onclick="banUser('${userId}')">
+                            <i class="fas fa-ban"></i> Ban
+                        </button>
                     </td>
-                    <td>${user.id}</td>
-                    <td>$${user.balance.toFixed(2)}</td>
-                    <td>$${(user.totalDeposit || 0).toFixed(2)}</td>
-                    <td>${user.totalReferrals || 0}</td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="icon-btn btn-primary" onclick="editUser('${userId}')">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="icon-btn btn-danger" onclick="deleteUser('${userId}')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-                `;
-                usersList.appendChild(row);
-            });
-        }
+                </tr>
+            `).join('');
+        };
 
         // Edit User
         window.editUser = async function(userId) {
-            const userRef = dbRef(database, `users/${userId}`);
-            const snapshot = await dbGet(userRef);
-            const user = snapshot.val();
-
-            document.getElementById('editUserId').value = userId;
-            document.getElementById('editUserBalance').value = user.balance;
-            document.getElementById('editUserModal').classList.add('active');
+            const userRef = ref(database, `users/${userId}`);
+            const snapshot = await get(userRef);
+            
+            if (snapshot.exists()) {
+                const user = snapshot.val();
+                document.getElementById('editUserId').value = userId;
+                document.getElementById('editUserBalance').value = user.balance || 0;
+                document.getElementById('editUserModal').classList.add('active');
+            }
         };
 
         // Update User Balance
@@ -1099,614 +1334,638 @@
             const newBalance = parseFloat(document.getElementById('editUserBalance').value);
             const action = document.getElementById('balanceAction').value;
 
-            const userRef = dbRef(database, `users/${userId}`);
-            const snapshot = await dbGet(userRef);
-            const user = snapshot.val();
+            showLoading(true);
 
-            let finalBalance = newBalance;
-            if (action === 'add') {
-                finalBalance = user.balance + newBalance;
-            } else if (action === 'subtract') {
-                finalBalance = user.balance - newBalance;
+            try {
+                const userRef = ref(database, `users/${userId}`);
+                const snapshot = await get(userRef);
+                const currentBalance = snapshot.val().balance || 0;
+
+                let finalBalance = newBalance;
+                if (action === 'add') {
+                    finalBalance = currentBalance + newBalance;
+                } else if (action === 'subtract') {
+                    finalBalance = currentBalance - newBalance;
+                }
+
+                await update(userRef, { balance: finalBalance });
+
+                await push(ref(database, `activities/${userId}`), {
+                    type: 'admin',
+                    description: `Admin ${action} balance`,
+                    amount: newBalance,
+                    timestamp: Date.now()
+                });
+
+                showNotification('Balance updated successfully', 'success');
+                closeModal('editUserModal');
+                loadUsers();
+            } catch (error) {
+                console.error('Balance update error:', error);
+                showNotification('Balance update failed', 'error');
             }
 
-            await dbUpdate(userRef, { balance: finalBalance });
-
-            // Send notification
-            await sendTelegramNotification(
-                userId,
-                `💰 Balance Updated!\n\nYour new balance: $${finalBalance.toFixed(2)}`
-            );
-
-            showNotification('User balance updated successfully', 'success');
-            closeModal('editUserModal');
-            loadUsers();
+            showLoading(false);
         };
 
         // Ban User
-        window.banUser = async function() {
-            const userId = document.getElementById('editUserId').value;
-            if (confirm('Are you sure you want to ban this user?')) {
-                const userRef = dbRef(database, `users/${userId}`);
-                await dbUpdate(userRef, { banned: true, balance: 0 });
+        window.banUser = async function(userId) {
+            if (!confirm('Are you sure you want to ban this user?')) return;
 
-                await sendTelegramNotification(
-                    userId,
-                    '🚫 Your account has been banned by the administrator.'
-                );
+            showLoading(true);
+
+            try {
+                await update(ref(database, `users/${userId}`), {
+                    banned: true,
+                    bannedAt: Date.now()
+                });
 
                 showNotification('User banned successfully', 'success');
-                closeModal('editUserModal');
                 loadUsers();
+            } catch (error) {
+                console.error('Ban error:', error);
+                showNotification('Ban failed', 'error');
             }
-        };
 
-        // Delete User
-        window.deleteUser = async function(userId) {
-            if (confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
-                await dbRemove(dbRef(database, `users/${userId}`));
-                await dbRemove(dbRef(database, `trades/${userId}`));
-                await dbRemove(dbRef(database, `deposits/${userId}`));
-                await dbRemove(dbRef(database, `withdrawals/${userId}`));
-                await dbRemove(dbRef(database, `activities/${userId}`));
-
-                showNotification('User deleted successfully', 'success');
-                loadUsers();
-            }
+            showLoading(false);
         };
 
         // Load Deposits
-        async function loadDeposits() {
-            const depositsList = document.getElementById('depositsList');
-            depositsList.innerHTML = '';
+        window.loadDeposits = async function() {
+            const tbody = document.getElementById('depositsTable');
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Loading...</td></tr>';
 
-            const usersRef = dbRef(database, 'users');
-            const usersSnapshot = await dbGet(usersRef);
+            try {
+                const depositsRef = ref(database, 'deposits');
+                const snapshot = await get(depositsRef);
 
-            if (!usersSnapshot.exists()) {
-                depositsList.innerHTML = '<tr><td colspan="7" style="text-align: center;">No deposits yet</td></tr>';
-                return;
-            }
-
-            let hasDeposits = false;
-            for (const userId of Object.keys(usersSnapshot.val())) {
-                const depositsRef = dbRef(database, `deposits/${userId}`);
-                const depositsSnapshot = await dbGet(depositsRef);
-
-                if (depositsSnapshot.exists()) {
-                    const userRef = dbRef(database, `users/${userId}`);
-                    const userSnapshot = await dbGet(userRef);
-                    const user = userSnapshot.val();
-
-                    Object.entries(depositsSnapshot.val()).forEach(([depositId, deposit]) => {
-                        if (deposit.status === 'pending') {
-                            hasDeposits = true;
-                            const row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td>${user.firstName} ${user.lastName}</td>
-                                <td>$${deposit.amount}</td>
-                                <td>${deposit.memo}</td>
-                                <td><small>${deposit.txHash.substring(0, 20)}...</small></td>
-                                <td>${new Date(deposit.timestamp).toLocaleString()}</td>
-                                <td><span class="badge badge-pending">${deposit.status}</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="icon-btn btn-success" onclick="approveDeposit('${userId}', '${depositId}', ${deposit.amount})">
-                                            <i class="fas fa-check"></i>
-                                        </button>
-                                        <button class="icon-btn btn-danger" onclick="rejectDeposit('${userId}', '${depositId}')">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            `;
-                            depositsList.appendChild(row);
-                        }
-                    });
+                if (!snapshot.exists()) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No deposits yet</td></tr>';
+                    return;
                 }
-            }
 
-            if (!hasDeposits) {
-                depositsList.innerHTML = '<tr><td colspan="7" style="text-align: center;">No pending deposits</td></tr>';
+                const deposits = Object.entries(snapshot.val()).sort((a, b) => b[1].timestamp - a[1].timestamp);
+
+                tbody.innerHTML = deposits.map(([depositId, deposit]) => `
+                    <tr>
+                        <td>${deposit.userId.substr(0, 12)}...</td>
+                        <td>$${deposit.amount.toFixed(2)}</td>
+                        <td>${deposit.txHash.substr(0, 20)}...</td>
+                        <td><span class="status-badge status-${deposit.status}">${deposit.status}</span></td>
+                        <td>${new Date(deposit.timestamp).toLocaleString()}</td>
+                        <td>
+                            ${deposit.status === 'pending' ? `
+                                <button class="btn btn-success" onclick="approveDeposit('${depositId}', '${deposit.userId}', ${deposit.amount})">
+                                    <i class="fas fa-check"></i> Approve
+                                </button>
+                                <button class="btn btn-danger" onclick="rejectDeposit('${depositId}', '${deposit.userId}')">
+                                    <i class="fas fa-times"></i> Reject
+                                </button>
+                            ` : '-'}
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Deposits load error:', error);
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Error loading deposits</td></tr>';
             }
-        }
+        };
 
         // Approve Deposit
-        window.approveDeposit = async function(userId, depositId, amount) {
+        window.approveDeposit = async function(depositId, userId, amount) {
             showLoading(true);
 
-            const depositRef = dbRef(database, `deposits/${userId}/${depositId}`);
-            await dbUpdate(depositRef, { status: 'approved' });
+            try {
+                const userRef = ref(database, `users/${userId}`);
+                const userSnapshot = await get(userRef);
+                const userData = userSnapshot.val();
 
-            const userRef = dbRef(database, `users/${userId}`);
-            const snapshot = await dbGet(userRef);
-            const user = snapshot.val();
+                const newBalance = (userData.balance || 0) + amount;
+                const newTotalDeposits = (userData.totalDeposits || 0) + amount;
 
-            await dbUpdate(userRef, {
-                balance: user.balance + amount,
-                totalDeposit: (user.totalDeposit || 0) + amount,
-                hasDeposited: true
-            });
+                await update(userRef, {
+                    balance: newBalance,
+                    totalDeposits: newTotalDeposits,
+                    hasDeposited: true
+                });
 
-            // Handle referral bonus
-            if (user.referredBy && !user.referralBonusPaid) {
-                const referrerRef = dbRef(database, `users/${user.referredBy}`);
-                const referrerSnapshot = await dbGet(referrerRef);
-                if (referrerSnapshot.exists()) {
-                    const referrer = referrerSnapshot.val();
-                    const commission = amount * 0.20; // 20% commission
-                    const bonus = 0.20; // One-time bonus
+                await update(ref(database, `deposits/${depositId}`), {
+                    status: 'approved',
+                    approvedAt: Date.now()
+                });
 
-                    await dbUpdate(referrerRef, {
-                        balance: referrer.balance + commission + bonus,
-                        referralEarnings: (referrer.referralEarnings || 0) + commission + bonus
-                    });
+                await push(ref(database, `activities/${userId}`), {
+                    type: 'deposit',
+                    description: 'Deposit approved',
+                    amount: amount,
+                    timestamp: Date.now()
+                });
 
-                    await dbUpdate(userRef, { referralBonusPaid: true });
+                // Handle referral bonus
+                if (userData.referredBy) {
+                    const referrerRef = ref(database, `users/${userData.referredBy}`);
+                    const referrerSnapshot = await get(referrerRef);
+                    
+                    if (referrerSnapshot.exists()) {
+                        const referrer = referrerSnapshot.val();
+                        const commission = amount * 0.2;
+                        const newReferrerBalance = (referrer.balance || 0) + commission;
+                        const newReferralEarnings = (referrer.referralEarnings || 0) + commission;
 
-                    // Update referral record
-                    const referralRef = dbRef(database, `referrals/${user.referredBy}/${userId}`);
-                    const referralSnapshot = await dbGet(referralRef);
-                    if (referralSnapshot.exists()) {
-                        const referralData = referralSnapshot.val();
-                        await dbUpdate(referralRef, {
-                            earned: (referralData.earned || 0) + commission + bonus
+                        await update(referrerRef, {
+                            balance: newReferrerBalance,
+                            referralEarnings: newReferralEarnings
                         });
-                    }
 
-                    await sendTelegramNotification(
-                        user.referredBy,
-                        `💰 Referral Earnings!\n\nYou earned $${(commission + bonus).toFixed(2)} from your referral's deposit!`
-                    );
+                        await sendTelegramNotification(userData.referredBy, 
+                            `💰 <b>Referral Commission Earned!</b>\n\n` +
+                            `Your referral made a deposit of $${amount.toFixed(2)}\n` +
+                            `Commission: $${commission.toFixed(2)}\n` +
+                            `New Balance: $${newReferrerBalance.toFixed(2)}`
+                        );
+                    }
                 }
+
+                await sendTelegramNotification(userId,
+                    `✅ <b>Deposit Approved!</b>\n\n` +
+                    `Amount: $${amount.toFixed(2)}\n` +
+                    `New Balance: $${newBalance.toFixed(2)}\n` +
+                    `Date: ${new Date().toLocaleString()}`
+                );
+
+                showNotification('Deposit approved successfully', 'success');
+                loadDeposits();
+                loadDashboard();
+            } catch (error) {
+                console.error('Approve deposit error:', error);
+                showNotification('Approval failed', 'error');
             }
 
-            await sendTelegramNotification(
-                userId,
-                `✅ Deposit Approved!\n\nAmount: $${amount}\nYour balance has been updated.`
-            );
-
             showLoading(false);
-            showNotification('Deposit approved successfully', 'success');
-            loadDeposits();
-            loadDashboardStats();
         };
 
         // Reject Deposit
-        window.rejectDeposit = async function(userId, depositId) {
-            if (confirm('Are you sure you want to reject this deposit?')) {
-                const depositRef = dbRef(database, `deposits/${userId}/${depositId}`);
-                await dbUpdate(depositRef, { status: 'rejected' });
+        window.rejectDeposit = async function(depositId, userId) {
+            showLoading(true);
 
-                await sendTelegramNotification(
-                    userId,
-                    `❌ Deposit Rejected\n\nYour deposit request has been rejected. Please contact support for more information.`
+            try {
+                await update(ref(database, `deposits/${depositId}`), {
+                    status: 'rejected',
+                    rejectedAt: Date.now()
+                });
+
+                await sendTelegramNotification(userId,
+                    `❌ <b>Deposit Rejected</b>\n\n` +
+                    `Your deposit request has been rejected.\n` +
+                    `Please contact support for more information.`
                 );
 
                 showNotification('Deposit rejected', 'success');
                 loadDeposits();
+            } catch (error) {
+                console.error('Reject deposit error:', error);
+                showNotification('Rejection failed', 'error');
             }
+
+            showLoading(false);
         };
 
         // Load Withdrawals
-        async function loadWithdrawals() {
-            const withdrawalsList = document.getElementById('withdrawalsList');
-            withdrawalsList.innerHTML = '';
+        window.loadWithdrawals = async function() {
+            const tbody = document.getElementById('withdrawalsTable');
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Loading...</td></tr>';
 
-            const usersRef = dbRef(database, 'users');
-            const usersSnapshot = await dbGet(usersRef);
+            try {
+                const withdrawalsRef = ref(database, 'withdrawals');
+                const snapshot = await get(withdrawalsRef);
 
-            if (!usersSnapshot.exists()) {
-                withdrawalsList.innerHTML = '<tr><td colspan="7" style="text-align: center;">No withdrawals yet</td></tr>';
-                return;
-            }
-
-            let hasWithdrawals = false;
-            for (const userId of Object.keys(usersSnapshot.val())) {
-                const withdrawalsRef = dbRef(database, `withdrawals/${userId}`);
-                const withdrawalsSnapshot = await dbGet(withdrawalsRef);
-
-                if (withdrawalsSnapshot.exists()) {
-                    const userRef = dbRef(database, `users/${userId}`);
-                    const userSnapshot = await dbGet(userRef);
-                    const user = userSnapshot.val();
-
-                    Object.entries(withdrawalsSnapshot.val()).forEach(([withdrawalId, withdrawal]) => {
-                        if (withdrawal.status === 'pending') {
-                            hasWithdrawals = true;
-                            const row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td>${user.firstName} ${user.lastName}</td>
-                                <td>$${withdrawal.amount}</td>
-                                <td><small>${withdrawal.address.substring(0, 20)}...</small></td>
-                                <td>${withdrawal.memo || 'N/A'}</td>
-                                <td>${new Date(withdrawal.timestamp).toLocaleString()}</td>
-                                <td><span class="badge badge-pending">${withdrawal.status}</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="icon-btn btn-success" onclick="approveWithdrawal('${userId}', '${withdrawalId}', ${withdrawal.amount})">
-                                            <i class="fas fa-check"></i>
-                                        </button>
-                                        <button class="icon-btn btn-danger" onclick="rejectWithdrawal('${userId}', '${withdrawalId}', ${withdrawal.amount})">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            `;
-                            withdrawalsList.appendChild(row);
-                        }
-                    });
+                if (!snapshot.exists()) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No withdrawals yet</td></tr>';
+                    return;
                 }
-            }
 
-            if (!hasWithdrawals) {
-                withdrawalsList.innerHTML = '<tr><td colspan="7" style="text-align: center;">No pending withdrawals</td></tr>';
+                const withdrawals = Object.entries(snapshot.val()).sort((a, b) => b[1].timestamp - a[1].timestamp);
+
+                tbody.innerHTML = withdrawals.map(([withdrawalId, withdrawal]) => `
+                    <tr>
+                        <td>${withdrawal.userId.substr(0, 12)}...</td>
+                        <td>$${withdrawal.amount.toFixed(2)}</td>
+                        <td>${withdrawal.address.substr(0, 20)}...</td>
+                        <td><span class="status-badge status-${withdrawal.status}">${withdrawal.status}</span></td>
+                        <td>${new Date(withdrawal.timestamp).toLocaleString()}</td>
+                        <td>
+                            ${withdrawal.status === 'pending' ? `
+                                <button class="btn btn-success" onclick="approveWithdrawal('${withdrawalId}', '${withdrawal.userId}', ${withdrawal.amount})">
+                                    <i class="fas fa-check"></i> Approve
+                                </button>
+                                <button class="btn btn-danger" onclick="rejectWithdrawal('${withdrawalId}', '${withdrawal.userId}', ${withdrawal.amount})">
+                                    <i class="fas fa-times"></i> Reject
+                                </button>
+                            ` : '-'}
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Withdrawals load error:', error);
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Error loading withdrawals</td></tr>';
             }
-        }
+        };
 
         // Approve Withdrawal
-        window.approveWithdrawal = async function(userId, withdrawalId, amount) {
+        window.approveWithdrawal = async function(withdrawalId, userId, amount) {
             showLoading(true);
 
-            const withdrawalRef = dbRef(database, `withdrawals/${userId}/${withdrawalId}`);
-            await dbUpdate(withdrawalRef, { status: 'approved' });
+            try {
+                const userRef = ref(database, `users/${userId}`);
+                const userSnapshot = await get(userRef);
+                const userData = userSnapshot.val();
 
-            const userRef = dbRef(database, `users/${userId}`);
-            const snapshot = await dbGet(userRef);
-            const user = snapshot.val();
+                const newBalance = (userData.balance || 0) - amount;
+                const newTotalWithdrawals = (userData.totalWithdrawals || 0) + amount;
 
-            await dbUpdate(userRef, {
-                balance: user.balance - amount,
-                totalWithdraw: (user.totalWithdraw || 0) + amount
-            });
+                await update(userRef, {
+                    balance: newBalance,
+                    totalWithdrawals: newTotalWithdrawals
+                });
 
-            await sendTelegramNotification(
-                userId,
-                `✅ Withdrawal Approved!\n\nAmount: $${amount}\nYour withdrawal has been processed.`
-            );
+                await update(ref(database, `withdrawals/${withdrawalId}`), {
+                    status: 'approved',
+                    approvedAt: Date.now()
+                });
+
+                await push(ref(database, `activities/${userId}`), {
+                    type: 'withdrawal',
+                    description: 'Withdrawal approved',
+                    amount: amount,
+                    timestamp: Date.now()
+                });
+
+                await sendTelegramNotification(userId,
+                    `✅ <b>Withdrawal Approved!</b>\n\n` +
+                    `Amount: $${amount.toFixed(2)}\n` +
+                    `New Balance: $${newBalance.toFixed(2)}\n` +
+                    `Date: ${new Date().toLocaleString()}`
+                );
+
+                showNotification('Withdrawal approved successfully', 'success');
+                loadWithdrawals();
+            } catch (error) {
+                console.error('Approve withdrawal error:', error);
+                showNotification('Approval failed', 'error');
+            }
 
             showLoading(false);
-            showNotification('Withdrawal approved successfully', 'success');
-            loadWithdrawals();
         };
 
         // Reject Withdrawal
-        window.rejectWithdrawal = async function(userId, withdrawalId, amount) {
-            if (confirm('Are you sure you want to reject this withdrawal?')) {
-                const withdrawalRef = dbRef(database, `withdrawals/${userId}/${withdrawalId}`);
-                await dbUpdate(withdrawalRef, { status: 'rejected' });
+        window.rejectWithdrawal = async function(withdrawalId, userId, amount) {
+            showLoading(true);
 
-                await sendTelegramNotification(
-                    userId,
-                    `❌ Withdrawal Rejected\n\nAmount: $${amount}\nYour withdrawal request has been rejected.`
+            try {
+                await update(ref(database, `withdrawals/${withdrawalId}`), {
+                    status: 'rejected',
+                    rejectedAt: Date.now()
+                });
+
+                await sendTelegramNotification(userId,
+                    `❌ <b>Withdrawal Rejected</b>\n\n` +
+                    `Amount: $${amount.toFixed(2)}\n` +
+                    `Your withdrawal request has been rejected.\n` +
+                    `Balance refunded.`
                 );
 
                 showNotification('Withdrawal rejected', 'success');
                 loadWithdrawals();
+            } catch (error) {
+                console.error('Reject withdrawal error:', error);
+                showNotification('Rejection failed', 'error');
             }
+
+            showLoading(false);
         };
 
         // Load Trades
-        async function loadTrades() {
-            const tradesList = document.getElementById('tradesList');
-            tradesList.innerHTML = '';
+        window.loadTrades = async function() {
+            const tbody = document.getElementById('tradesTable');
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Loading...</td></tr>';
 
-            const usersRef = dbRef(database, 'users');
-            const usersSnapshot = await dbGet(usersRef);
+            try {
+                const tradesRef = ref(database, 'trades');
+                const snapshot = await get(tradesRef);
 
-            if (!usersSnapshot.exists()) {
-                tradesList.innerHTML = '<tr><td colspan="7" style="text-align: center;">No trades yet</td></tr>';
-                return;
-            }
-
-            let hasTrades = false;
-            for (const userId of Object.keys(usersSnapshot.val())) {
-                const tradesRef = dbRef(database, `trades/${userId}`);
-                const tradesSnapshot = await dbGet(tradesRef);
-
-                if (tradesSnapshot.exists()) {
-                    const userRef = dbRef(database, `users/${userId}`);
-                    const userSnapshot = await dbGet(userRef);
-                    const user = userSnapshot.val();
-
-                    Object.values(tradesSnapshot.val()).forEach(trade => {
-                        if (trade.status === 'active') {
-                            hasTrades = true;
-                            const row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td>${user.firstName} ${user.lastName}</td>
-                                <td>${trade.pair}</td>
-                                <td>$${trade.price}</td>
-                                <td>$${trade.dailyEarning}</td>
-                                <td>${trade.daysRemaining}</td>
-                                <td>$${trade.totalEarned.toFixed(2)}</td>
-                                <td><span class="badge badge-active">${trade.status}</span></td>
-                            `;
-                            tradesList.appendChild(row);
-                        }
-                    });
+                if (!snapshot.exists()) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No trades yet</td></tr>';
+                    return;
                 }
+
+                const allTrades = [];
+                Object.entries(snapshot.val()).forEach(([userId, userTrades]) => {
+                    Object.entries(userTrades).forEach(([tradeId, trade]) => {
+                        allTrades.push({ userId, tradeId, ...trade });
+                    });
+                });
+
+                allTrades.sort((a, b) => b.purchaseDate - a.purchaseDate);
+
+                tbody.innerHTML = allTrades.map(trade => `
+                    <tr>
+                        <td>${trade.userId.substr(0, 12)}...</td>
+                        <td>${trade.pair}</td>
+                        <td>$${trade.investment.toFixed(2)}</td>
+                        <td>$${trade.dailyEarning.toFixed(2)}</td>
+                        <td>${trade.daysRemaining} / ${trade.duration}</td>
+                        <td><span class="status-badge status-${trade.status}">${trade.status}</span></td>
+                        <td>
+                            ${trade.status === 'active' ? `
+                                <button class="btn btn-danger" onclick="cancelTrade('${trade.userId}', '${trade.tradeId}')">
+                                    <i class="fas fa-times"></i> Cancel
+                                </button>
+                            ` : '-'}
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Trades load error:', error);
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Error loading trades</td></tr>';
+            }
+        };
+
+        // Cancel Trade
+        window.cancelTrade = async function(userId, tradeId) {
+            if (!confirm('Are you sure you want to cancel this trade?')) return;
+
+            showLoading(true);
+
+            try {
+                await update(ref(database, `trades/${userId}/${tradeId}`), {
+                    status: 'cancelled',
+                    cancelledAt: Date.now()
+                });
+
+                showNotification('Trade cancelled successfully', 'success');
+                loadTrades();
+            } catch (error) {
+                console.error('Cancel trade error:', error);
+                showNotification('Cancellation failed', 'error');
             }
 
-            if (!hasTrades) {
-                tradesList.innerHTML = '<tr><td colspan="7" style="text-align: center;">No active trades</td></tr>';
-            }
-        }
+            showLoading(false);
+        };
 
         // Load Tasks
-        async function loadTasks() {
-            const tasksRef = dbRef(database, 'tasks');
-            const snapshot = await dbGet(tasksRef);
-            const tasksList = document.getElementById('tasksList');
-            tasksList.innerHTML = '';
+        window.loadTasks = async function() {
+            const tbody = document.getElementById('tasksTable');
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Loading...</td></tr>';
 
-            if (!snapshot.exists()) {
-                tasksList.innerHTML = '<tr><td colspan="6" style="text-align: center;">No tasks yet</td></tr>';
-                return;
+            try {
+                const tasksRef = ref(database, 'tasks');
+                const snapshot = await get(tasksRef);
+
+                if (!snapshot.exists()) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No tasks yet</td></tr>';
+                    return;
+                }
+
+                const tasks = Object.entries(snapshot.val());
+
+                tbody.innerHTML = tasks.map(([taskId, task]) => `
+                    <tr>
+                        <td>${task.title}</td>
+                        <td>${task.description}</td>
+                        <td>$${task.reward.toFixed(2)}</td>
+                        <td><a href="${task.link}" target="_blank">${task.link.substr(0, 30)}...</a></td>
+                        <td>
+                            <button class="btn btn-danger" onclick="deleteTask('${taskId}')">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Tasks load error:', error);
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Error loading tasks</td></tr>';
             }
+        };
 
-            const tasks = snapshot.val();
-            Object.entries(tasks).forEach(([taskId, task]) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td><img src="${task.logo}" style="width: 40px; height: 40px; border-radius: 5px;"></td>
-                    <td>${task.heading}</td>
-                    <td>${task.description}</td>
-                    <td>$${task.reward}</td>
-                    <td><a href="${task.link}" target="_blank">Link</a></td>
-                    <td>
-                        <button class="icon-btn btn-danger" onclick="deleteTask('${taskId}')">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                `;
-                tasksList.appendChild(row);
-            });
-        }
-
-        // Add Task
-        window.openAddTaskModal = function() {
+        // Show Add Task Modal
+        window.showAddTaskModal = function() {
             document.getElementById('addTaskModal').classList.add('active');
         };
 
+        // Add Task
         window.addTask = async function() {
-            const logo = document.getElementById('taskLogo').value;
-            const heading = document.getElementById('taskHeading').value;
-            const description = document.getElementById('taskDescription').value;
+            const title = document.getElementById('taskTitle').value.trim();
+            const description = document.getElementById('taskDescription').value.trim();
             const reward = parseFloat(document.getElementById('taskReward').value);
-            const link = document.getElementById('taskLink').value;
+            const link = document.getElementById('taskLink').value.trim();
+            const logo = document.getElementById('taskLogo').value.trim();
 
-            if (!logo || !heading || !description || !reward || !link) {
-                showNotification('Please fill all fields', 'error');
+            if (!title || !description || !reward || !link) {
+                showNotification('Please fill all required fields', 'error');
                 return;
             }
 
             showLoading(true);
 
-            const taskRef = dbPush(dbRef(database, 'tasks'));
-            await dbSet(taskRef, {
-                logo: logo,
-                heading: heading,
-                description: description,
-                reward: reward,
-                link: link,
-                createdAt: Date.now()
-            });
+            try {
+                await push(ref(database, 'tasks'), {
+                    title,
+                    description,
+                    reward,
+                    link,
+                    logo: logo || null,
+                    createdAt: Date.now()
+                });
+
+                showNotification('Task added successfully', 'success');
+                closeModal('addTaskModal');
+                loadTasks();
+                
+                // Clear form
+                document.getElementById('taskTitle').value = '';
+                document.getElementById('taskDescription').value = '';
+                document.getElementById('taskReward').value = '';
+                document.getElementById('taskLink').value = '';
+                document.getElementById('taskLogo').value = '';
+            } catch (error) {
+                console.error('Add task error:', error);
+                showNotification('Failed to add task', 'error');
+            }
 
             showLoading(false);
-            showNotification('Task added successfully', 'success');
-            closeModal('addTaskModal');
-            loadTasks();
-
-            // Clear form
-            document.getElementById('taskLogo').value = '';
-            document.getElementById('taskHeading').value = '';
-            document.getElementById('taskDescription').value = '';
-            document.getElementById('taskReward').value = '';
-            document.getElementById('taskLink').value = '';
         };
 
         // Delete Task
         window.deleteTask = async function(taskId) {
-            if (confirm('Are you sure you want to delete this task?')) {
-                await dbRemove(dbRef(database, `tasks/${taskId}`));
+            if (!confirm('Are you sure you want to delete this task?')) return;
+
+            showLoading(true);
+
+            try {
+                await remove(ref(database, `tasks/${taskId}`));
                 showNotification('Task deleted successfully', 'success');
                 loadTasks();
+            } catch (error) {
+                console.error('Delete task error:', error);
+                showNotification('Failed to delete task', 'error');
             }
+
+            showLoading(false);
+        };
+
+        // Load Redeem Codes
+        window.loadRedeemCodes = async function() {
+            const tbody = document.getElementById('redeemCodesTable');
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Loading...</td></tr>';
+
+            try {
+                const codesRef = ref(database, 'redeemCodes');
+                const snapshot = await get(codesRef);
+
+                if (!snapshot.exists()) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No codes yet</td></tr>';
+                    return;
+                }
+
+                const codes = Object.entries(snapshot.val()).sort((a, b) => b[1].createdAt - a[1].createdAt);
+
+                tbody.innerHTML = codes.map(([codeId, code]) => `
+                    <tr>
+                        <td><strong>${code.code}</strong></td>
+                        <td>$${code.amount.toFixed(2)}</td>
+                        <td><span class="status-badge ${code.used ? 'status-approved' : 'status-pending'}">${code.used ? 'Used' : 'Active'}</span></td>
+                        <td>${code.used ? code.usedBy.substr(0, 12) + '...' : '-'}</td>
+                        <td>${new Date(code.createdAt).toLocaleString()}</td>
+                        <td>
+                            ${!code.used ? `
+                                <button class="btn btn-danger" onclick="deleteCode('${codeId}')">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            ` : '-'}
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Codes load error:', error);
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Error loading codes</td></tr>';
+            }
+        };
+
+        // Show Generate Code Modal
+        window.showGenerateCodeModal = function() {
+            document.getElementById('generateCodeModal').classList.add('active');
         };
 
         // Generate Redeem Codes
         window.generateRedeemCodes = async function() {
+            const numCodes = parseInt(document.getElementById('numCodes').value);
             const minAmount = parseFloat(document.getElementById('minAmount').value);
             const maxAmount = parseFloat(document.getElementById('maxAmount').value);
-            const numCodes = parseInt(document.getElementById('numCodes').value);
 
-            if (minAmount >= maxAmount) {
-                showNotification('Max amount must be greater than min amount', 'error');
+            if (numCodes < 1 || minAmount <= 0 || maxAmount <= 0 || minAmount > maxAmount) {
+                showNotification('Invalid input values', 'error');
                 return;
             }
 
             showLoading(true);
 
-            for (let i = 0; i < numCodes; i++) {
-                const code = Math.random().toString(36).substring(2, 10).toUpperCase();
-                const amount = (Math.random() * (maxAmount - minAmount) + minAmount).toFixed(2);
+            try {
+                for (let i = 0; i < numCodes; i++) {
+                    const code = Math.random().toString(36).substr(2, 8).toUpperCase();
+                    const amount = Math.random() * (maxAmount - minAmount) + minAmount;
 
-                const codeRef = dbPush(dbRef(database, 'redeemCodes'));
-                await dbSet(codeRef, {
-                    code: code,
-                    amount: parseFloat(amount),
-                    used: false,
-                    createdAt: Date.now()
-                });
+                    await push(ref(database, 'redeemCodes'), {
+                        code,
+                        amount: parseFloat(amount.toFixed(2)),
+                        used: false,
+                        createdAt: Date.now()
+                    });
+                }
+
+                showNotification(`${numCodes} code(s) generated successfully`, 'success');
+                closeModal('generateCodeModal');
+                loadRedeemCodes();
+            } catch (error) {
+                console.error('Generate codes error:', error);
+                showNotification('Failed to generate codes', 'error');
             }
 
             showLoading(false);
-            showNotification(`${numCodes} redeem codes generated successfully`, 'success');
-            loadRedeemCodes();
         };
 
-        // Load Redeem Codes
-        async function loadRedeemCodes() {
-            const codesRef = dbRef(database, 'redeemCodes');
-            const snapshot = await dbGet(codesRef);
-            const codesList = document.getElementById('redeemCodesList');
-            codesList.innerHTML = '';
+        // Delete Code
+        window.deleteCode = async function(codeId) {
+            if (!confirm('Are you sure you want to delete this code?')) return;
 
-            if (!snapshot.exists()) {
-                codesList.innerHTML = '<tr><td colspan="6" style="text-align: center;">No codes generated yet</td></tr>';
-                return;
-            }
+            showLoading(true);
 
-            const codes = snapshot.val();
-            Object.entries(codes).forEach(([codeId, code]) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td><strong>${code.code}</strong></td>
-                    <td>$${code.amount.toFixed(2)}</td>
-                    <td><span class="badge ${code.used ? 'badge-rejected' : 'badge-approved'}">${code.used ? 'Used' : 'Available'}</span></td>
-                    <td>${code.usedBy || 'N/A'}</td>
-                    <td>${new Date(code.createdAt).toLocaleString()}</td>
-                    <td>
-                        <button class="icon-btn btn-danger" onclick="deleteRedeemCode('${codeId}')">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                `;
-                codesList.appendChild(row);
-            });
-        }
-
-        // Delete Redeem Code
-        window.deleteRedeemCode = async function(codeId) {
-            if (confirm('Are you sure you want to delete this code?')) {
-                await dbRemove(dbRef(database, `redeemCodes/${codeId}`));
+            try {
+                await remove(ref(database, `redeemCodes/${codeId}`));
                 showNotification('Code deleted successfully', 'success');
                 loadRedeemCodes();
+            } catch (error) {
+                console.error('Delete code error:', error);
+                showNotification('Failed to delete code', 'error');
             }
+
+            showLoading(false);
         };
 
         // Save Settings
         window.saveSettings = async function() {
-            const settings = {
-                platformName: document.getElementById('platformName').value,
-                minDeposit: parseFloat(document.getElementById('minDeposit').value),
-                minWithdraw: parseFloat(document.getElementById('minWithdraw').value),
-                referralBonus: parseFloat(document.getElementById('referralBonus').value),
-                referralCommission: parseFloat(document.getElementById('referralCommission').value)
-            };
+            const platformName = document.getElementById('platformName').value;
+            const minDeposit = parseFloat(document.getElementById('minDeposit').value);
+            const minWithdrawal = parseFloat(document.getElementById('minWithdrawal').value);
+            const referralBonus = parseFloat(document.getElementById('referralBonus').value);
+            const referralCommission = parseFloat(document.getElementById('referralCommission').value);
+            const newPassword = document.getElementById('newAdminPassword').value;
 
-            await dbSet(dbRef(database, 'settings'), settings);
-            showNotification('Settings saved successfully', 'success');
+            showLoading(true);
+
+            try {
+                await set(ref(database, 'settings'), {
+                    platformName,
+                    minDeposit,
+                    minWithdrawal,
+                    referralBonus,
+                    referralCommission
+                });
+
+                if (newPassword) {
+                    await update(ref(database, 'admin'), {
+                        password: newPassword
+                    });
+                }
+
+                showNotification('Settings saved successfully', 'success');
+                document.getElementById('newAdminPassword').value = '';
+            } catch (error) {
+                console.error('Save settings error:', error);
+                showNotification('Failed to save settings', 'error');
+            }
+
+            showLoading(false);
         };
 
-        // Save Bot Settings
-        window.saveBotSettings = async function() {
-            const botSettings = {
-                botToken: document.getElementById('botToken').value,
-                botLink: document.getElementById('botLink').value
-            };
-
-            await dbSet(dbRef(database, 'botSettings'), botSettings);
-            showNotification('Bot settings saved successfully', 'success');
-        };
-
-        // Utility Functions
+        // Utility functions
         window.closeModal = function(modalId) {
             document.getElementById(modalId).classList.remove('active');
         };
 
-        function showNotification(message, type) {
+        window.showNotification = function(message, type = 'success') {
             const notification = document.createElement('div');
-            notification.className = 'notification';
-            notification.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}" style="color: ${type === 'success' ? 'var(--success)' : 'var(--danger)'}; font-size: 24px;"></i>
-                    <div>${message}</div>
-                </div>
-            `;
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
             document.body.appendChild(notification);
 
             setTimeout(() => {
                 notification.remove();
             }, 3000);
-        }
-
-        function showLoading(show) {
-            document.getElementById('loading').classList.toggle('active', show);
-        }
-
-        async function sendTelegramNotification(userId, message) {
-            try {
-                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: userId,
-                        text: message,
-                        parse_mode: 'HTML'
-                    })
-                });
-            } catch (error) {
-                console.error('Telegram notification error:', error);
-            }
-        }
-
-        // Navigation
-        window.switchSection = function(section) {
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
-
-            const sectionMap = {
-                'dashboard': 'dashboardSection',
-                'users': 'usersSection',
-                'deposits': 'depositsSection',
-                'withdrawals': 'withdrawalsSection',
-                'trades': 'tradesSection',
-                'plans': 'plansSection',
-                'tasks': 'tasksSection',
-                'redeem': 'redeemSection',
-                'settings': 'settingsSection'
-            };
-
-            document.getElementById(sectionMap[section]).classList.add('active');
-            event.currentTarget.classList.add('active');
-
-            // Load data for specific sections
-            if (section === 'dashboard') {
-                loadDashboardStats();
-                loadRecentActivities();
-            } else if (section === 'users') {
-                loadUsers();
-            } else if (section === 'deposits') {
-                loadDeposits();
-            } else if (section === 'withdrawals') {
-                loadWithdrawals();
-            } else if (section === 'trades') {
-                loadTrades();
-            } else if (section === 'tasks') {
-                loadTasks();
-            } else if (section === 'redeem') {
-                loadRedeemCodes();
-            }
         };
 
-        // Initialize
-        loadDashboardStats();
-        loadRecentActivities();
-
-        // Auto-refresh every 30 seconds
-        setInterval(() => {
-            const activeSection = document.querySelector('.content-section.active').id;
-            if (activeSection === 'dashboardSection') {
-                loadDashboardStats();
-                loadRecentActivities();
-            } else if (activeSection === 'depositsSection') {
-                loadDeposits();
-            } else if (activeSection === 'withdrawalsSection') {
-                loadWithdrawals();
-            }
-        }, 30000);
+        window.showLoading = function(show) {
+            document.getElementById('loadingOverlay').classList.toggle('active', show);
+        };
     </script>
 </body>
 </html>
