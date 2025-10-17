@@ -9,98 +9,86 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         :root {
-            --primary: #6C5CE7;
-            --secondary: #00B894;
-            --danger: #FF7675;
-            --warning: #FDCB6E;
-            --dark: #2D3436;
-            --light: #DFE6E9;
-            --bg: #0F1419;
-            --card-bg: #1A1F26;
-            --text: #FFFFFF;
-            --text-secondary: #8899A6;
+            --primary-color: #6c5ce7;
+            --secondary-color: #a29bfe;
+            --success-color: #00b894;
+            --danger-color: #d63031;
+            --warning-color: #fdcb6e;
+            --dark-bg: #0a0e27;
+            --card-bg: #1a1f3a;
+            --text-primary: #ffffff;
+            --text-secondary: #b2bec3;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
         }
 
         /* Header */
         .header {
+            background: rgba(26, 31, 58, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px;
-            background: var(--card-bg);
-            border-radius: 15px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .logo {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: bold;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(45deg, #6c5ce7, #a29bfe);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .admin-badge {
-            background: linear-gradient(135deg, var(--danger), #FF4757);
-            padding: 10px 20px;
-            border-radius: 25px;
+            background: linear-gradient(45deg, var(--danger-color), #ff7675);
+            padding: 8px 20px;
+            border-radius: 20px;
             font-weight: bold;
-            box-shadow: 0 4px 15px rgba(255, 118, 117, 0.4);
         }
 
         /* Sidebar */
-        .layout {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 30px;
+        .container {
+            display: flex;
+            min-height: calc(100vh - 80px);
         }
 
         .sidebar {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 20px;
-            height: fit-content;
-            position: sticky;
-            top: 20px;
+            width: 280px;
+            background: rgba(26, 31, 58, 0.8);
+            padding: 30px 20px;
+            border-right: 2px solid rgba(108, 92, 231, 0.2);
         }
 
         .menu-item {
             padding: 15px 20px;
             margin-bottom: 10px;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 15px;
-            font-size: 16px;
+            color: var(--text-secondary);
         }
 
         .menu-item:hover {
             background: rgba(108, 92, 231, 0.2);
-            transform: translateX(5px);
+            color: var(--text-primary);
         }
 
         .menu-item.active {
-            background: linear-gradient(135deg, var(--primary), #5F4FD1);
-            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
         }
 
         .menu-icon {
@@ -109,7 +97,9 @@
 
         /* Main Content */
         .main-content {
-            min-height: 80vh;
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
         }
 
         .section {
@@ -118,7 +108,7 @@
 
         .section.active {
             display: block;
-            animation: fadeIn 0.3s;
+            animation: fadeIn 0.3s ease;
         }
 
         @keyframes fadeIn {
@@ -126,32 +116,34 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Dashboard Stats */
+        .section-title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #6c5ce7, #a29bfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Stats Cards */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .stat-card {
-            background: var(--card-bg);
-            padding: 25px;
+            background: rgba(26, 31, 58, 0.8);
+            padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            position: relative;
-            overflow: hidden;
+            border: 2px solid rgba(108, 92, 231, 0.3);
+            transition: all 0.3s ease;
         }
 
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100px;
-            height: 100px;
-            background: radial-gradient(circle, rgba(108, 92, 231, 0.2), transparent);
-            border-radius: 50%;
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3);
         }
 
         .stat-icon {
@@ -159,73 +151,47 @@
             margin-bottom: 15px;
         }
 
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 14px;
-            margin-bottom: 10px;
+        .stat-value {
+            font-size: 36px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
         }
 
-        .stat-value {
-            font-size: 32px;
-            font-weight: bold;
-            color: var(--secondary);
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
         }
 
         /* Tables */
         .table-container {
-            background: var(--card-bg);
+            background: rgba(26, 31, 58, 0.8);
             border-radius: 15px;
             padding: 20px;
             overflow-x: auto;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
-        .table-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .table-title {
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .search-box {
-            padding: 10px 20px;
-            background: var(--bg);
-            border: 2px solid var(--light);
-            border-radius: 10px;
-            color: var(--text);
-            font-size: 14px;
-            width: 300px;
-        }
-
-        .search-box:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        table {
+        .data-table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        th {
-            background: rgba(108, 92, 231, 0.2);
+        .data-table th,
+        .data-table td {
             padding: 15px;
             text-align: left;
+            border-bottom: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        .data-table th {
+            background: rgba(108, 92, 231, 0.2);
             font-weight: bold;
-            border-bottom: 2px solid var(--primary);
+            position: sticky;
+            top: 0;
         }
 
-        td {
-            padding: 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        tr:hover {
+        .data-table tr:hover {
             background: rgba(108, 92, 231, 0.1);
         }
 
@@ -233,47 +199,56 @@
         .btn {
             padding: 10px 20px;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             font-weight: bold;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), #5F4FD1);
-            color: white;
+            transition: all 0.3s ease;
+            margin-right: 10px;
         }
 
         .btn-success {
-            background: linear-gradient(135deg, var(--secondary), #00D2A0);
+            background: var(--success-color);
             color: white;
+        }
+
+        .btn-success:hover {
+            background: #00a383;
+            transform: scale(1.05);
         }
 
         .btn-danger {
-            background: linear-gradient(135deg, var(--danger), #FF4757);
+            background: var(--danger-color);
             color: white;
         }
 
-        .btn-warning {
-            background: linear-gradient(135deg, var(--warning), #FFA502);
-            color: var(--dark);
-        }
-
-        .btn:hover {
+        .btn-danger:hover {
+            background: #c0282a;
             transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5f4dd1;
+            transform: scale(1.05);
+        }
+
+        .btn-warning {
+            background: var(--warning-color);
+            color: #0a0e27;
         }
 
         /* Forms */
+        .form-container {
+            background: rgba(26, 31, 58, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
         .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -289,27 +264,83 @@
             display: block;
             margin-bottom: 8px;
             color: var(--text-secondary);
+            font-size: 14px;
             font-weight: bold;
         }
 
-        .form-input, .form-select, .form-textarea {
+        .form-input,
+        .form-select,
+        .form-textarea {
             width: 100%;
-            padding: 12px 15px;
-            background: var(--bg);
-            border: 2px solid var(--light);
+            padding: 15px;
+            background: rgba(10, 14, 39, 0.5);
+            border: 2px solid rgba(108, 92, 231, 0.3);
             border-radius: 10px;
-            color: var(--text);
-            font-size: 14px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
         }
 
-        .form-input:focus, .form-select:focus, .form-textarea:focus {
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
             outline: none;
-            border-color: var(--primary);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(108, 92, 231, 0.3);
         }
 
         .form-textarea {
             min-height: 100px;
             resize: vertical;
+        }
+
+        /* Status Badges */
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .status-pending {
+            background: var(--warning-color);
+            color: #0a0e27;
+        }
+
+        .status-approved {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .status-rejected {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        /* User Avatar */
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            width: 100%;
+            padding: 15px;
+            background: rgba(10, 14, 39, 0.5);
+            border: 2px solid rgba(108, 92, 231, 0.3);
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: var(--primary-color);
         }
 
         /* Modal */
@@ -318,13 +349,12 @@
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.8);
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
             z-index: 1000;
             justify-content: center;
             align-items: center;
-            padding: 20px;
         }
 
         .modal.active {
@@ -333,177 +363,82 @@
 
         .modal-content {
             background: var(--card-bg);
-            border-radius: 15px;
-            padding: 30px;
+            padding: 40px;
+            border-radius: 20px;
             max-width: 600px;
-            width: 100%;
+            width: 90%;
             max-height: 90vh;
             overflow-y: auto;
         }
 
         .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .modal-title {
             font-size: 24px;
             font-weight: bold;
+            margin-bottom: 20px;
+            color: var(--primary-color);
         }
 
-        .close-btn {
-            font-size: 30px;
+        .modal-close {
+            float: right;
+            font-size: 28px;
             cursor: pointer;
             color: var(--text-secondary);
         }
 
-        .close-btn:hover {
-            color: var(--danger);
-        }
-
-        /* Badge */
-        .badge {
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            display: inline-block;
-        }
-
-        .badge-pending {
-            background: var(--warning);
-            color: var(--dark);
-        }
-
-        .badge-approved {
-            background: var(--secondary);
-            color: white;
-        }
-
-        .badge-rejected {
-            background: var(--danger);
-            color: white;
-        }
-
-        .badge-active {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* Loading */
-        .loading {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.8);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .loading.active {
-            display: flex;
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255,255,255,0.3);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .modal-close:hover {
+            color: var(--danger-color);
         }
 
         /* Notification */
         .notification {
             position: fixed;
-            top: 20px;
+            top: 100px;
             right: 20px;
-            background: var(--card-bg);
+            background: rgba(26, 31, 58, 0.98);
             padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            z-index: 3000;
-            animation: slideIn 0.3s;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-color);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
             max-width: 350px;
         }
 
         @keyframes slideIn {
-            from { transform: translateX(400px); }
-            to { transform: translateX(0); }
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         .notification.success {
-            border-left: 5px solid var(--secondary);
+            border-left-color: var(--success-color);
         }
 
         .notification.error {
-            border-left: 5px solid var(--danger);
-        }
-
-        /* User Card */
-        .user-card {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .user-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--primary);
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        /* Charts */
-        .chart-container {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-        }
-
-        canvas {
-            max-width: 100%;
+            border-left-color: var(--danger-color);
         }
 
         /* Responsive */
-        @media (max-width: 1024px) {
-            .layout {
-                grid-template-columns: 1fr;
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
             }
 
             .sidebar {
-                position: relative;
-                top: 0;
+                width: 100%;
+                border-right: none;
+                border-bottom: 2px solid rgba(108, 92, 231, 0.2);
             }
-        }
 
-        @media (max-width: 768px) {
+            .main-content {
+                padding: 20px;
+            }
+
             .stats-grid {
                 grid-template-columns: 1fr;
             }
@@ -511,23 +446,49 @@
             .form-grid {
                 grid-template-columns: 1fr;
             }
+        }
 
-            .search-box {
-                width: 100%;
-            }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
         }
 
         .code-display {
-            background: var(--bg);
+            background: rgba(10, 14, 39, 0.5);
             padding: 20px;
             border-radius: 10px;
             font-size: 32px;
             font-weight: bold;
             text-align: center;
-            letter-spacing: 5px;
-            color: var(--secondary);
+            color: var(--success-color);
             margin: 20px 0;
-            border: 2px dashed var(--primary);
+            letter-spacing: 5px;
+        }
+
+        .plan-preview {
+            background: rgba(10, 14, 39, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .plan-preview-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(108, 92, 231, 0.2);
         }
 
         .image-preview {
@@ -540,273 +501,330 @@
 <script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
 </head>
 <body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">EXOTIX ADMIN</div>
+        <div class="admin-badge">🔐 Admin Panel</div>
+    </div>
+
+    <!-- Main Container -->
     <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="logo">⚡ EXOTIX ADMIN</div>
-            <div class="admin-badge">🔐 Administrator</div>
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="menu-item active" onclick="showSection('dashboard')">
+                <span class="menu-icon">📊</span>
+                <span>Dashboard</span>
+            </div>
+            <div class="menu-item" onclick="showSection('users')">
+                <span class="menu-icon">👥</span>
+                <span>Users</span>
+            </div>
+            <div class="menu-item" onclick="showSection('deposits')">
+                <span class="menu-icon">💰</span>
+                <span>Deposits</span>
+            </div>
+            <div class="menu-item" onclick="showSection('withdrawals')">
+                <span class="menu-icon">💸</span>
+                <span>Withdrawals</span>
+            </div>
+            <div class="menu-item" onclick="showSection('plans')">
+                <span class="menu-icon">📈</span>
+                <span>Plans</span>
+            </div>
+            <div class="menu-item" onclick="showSection('tasks')">
+                <span class="menu-icon">✅</span>
+                <span>Tasks</span>
+            </div>
+            <div class="menu-item" onclick="showSection('redeem')">
+                <span class="menu-icon">🎁</span>
+                <span>Redeem Codes</span>
+            </div>
+            <div class="menu-item" onclick="showSection('branding')">
+                <span class="menu-icon">🎨</span>
+                <span>Branding</span>
+            </div>
         </div>
 
-        <div class="layout">
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <div class="menu-item active" onclick="switchSection('dashboard')">
-                    <span class="menu-icon">📊</span>
-                    <span>Dashboard</span>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Dashboard Section -->
+            <div id="dashboard" class="section active">
+                <h1 class="section-title">Dashboard</h1>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-value" id="totalUsers">0</div>
+                        <div class="stat-label">Total Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📅</div>
+                        <div class="stat-value" id="todayUsers">0</div>
+                        <div class="stat-label">Today's Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-value">$<span id="totalDeposits">0</span></div>
+                        <div class="stat-label">Total Deposits</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💸</div>
+                        <div class="stat-value">$<span id="totalWithdrawals">0</span></div>
+                        <div class="stat-label">Total Withdrawals</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-value" id="activePlans">0</div>
+                        <div class="stat-label">Active Plans</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⏳</div>
+                        <div class="stat-value" id="pendingDeposits">0</div>
+                        <div class="stat-label">Pending Deposits</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⏳</div>
+                        <div class="stat-value" id="pendingWithdrawals">0</div>
+                        <div class="stat-label">Pending Withdrawals</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💎</div>
+                        <div class="stat-value">$<span id="platformRevenue">0</span></div>
+                        <div class="stat-label">Platform Revenue</div>
+                    </div>
                 </div>
-                <div class="menu-item" onclick="switchSection('users')">
-                    <span class="menu-icon">👥</span>
-                    <span>Users</span>
-                </div>
-                <div class="menu-item" onclick="switchSection('deposits')">
-                    <span class="menu-icon">💳</span>
-                    <span>Deposits</span>
-                </div>
-                <div class="menu-item" onclick="switchSection('withdrawals')">
-                    <span class="menu-icon">💸</span>
-                    <span>Withdrawals</span>
-                </div>
-                <div class="menu-item" onclick="switchSection('plans')">
-                    <span class="menu-icon">💎</span>
-                    <span>Plans</span>
-                </div>
-                <div class="menu-item" onclick="switchSection('tasks')">
-                    <span class="menu-icon">✅</span>
-                    <span>Tasks</span>
-                </div>
-                <div class="menu-item" onclick="switchSection('redeem')">
-                    <span class="menu-icon">🎁</span>
-                    <span>Redeem Codes</span>
-                </div>
-                <div class="menu-item" onclick="switchSection('settings')">
-                    <span class="menu-icon">⚙️</span>
-                    <span>Settings</span>
+
+                <h2 style="margin-bottom: 20px;">Recent Activities</h2>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Action</th>
+                                <th>Amount</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentActivities"></tbody>
+                    </table>
                 </div>
             </div>
 
-            <!-- Main Content -->
-            <div class="main-content">
-                <!-- Dashboard Section -->
-                <div id="dashboardSection" class="section active">
-                    <h2 style="margin-bottom: 20px;">📊 Dashboard Overview</h2>
-                    
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-icon">👥</div>
-                            <div class="stat-label">Total Users</div>
-                            <div class="stat-value" id="totalUsers">0</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">📈</div>
-                            <div class="stat-label">Today's Users</div>
-                            <div class="stat-value" id="todayUsers">0</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">💰</div>
-                            <div class="stat-label">Total Deposits</div>
-                            <div class="stat-value" id="totalDeposits">$0</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">💸</div>
-                            <div class="stat-label">Total Withdrawals</div>
-                            <div class="stat-value" id="totalWithdrawals">$0</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">⏳</div>
-                            <div class="stat-label">Pending Deposits</div>
-                            <div class="stat-value" id="pendingDeposits">0</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">⏳</div>
-                            <div class="stat-label">Pending Withdrawals</div>
-                            <div class="stat-value" id="pendingWithdrawals">0</div>
-                        </div>
-                    </div>
+            <!-- Users Section -->
+            <div id="users" class="section">
+                <h1 class="section-title">User Management</h1>
+                <input type="text" class="search-bar" id="userSearch" placeholder="Search users by name or ID..." onkeyup="filterUsers()">
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Avatar</th>
+                                <th>Name</th>
+                                <th>User ID</th>
+                                <th>Balance</th>
+                                <th>Total Deposit</th>
+                                <th>Referrals</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTable"></tbody>
+                    </table>
+                </div>
+            </div>
 
-                    <div class="chart-container">
-                        <h3 style="margin-bottom: 20px;">📈 User Growth</h3>
-                        <canvas id="userGrowthChart" width="400" height="200"></canvas>
-                    </div>
+            <!-- Deposits Section -->
+            <div id="deposits" class="section">
+                <h1 class="section-title">Deposit Management</h1>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Amount</th>
+                                <th>TX Hash</th>
+                                <th>Address</th>
+                                <th>Memo</th>
+                                <th>Status</th>
+                                <th>Time</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="depositsTable"></tbody>
+                    </table>
+                </div>
+            </div>
 
-                    <div class="table-container">
-                        <div class="table-header">
-                            <h3 class="table-title">Recent Activities</h3>
-                        </div>
-                        <div id="recentActivities"></div>
+            <!-- Withdrawals Section -->
+            <div id="withdrawals" class="section">
+                <h1 class="section-title">Withdrawal Management</h1>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Amount</th>
+                                <th>Address</th>
+                                <th>Memo</th>
+                                <th>Status</th>
+                                <th>Time</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="withdrawalsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Plans Section -->
+            <div id="plans" class="section">
+                <h1 class="section-title">Plans Management</h1>
+                <div class="form-container">
+                    <h2 style="margin-bottom: 20px;">Edit Trading Plans</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                        Note: Plans are currently hardcoded. You can view active user plans below.
+                    </p>
+                </div>
+                <h2 style="margin-bottom: 20px;">Active User Plans</h2>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Plan</th>
+                                <th>Investment</th>
+                                <th>Daily Earning</th>
+                                <th>Claims Left</th>
+                                <th>Total Earned</th>
+                                <th>Purchased</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userPlansTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tasks Section -->
+            <div id="tasks" class="section">
+                <h1 class="section-title">Tasks Management</h1>
+                <div class="form-container">
+                    <h2 style="margin-bottom: 20px;">Add New Task</h2>
+                    <div class="form-group">
+                        <label class="form-label">Task Logo URL</label>
+                        <input type="text" class="form-input" id="taskLogo" placeholder="Enter logo URL">
                     </div>
+                    <div class="form-group">
+                        <label class="form-label">Task Heading</label>
+                        <input type="text" class="form-input" id="taskHeading" placeholder="Enter task heading">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Task Description</label>
+                        <textarea class="form-textarea" id="taskDescription" placeholder="Enter task description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Task Link</label>
+                        <input type="text" class="form-input" id="taskLink" placeholder="Enter task link">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Reward (USDT)</label>
+                        <input type="number" class="form-input" id="taskReward" placeholder="Enter reward amount" step="0.01">
+                    </div>
+                    <button class="btn btn-primary" onclick="addTask()">Add Task</button>
                 </div>
 
-                <!-- Users Section -->
-                <div id="usersSection" class="section">
-                    <h2 style="margin-bottom: 20px;">👥 User Management</h2>
-                    
-                    <div class="table-container">
-                        <div class="table-header">
-                            <h3 class="table-title">All Users</h3>
-                            <input type="text" class="search-box" id="userSearch" placeholder="Search users..." onkeyup="searchUsers()">
-                        </div>
-                        <div id="usersList"></div>
-                    </div>
+                <h2 style="margin-bottom: 20px;">Active Tasks</h2>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Logo</th>
+                                <th>Heading</th>
+                                <th>Description</th>
+                                <th>Reward</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tasksTable"></tbody>
+                    </table>
                 </div>
+            </div>
 
-                <!-- Deposits Section -->
-                <div id="depositsSection" class="section">
-                    <h2 style="margin-bottom: 20px;">💳 Deposit Management</h2>
-                    
-                    <div class="table-container">
-                        <div class="table-header">
-                            <h3 class="table-title">Pending Deposits</h3>
-                        </div>
-                        <div id="pendingDepositsList"></div>
-                    </div>
-
-                    <div class="table-container">
-                        <div class="table-header">
-                            <h3 class="table-title">All Deposits</h3>
-                            <input type="text" class="search-box" id="depositSearch" placeholder="Search deposits..." onkeyup="searchDeposits()">
-                        </div>
-                        <div id="allDepositsList"></div>
-                    </div>
-                </div>
-
-                <!-- Withdrawals Section -->
-                <div id="withdrawalsSection" class="section">
-                    <h2 style="margin-bottom: 20px;">💸 Withdrawal Management</h2>
-                    
-                    <div class="table-container">
-                        <div class="table-header">
-                            <h3 class="table-title">Pending Withdrawals</h3>
-                        </div>
-                        <div id="pendingWithdrawalsList"></div>
-                    </div>
-
-                    <div class="table-container">
-                        <div class="table-header">
-                            <h3 class="table-title">All Withdrawals</h3>
-                            <input type="text" class="search-box" id="withdrawalSearch" placeholder="Search withdrawals..." onkeyup="searchWithdrawals()">
-                        </div>
-                        <div id="allWithdrawalsList"></div>
-                    </div>
-                </div>
-
-                <!-- Plans Section -->
-                <div id="plansSection" class="section">
-                    <h2 style="margin-bottom: 20px;">💎 Plan Management</h2>
-                    
-                    <div class="table-container">
-                        <div class="table-header">
-                            <h3 class="table-title">Active Plans</h3>
-                            <button class="btn btn-primary" onclick="showAddPlanModal()">➕ Add New Plan</button>
-                        </div>
-                        <div id="plansList"></div>
-                    </div>
-                </div>
-
-                <!-- Tasks Section -->
-                <div id="tasksSection" class="section">
-                    <h2 style="margin-bottom: 20px;">✅ Task Management</h2>
-                    
-                    <div class="table-container">
-                        <div class="table-header">
-                            <h3 class="table-title">All Tasks</h3>
-                            <button class="btn btn-primary" onclick="showAddTaskModal()">➕ Add New Task</button>
-                        </div>
-                        <div id="tasksList"></div>
-                    </div>
-                </div>
-
-                <!-- Redeem Codes Section -->
-                <div id="redeemSection" class="section">
-                    <h2 style="margin-bottom: 20px;">🎁 Redeem Code Management</h2>
-                    
-                    <div class="table-container">
-                        <h3 style="margin-bottom: 20px;">Generate New Code</h3>
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label class="form-label">Minimum Amount ($)</label>
-                                <input type="number" class="form-input" id="redeemMinAmount" placeholder="0.10" step="0.01" value="0.10">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Maximum Amount ($)</label>
-                                <input type="number" class="form-input" id="redeemMaxAmount" placeholder="1.00" step="0.01" value="1.00">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Maximum Uses</label>
-                                <input type="number" class="form-input" id="redeemMaxUses" placeholder="1" value="1">
-                            </div>
-                        </div>
-                        <button class="btn btn-success" onclick="generateRedeemCode()">🎁 Generate Code</button>
-                        
-                        <div id="generatedCodeDisplay"></div>
-                    </div>
-
-                    <div class="table-container">
-                        <div class="table-header">
-                            <h3 class="table-title">All Redeem Codes</h3>
-                        </div>
-                        <div id="redeemCodesList"></div>
-                    </div>
-                </div>
-
-                <!-- Settings Section -->
-                <div id="settingsSection" class="section">
-                    <h2 style="margin-bottom: 20px;">⚙️ Platform Settings</h2>
-                    
-                    <div class="table-container">
-                        <h3 style="margin-bottom: 20px;">General Settings</h3>
+            <!-- Redeem Codes Section -->
+            <div id="redeem" class="section">
+                <h1 class="section-title">Redeem Code Generator</h1>
+                <div class="form-container">
+                    <h2 style="margin-bottom: 20px;">Generate New Code</h2>
+                    <div class="form-grid">
                         <div class="form-group">
-                            <label class="form-label">Platform Name</label>
-                            <input type="text" class="form-input" id="platformName" value="Exotix">
+                            <label class="form-label">Minimum Amount ($)</label>
+                            <input type="number" class="form-input" id="redeemMin" placeholder="0.10" step="0.01" value="0.10">
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Minimum Deposit ($)</label>
-                            <input type="number" class="form-input" id="minDeposit" value="30" step="1">
+                            <label class="form-label">Maximum Amount ($)</label>
+                            <input type="number" class="form-input" id="redeemMax" placeholder="1.00" step="0.01" value="1.00">
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Minimum Withdrawal ($)</label>
-                            <input type="number" class="form-input" id="minWithdrawal" value="0.10" step="0.01">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Referral Bonus ($)</label>
-                            <input type="number" class="form-input" id="referralBonus" value="0.20" step="0.01">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Referral Commission (%)</label>
-                            <input type="number" class="form-input" id="referralCommission" value="20" step="1">
-                        </div>
-                        <button class="btn btn-success" onclick="saveSettings()">💾 Save Settings</button>
                     </div>
+                    <div class="form-group">
+                        <label class="form-label">Number of Uses (0 = unlimited)</label>
+                        <input type="number" class="form-input" id="redeemUses" placeholder="0" value="1">
+                    </div>
+                    <button class="btn btn-primary" onclick="generateRedeemCode()">Generate Code</button>
+                    <div id="generatedCode"></div>
+                </div>
 
-                    <div class="table-container">
-                        <h3 style="margin-bottom: 20px;">Button Icons</h3>
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label class="form-label">Trade Icon URL</label>
-                                <input type="text" class="form-input" id="tradeIcon" placeholder="Icon URL">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Wallet Icon URL</label>
-                                <input type="text" class="form-input" id="walletIcon" placeholder="Icon URL">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Referral Icon URL</label>
-                                <input type="text" class="form-input" id="referralIcon" placeholder="Icon URL">
-                            </div>
-                        </div>
-                        <button class="btn btn-success" onclick="saveIcons()">💾 Save Icons</button>
+                <h2 style="margin-bottom: 20px;">Active Redeem Codes</h2>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Amount Range</th>
+                                <th>Uses</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="redeemCodesTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Branding Section -->
+            <div id="branding" class="section">
+                <h1 class="section-title">Branding & Customization</h1>
+                <div class="form-container">
+                    <h2 style="margin-bottom: 20px;">Platform Settings</h2>
+                    <div class="form-group">
+                        <label class="form-label">Platform Name</label>
+                        <input type="text" class="form-input" id="platformName" value="EXOTIX">
                     </div>
+                    <div class="form-group">
+                        <label class="form-label">Welcome Message</label>
+                        <textarea class="form-textarea" id="welcomeMessage" placeholder="Enter welcome message for new users"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Support Link</label>
+                        <input type="text" class="form-input" id="supportLink" placeholder="Enter support link">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Minimum Deposit ($)</label>
+                        <input type="number" class="form-input" id="minDeposit" value="30" step="1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Minimum Withdrawal ($)</label>
+                        <input type="number" class="form-input" id="minWithdraw" value="0.10" step="0.01">
+                    </div>
+                    <button class="btn btn-primary" onclick="saveBranding()">Save Settings</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- User Edit Modal -->
-    <div id="userEditModal" class="modal">
+    <div id="userModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Edit User</h3>
-                <span class="close-btn" onclick="closeModal('userEditModal')">&times;</span>
-            </div>
+            <span class="modal-close" onclick="closeModal('userModal')">&times;</span>
+            <div class="modal-header">Edit User</div>
             <div class="form-group">
                 <label class="form-label">User ID</label>
                 <input type="text" class="form-input" id="editUserId" readonly>
@@ -823,89 +841,15 @@
                     <option value="subtract">Subtract from Balance</option>
                 </select>
             </div>
-            <div style="display: flex; gap: 10px; margin-top: 20px;">
-                <button class="btn btn-success" onclick="updateUserBalance()">💾 Save Changes</button>
-                <button class="btn btn-danger" onclick="banUser()">🚫 Ban User</button>
-            </div>
+            <button class="btn btn-primary" onclick="updateUserBalance()">Update Balance</button>
+            <button class="btn btn-danger" onclick="banUser()">Ban User</button>
         </div>
-    </div>
-
-    <!-- Add Plan Modal -->
-    <div id="addPlanModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Add New Plan</h3>
-                <span class="close-btn" onclick="closeModal('addPlanModal')">&times;</span>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Trading Pair</label>
-                <input type="text" class="form-input" id="planPair" placeholder="BTC/USDT">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Price ($)</label>
-                <input type="number" class="form-input" id="planPrice" step="1">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Daily Earning ($)</label>
-                <input type="number" class="form-input" id="planDaily" step="1">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Duration (Days)</label>
-                <input type="number" class="form-input" id="planDuration" value="30">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Color (Hex)</label>
-                <input type="color" class="form-input" id="planColor" value="#6C5CE7">
-            </div>
-            <button class="btn btn-success" onclick="addPlan()">➕ Add Plan</button>
-        </div>
-    </div>
-
-    <!-- Add Task Modal -->
-    <div id="addTaskModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Add New Task</h3>
-                <span class="close-btn" onclick="closeModal('addTaskModal')">&times;</span>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Task Title</label>
-                <input type="text" class="form-input" id="taskTitle" placeholder="Join our Telegram channel">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Description</label>
-                <textarea class="form-textarea" id="taskDescription" placeholder="Join our official Telegram channel and get rewarded"></textarea>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Task Link</label>
-                <input type="text" class="form-input" id="taskLink" placeholder="https://t.me/exotix">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Reward ($)</label>
-                <input type="number" class="form-input" id="taskReward" step="0.01" value="0.50">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Icon (Emoji)</label>
-                <input type="text" class="form-input" id="taskIcon" placeholder="📱" maxlength="2">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Logo URL (Optional)</label>
-                <input type="text" class="form-input" id="taskLogo" placeholder="https://...">
-                <img id="taskLogoPreview" class="image-preview" style="display: none;">
-            </div>
-            <button class="btn btn-success" onclick="addTask()">➕ Add Task</button>
-        </div>
-    </div>
-
-    <!-- Loading Overlay -->
-    <div class="loading" id="loadingOverlay">
-        <div class="spinner"></div>
     </div>
 
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getDatabase, ref, set, get, update, onValue, push, remove } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+        import { getDatabase, ref, set, get, update, push, onValue, remove } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyBfR97veh6idxb81mH6N5_Gq8-CpW2D7bE",
@@ -925,49 +869,31 @@
         window.dbSet = set;
         window.dbGet = get;
         window.dbUpdate = update;
-        window.dbOnValue = onValue;
         window.dbPush = push;
+        window.dbOnValue = onValue;
         window.dbRemove = remove;
-
-        const BOT_TOKEN = '7930967027:AAG3AkEZrkKGxTFOyVHwN8VpA9HgusAdRmw';
-        window.BOT_TOKEN = BOT_TOKEN;
-
-        // Initialize admin panel
-        loadDashboard();
-        loadUsers();
-        loadDeposits();
-        loadWithdrawals();
-        loadPlans();
-        loadTasks();
-        loadRedeemCodes();
     </script>
 
     <script>
-        // Navigation
-        function switchSection(section) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
-            
-            const sectionMap = {
-                'dashboard': 'dashboardSection',
-                'users': 'usersSection',
-                'deposits': 'depositsSection',
-                'withdrawals': 'withdrawalsSection',
-                'plans': 'plansSection',
-                'tasks': 'tasksSection',
-                'redeem': 'redeemSection',
-                'settings': 'settingsSection'
-            };
-            
-            document.getElementById(sectionMap[section]).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
+        const BOT_TOKEN = '8332448822:AAHKhDvougBhBThL6aBl3hGjZbKFGAq7BUs';
+
+        // Initialize
+        window.addEventListener('load', () => {
+            loadDashboard();
+            loadUsers();
+            loadDeposits();
+            loadWithdrawals();
+            loadUserPlans();
+            loadTasks();
+            loadRedeemCodes();
+        });
 
         // Dashboard
         async function loadDashboard() {
             try {
                 // Load users
-                const usersSnapshot = await window.dbGet(window.dbRef(window.database, 'users'));
+                const usersRef = window.dbRef(window.database, 'users');
+                const usersSnapshot = await window.dbGet(usersRef);
                 const users = usersSnapshot.exists() ? Object.values(usersSnapshot.val()) : [];
                 
                 document.getElementById('totalUsers').textContent = users.length;
@@ -976,497 +902,306 @@
                 const today = new Date().setHours(0, 0, 0, 0);
                 const todayUsers = users.filter(u => u.createdAt >= today).length;
                 document.getElementById('todayUsers').textContent = todayUsers;
-                
+
                 // Total deposits
+                const depositsRef = window.dbRef(window.database, 'deposits');
+                const depositsSnapshot = await window.dbGet(depositsRef);
                 let totalDeposits = 0;
-                let pendingDepositsCount = 0;
-                const depositsSnapshot = await window.dbGet(window.dbRef(window.database, 'deposits'));
+                let pendingDeposits = 0;
                 if (depositsSnapshot.exists()) {
-                    Object.values(depositsSnapshot.val()).forEach(userDeposits => {
-                        Object.values(userDeposits).forEach(deposit => {
-                            if (deposit.status === 'approved') {
-                                totalDeposits += deposit.amount;
-                            }
-                            if (deposit.status === 'pending') {
-                                pendingDepositsCount++;
-                            }
-                        });
-                    });
+                    const deposits = Object.values(depositsSnapshot.val());
+                    totalDeposits = deposits.filter(d => d.status === 'approved').reduce((sum, d) => sum + d.amount, 0);
+                    pendingDeposits = deposits.filter(d => d.status === 'pending').length;
                 }
-                document.getElementById('totalDeposits').textContent = '$' + totalDeposits.toFixed(2);
-                document.getElementById('pendingDeposits').textContent = pendingDepositsCount;
-                
+                document.getElementById('totalDeposits').textContent = totalDeposits.toFixed(2);
+                document.getElementById('pendingDeposits').textContent = pendingDeposits;
+
                 // Total withdrawals
+                const withdrawalsRef = window.dbRef(window.database, 'withdrawals');
+                const withdrawalsSnapshot = await window.dbGet(withdrawalsRef);
                 let totalWithdrawals = 0;
-                let pendingWithdrawalsCount = 0;
-                const withdrawalsSnapshot = await window.dbGet(window.dbRef(window.database, 'withdrawals'));
+                let pendingWithdrawals = 0;
                 if (withdrawalsSnapshot.exists()) {
-                    Object.values(withdrawalsSnapshot.val()).forEach(userWithdrawals => {
-                        Object.values(userWithdrawals).forEach(withdrawal => {
-                            if (withdrawal.status === 'approved') {
-                                totalWithdrawals += withdrawal.amount;
-                            }
-                            if (withdrawal.status === 'pending') {
-                                pendingWithdrawalsCount++;
-                            }
-                        });
+                    const withdrawals = Object.values(withdrawalsSnapshot.val());
+                    totalWithdrawals = withdrawals.filter(w => w.status === 'approved').reduce((sum, w) => sum + w.amount, 0);
+                    pendingWithdrawals = withdrawals.filter(w => w.status === 'pending').length;
+                }
+                document.getElementById('totalWithdrawals').textContent = totalWithdrawals.toFixed(2);
+                document.getElementById('pendingWithdrawals').textContent = pendingWithdrawals;
+
+                // Active plans
+                const plansRef = window.dbRef(window.database, 'userPlans');
+                const plansSnapshot = await window.dbGet(plansRef);
+                let activePlans = 0;
+                if (plansSnapshot.exists()) {
+                    const allPlans = plansSnapshot.val();
+                    Object.values(allPlans).forEach(userPlans => {
+                        activePlans += Object.values(userPlans).filter(p => p.claimsRemaining > 0).length;
                     });
                 }
-                document.getElementById('totalWithdrawals').textContent = '$' + totalWithdrawals.toFixed(2);
-                document.getElementById('pendingWithdrawals').textContent = pendingWithdrawalsCount;
-                
-                // Draw chart
-                drawUserGrowthChart(users);
-                
-                // Load recent activities
+                document.getElementById('activePlans').textContent = activePlans;
+
+                // Platform revenue (deposits - withdrawals)
+                const revenue = totalDeposits - totalWithdrawals;
+                document.getElementById('platformRevenue').textContent = revenue.toFixed(2);
+
+                // Recent activities
                 loadRecentActivities();
             } catch (error) {
                 console.error('Error loading dashboard:', error);
             }
         }
 
-        function drawUserGrowthChart(users) {
-            const canvas = document.getElementById('userGrowthChart');
-            const ctx = canvas.getContext('2d');
-            const width = canvas.width;
-            const height = canvas.height;
-            
-            ctx.clearRect(0, 0, width, height);
-            
-            // Group users by day (last 7 days)
-            const days = 7;
-            const data = new Array(days).fill(0);
-            const labels = [];
-            
-            for (let i = days - 1; i >= 0; i--) {
-                const date = new Date();
-                date.setDate(date.getDate() - i);
-                date.setHours(0, 0, 0, 0);
-                labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
-                
-                const nextDay = new Date(date);
-                nextDay.setDate(nextDay.getDate() + 1);
-                
-                data[days - 1 - i] = users.filter(u => u.createdAt >= date.getTime() && u.createdAt < nextDay.getTime()).length;
-            }
-            
-            // Draw bars
-            const barWidth = width / days - 20;
-            const maxValue = Math.max(...data, 1);
-            
-            data.forEach((value, index) => {
-                const barHeight = (value / maxValue) * (height - 60);
-                const x = index * (width / days) + 10;
-                const y = height - barHeight - 40;
-                
-                // Draw bar
-                const gradient = ctx.createLinearGradient(0, y, 0, height - 40);
-                gradient.addColorStop(0, '#6C5CE7');
-                gradient.addColorStop(1, '#00B894');
-                
-                ctx.fillStyle = gradient;
-                ctx.fillRect(x, y, barWidth, barHeight);
-                
-                // Draw value
-                ctx.fillStyle = '#FFFFFF';
-                ctx.font = '14px Arial';
-                ctx.textAlign = 'center';
-                ctx.fillText(value, x + barWidth / 2, y - 5);
-                
-                // Draw label
-                ctx.fillStyle = '#8899A6';
-                ctx.font = '12px Arial';
-                ctx.fillText(labels[index], x + barWidth / 2, height - 20);
-            });
-        }
-
         async function loadRecentActivities() {
-            const container = document.getElementById('recentActivities');
-            container.innerHTML = '<p style="text-align: center; padding: 20px;">Loading...</p>';
-            
-            try {
-                const activities = [];
-                
-                // Load deposits
-                const depositsSnapshot = await window.dbGet(window.dbRef(window.database, 'deposits'));
-                if (depositsSnapshot.exists()) {
-                    Object.entries(depositsSnapshot.val()).forEach(([userId, userDeposits]) => {
-                        Object.entries(userDeposits).forEach(([id, deposit]) => {
-                            activities.push({
-                                type: 'deposit',
-                                userId,
-                                amount: deposit.amount,
-                                status: deposit.status,
-                                timestamp: deposit.timestamp
-                            });
-                        });
-                    });
-                }
-                
-                // Load withdrawals
-                const withdrawalsSnapshot = await window.dbGet(window.dbRef(window.database, 'withdrawals'));
-                if (withdrawalsSnapshot.exists()) {
-                    Object.entries(withdrawalsSnapshot.val()).forEach(([userId, userWithdrawals]) => {
-                        Object.entries(userWithdrawals).forEach(([id, withdrawal]) => {
-                            activities.push({
-                                type: 'withdrawal',
-                                userId,
-                                amount: withdrawal.amount,
-                                status: withdrawal.status,
-                                timestamp: withdrawal.timestamp
-                            });
-                        });
-                    });
-                }
-                
-                // Sort by timestamp
-                activities.sort((a, b) => b.timestamp - a.timestamp);
-                
-                // Display top 10
-                container.innerHTML = '';
-                activities.slice(0, 10).forEach(activity => {
-                    const date = new Date(activity.timestamp).toLocaleString();
-                    const icon = activity.type === 'deposit' ? '📥' : '📤';
-                    
-                    const item = document.createElement('div');
-                    item.style.cssText = 'padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center;';
-                    item.innerHTML = `
-                        <div>
-                            <div style="font-weight: bold;">${icon} ${activity.type.charAt(0).toUpperCase() + activity.type.slice(1)}</div>
-                            <div style="color: var(--text-secondary); font-size: 14px;">User: ${activity.userId} • ${date}</div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div style="font-weight: bold; color: var(--secondary);">$${activity.amount.toFixed(2)}</div>
-                            <span class="badge badge-${activity.status}">${activity.status.toUpperCase()}</span>
-                        </div>
-                    `;
-                    container.appendChild(item);
-                });
-                
-                if (activities.length === 0) {
-                    container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px;">No activities yet</p>';
-                }
-            } catch (error) {
-                console.error('Error loading activities:', error);
-                container.innerHTML = '<p style="text-align: center; color: var(--danger); padding: 20px;">Error loading activities</p>';
+            const tbody = document.getElementById('recentActivities');
+            const activitiesRef = window.dbRef(window.database, 'activities');
+            const snapshot = await window.dbGet(activitiesRef);
+
+            if (!snapshot.exists()) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">No activities yet</td></tr>';
+                return;
             }
+
+            const allActivities = [];
+            const activities = snapshot.val();
+            
+            Object.keys(activities).forEach(userId => {
+                Object.values(activities[userId]).forEach(activity => {
+                    allActivities.push({ ...activity, userId });
+                });
+            });
+
+            allActivities.sort((a, b) => b.timestamp - a.timestamp);
+            const recent = allActivities.slice(0, 10);
+
+            tbody.innerHTML = recent.map(activity => `
+                <tr>
+                    <td>User ${activity.userId}</td>
+                    <td>${activity.description}</td>
+                    <td>$${activity.amount.toFixed(2)}</td>
+                    <td>${new Date(activity.timestamp).toLocaleString()}</td>
+                </tr>
+            `).join('');
         }
 
-        // Users Management
+        // Users
+        let allUsers = [];
         async function loadUsers() {
-            const container = document.getElementById('usersList');
-            container.innerHTML = '<p style="text-align: center; padding: 20px;">Loading...</p>';
-            
-            try {
-                const snapshot = await window.dbGet(window.dbRef(window.database, 'users'));
-                
-                if (!snapshot.exists()) {
-                    container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px;">No users yet</p>';
-                    return;
-                }
-                
-                const users = Object.entries(snapshot.val());
-                window.allUsers = users; // Store for search
-                
-                displayUsers(users);
-            } catch (error) {
-                console.error('Error loading users:', error);
-                container.innerHTML = '<p style="text-align: center; color: var(--danger); padding: 20px;">Error loading users</p>';
+            const usersRef = window.dbRef(window.database, 'users');
+            const snapshot = await window.dbGet(usersRef);
+
+            if (!snapshot.exists()) {
+                document.getElementById('usersTable').innerHTML = '<tr><td colspan="8" style="text-align: center;">No users yet</td></tr>';
+                return;
             }
+
+            allUsers = Object.values(snapshot.val());
+            displayUsers(allUsers);
         }
 
         function displayUsers(users) {
-            const container = document.getElementById('usersList');
-            container.innerHTML = '';
-            
-            users.forEach(([userId, user]) => {
-                const joinDate = new Date(user.createdAt).toLocaleDateString();
-                
-                const card = document.createElement('div');
-                card.className = 'user-card';
-                card.innerHTML = `
-                    <div class="user-info">
-                        <img src="${user.photoUrl || 'https://via.placeholder.com/50'}" class="user-avatar" alt="Avatar">
-                        <div>
-                            <div style="font-weight: bold; margin-bottom: 5px;">${user.telegramName || 'User'}</div>
-                            <div style="color: var(--text-secondary); font-size: 14px;">ID: ${userId}</div>
-                            <div style="color: var(--text-secondary); font-size: 12px;">Joined: ${joinDate}</div>
-                        </div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div style="font-size: 20px; font-weight: bold; color: var(--secondary); margin-bottom: 10px;">$${user.balance.toFixed(2)}</div>
-                        <div class="action-buttons">
-                            <button class="btn btn-primary" onclick="editUser('${userId}')">✏️ Edit</button>
-                            <button class="btn btn-danger" onclick="deleteUser('${userId}')">🗑️ Delete</button>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
+            const tbody = document.getElementById('usersTable');
+            tbody.innerHTML = users.map(user => `
+                <tr>
+                    <td><img src="${user.photoUrl}" alt="${user.firstName}" class="user-avatar"></td>
+                    <td>${user.firstName} ${user.lastName}</td>
+                    <td>${user.id}</td>
+                    <td>$${(user.balance || 0).toFixed(2)}</td>
+                    <td>$${(user.totalDeposit || 0).toFixed(2)}</td>
+                    <td>${user.referrals || 0}</td>
+                    <td>${new Date(user.createdAt).toLocaleDateString()}</td>
+                    <td>
+                        <button class="btn btn-primary" onclick="editUser(${user.id})">Edit</button>
+                    </td>
+                </tr>
+            `).join('');
         }
 
-        function searchUsers() {
-            const query = document.getElementById('userSearch').value.toLowerCase();
-            if (!window.allUsers) return;
-            
-            const filtered = window.allUsers.filter(([userId, user]) => {
-                return userId.toLowerCase().includes(query) ||
-                       (user.telegramName && user.telegramName.toLowerCase().includes(query)) ||
-                       (user.telegramUsername && user.telegramUsername.toLowerCase().includes(query));
-            });
-            
+        function filterUsers() {
+            const search = document.getElementById('userSearch').value.toLowerCase();
+            const filtered = allUsers.filter(user => 
+                user.firstName.toLowerCase().includes(search) ||
+                user.lastName.toLowerCase().includes(search) ||
+                user.id.toString().includes(search)
+            );
             displayUsers(filtered);
         }
 
         function editUser(userId) {
-            const user = window.allUsers.find(([id]) => id === userId)[1];
-            document.getElementById('editUserId').value = userId;
-            document.getElementById('editUserBalance').value = user.balance;
-            document.getElementById('userEditModal').classList.add('active');
+            const user = allUsers.find(u => u.id === userId);
+            if (!user) return;
+
+            document.getElementById('editUserId').value = user.id;
+            document.getElementById('editUserBalance').value = user.balance || 0;
+            openModal('userModal');
         }
 
         async function updateUserBalance() {
             const userId = document.getElementById('editUserId').value;
-            const amount = parseFloat(document.getElementById('editUserBalance').value);
+            const newBalance = parseFloat(document.getElementById('editUserBalance').value);
             const action = document.getElementById('balanceAction').value;
-            
-            if (!amount || amount < 0) {
-                showNotification('Invalid amount', 'error');
-                return;
-            }
-            
-            showLoading(true);
-            
+
             try {
                 const userRef = window.dbRef(window.database, `users/${userId}`);
                 const snapshot = await window.dbGet(userRef);
-                const user = snapshot.val();
-                
-                let newBalance;
-                if (action === 'set') {
-                    newBalance = amount;
-                } else if (action === 'add') {
-                    newBalance = user.balance + amount;
-                } else {
-                    newBalance = user.balance - amount;
+                const currentBalance = snapshot.val().balance || 0;
+
+                let finalBalance = newBalance;
+                if (action === 'add') {
+                    finalBalance = currentBalance + newBalance;
+                } else if (action === 'subtract') {
+                    finalBalance = currentBalance - newBalance;
                 }
-                
-                await window.dbUpdate(userRef, { balance: newBalance });
-                
+
+                await window.dbUpdate(userRef, { balance: finalBalance });
+
+                // Add activity
+                const activityRef = window.dbPush(window.dbRef(window.database, `activities/${userId}`));
+                await window.dbSet(activityRef, {
+                    type: 'admin',
+                    description: `Admin ${action} balance`,
+                    amount: newBalance,
+                    timestamp: Date.now()
+                });
+
                 // Send notification
-                await sendTelegramNotification(userId, `💰 Balance Updated!\n\nYour balance has been ${action === 'set' ? 'set to' : action === 'add' ? 'increased by' : 'decreased by'} $${amount.toFixed(2)}\n\nNew Balance: $${newBalance.toFixed(2)}`);
-                
+                await sendTelegramNotification(
+                    userId,
+                    `💰 Balance Updated!\n\nYour balance has been updated by admin.\nNew Balance: $${finalBalance.toFixed(2)}`
+                );
+
                 showNotification('Balance updated successfully', 'success');
-                closeModal('userEditModal');
+                closeModal('userModal');
                 loadUsers();
                 loadDashboard();
             } catch (error) {
                 console.error('Error updating balance:', error);
                 showNotification('Error updating balance', 'error');
             }
-            
-            showLoading(false);
         }
 
-        async function banUser(userId) {
+        async function banUser() {
+            const userId = document.getElementById('editUserId').value;
             if (!confirm('Are you sure you want to ban this user?')) return;
-            
-            showLoading(true);
-            
+
             try {
-                const userId = document.getElementById('editUserId').value;
-                await window.dbUpdate(window.dbRef(window.database, `users/${userId}`), {
-                    banned: true,
-                    balance: 0
-                });
-                
-                await sendTelegramNotification(userId, '🚫 Account Banned\n\nYour account has been banned by the administrator.');
-                
+                const userRef = window.dbRef(window.database, `users/${userId}`);
+                await window.dbUpdate(userRef, { banned: true, balance: 0 });
+
+                await sendTelegramNotification(
+                    userId,
+                    `🚫 Account Banned\n\nYour account has been banned by admin. Contact support for more information.`
+                );
+
                 showNotification('User banned successfully', 'success');
-                closeModal('userEditModal');
+                closeModal('userModal');
                 loadUsers();
             } catch (error) {
                 console.error('Error banning user:', error);
                 showNotification('Error banning user', 'error');
             }
-            
-            showLoading(false);
         }
 
-        async function deleteUser(userId) {
-            if (!confirm('Are you sure you want to delete this user? This action cannot be undone.')) return;
-            
-            showLoading(true);
-            
-            try {
-                await window.dbRemove(window.dbRef(window.database, `users/${userId}`));
-                await window.dbRemove(window.dbRef(window.database, `trades/${userId}`));
-                await window.dbRemove(window.dbRef(window.database, `deposits/${userId}`));
-                await window.dbRemove(window.dbRef(window.database, `withdrawals/${userId}`));
-                await window.dbRemove(window.dbRef(window.database, `activities/${userId}`));
-                
-                showNotification('User deleted successfully', 'success');
-                loadUsers();
-                loadDashboard();
-            } catch (error) {
-                console.error('Error deleting user:', error);
-                showNotification('Error deleting user', 'error');
-            }
-            
-            showLoading(false);
-        }
-
-        // Deposits Management
+        // Deposits
         async function loadDeposits() {
-            await loadPendingDeposits();
-            await loadAllDeposits();
-        }
+            const depositsRef = window.dbRef(window.database, 'deposits');
+            const snapshot = await window.dbGet(depositsRef);
 
-        async function loadPendingDeposits() {
-            const container = document.getElementById('pendingDepositsList');
-            container.innerHTML = '<p style="text-align: center; padding: 20px;">Loading...</p>';
-            
-            try {
-                const snapshot = await window.dbGet(window.dbRef(window.database, 'deposits'));
-                
-                if (!snapshot.exists()) {
-                    container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px;">No pending deposits</p>';
-                    return;
-                }
-                
-                const deposits = [];
-                Object.entries(snapshot.val()).forEach(([userId, userDeposits]) => {
-                    Object.entries(userDeposits).forEach(([depositId, deposit]) => {
-                        if (deposit.status === 'pending') {
-                            deposits.push({ userId, depositId, ...deposit });
-                        }
-                    });
-                });
-                
-                if (deposits.length === 0) {
-                    container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px;">No pending deposits</p>';
-                    return;
-                }
-                
-                container.innerHTML = '';
-                deposits.sort((a, b) => b.timestamp - a.timestamp).forEach(deposit => {
-                    const date = new Date(deposit.timestamp).toLocaleString();
-                    
-                    const card = document.createElement('div');
-                    card.className = 'user-card';
-                    card.innerHTML = `
-                        <div>
-                            <div style="font-weight: bold; margin-bottom: 5px;">User: ${deposit.userId}</div>
-                            <div style="color: var(--text-secondary); font-size: 14px;">${date}</div>
-                            <div style="color: var(--text-secondary); font-size: 12px; margin-top: 5px;">TxHash: ${deposit.txHash}</div>
-                            <div style="color: var(--text-secondary); font-size: 12px;">Memo: ${deposit.memo}</div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div style="font-size: 24px; font-weight: bold; color: var(--secondary); margin-bottom: 10px;">$${deposit.amount.toFixed(2)}</div>
+            if (!snapshot.exists()) {
+                document.getElementById('depositsTable').innerHTML = '<tr><td colspan="8" style="text-align: center;">No deposits yet</td></tr>';
+                return;
+            }
+
+            const deposits = snapshot.val();
+            const depositsArray = Object.entries(deposits).map(([key, value]) => ({ key, ...value }));
+            depositsArray.sort((a, b) => b.timestamp - a.timestamp);
+
+            const tbody = document.getElementById('depositsTable');
+            tbody.innerHTML = depositsArray.map(deposit => `
+                <tr>
+                    <td>${deposit.userName}</td>
+                    <td>$${deposit.amount.toFixed(2)}</td>
+                    <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis;">${deposit.txHash}</td>
+                    <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis;">${deposit.address}</td>
+                    <td>${deposit.memo}</td>
+                    <td><span class="status-badge status-${deposit.status}">${deposit.status.toUpperCase()}</span></td>
+                    <td>${new Date(deposit.timestamp).toLocaleString()}</td>
+                    <td>
+                        ${deposit.status === 'pending' ? `
                             <div class="action-buttons">
-                                <button class="btn btn-success" onclick="approveDeposit('${deposit.userId}', '${deposit.depositId}', ${deposit.amount})">✓ Approve</button>
-                                <button class="btn btn-danger" onclick="rejectDeposit('${deposit.userId}', '${deposit.depositId}')">✗ Reject</button>
+                                <button class="btn btn-success" onclick="approveDeposit('${deposit.key}', ${deposit.userId}, ${deposit.amount})">Approve</button>
+                                <button class="btn btn-danger" onclick="rejectDeposit('${deposit.key}', ${deposit.userId})">Reject</button>
                             </div>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
-            } catch (error) {
-                console.error('Error loading pending deposits:', error);
-                container.innerHTML = '<p style="text-align: center; color: var(--danger); padding: 20px;">Error loading deposits</p>';
-            }
+                        ` : '-'}
+                    </td>
+                </tr>
+            `).join('');
         }
 
-        async function loadAllDeposits() {
-            const container = document.getElementById('allDepositsList');
-            container.innerHTML = '<p style="text-align: center; padding: 20px;">Loading...</p>';
-            
-            try {
-                const snapshot = await window.dbGet(window.dbRef(window.database, 'deposits'));
-                
-                if (!snapshot.exists()) {
-                    container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px;">No deposits yet</p>';
-                    return;
-                }
-                
-                const deposits = [];
-                Object.entries(snapshot.val()).forEach(([userId, userDeposits]) => {
-                    Object.entries(userDeposits).forEach(([depositId, deposit]) => {
-                        deposits.push({ userId, depositId, ...deposit });
-                    });
-                });
-                
-                window.allDeposits = deposits; // Store for search
-                displayDeposits(deposits);
-            } catch (error) {
-                console.error('Error loading deposits:', error);
-                container.innerHTML = '<p style="text-align: center; color: var(--danger); padding: 20px;">Error loading deposits</p>';
-            }
-        }
-
-        function displayDeposits(deposits) {
-            const container = document.getElementById('allDepositsList');
-            container.innerHTML = '';
-            
-            deposits.sort((a, b) => b.timestamp - a.timestamp).forEach(deposit => {
-                const date = new Date(deposit.timestamp).toLocaleString();
-                
-                const card = document.createElement('div');
-                card.className = 'user-card';
-                card.innerHTML = `
-                    <div>
-                        <div style="font-weight: bold; margin-bottom: 5px;">User: ${deposit.userId}</div>
-                        <div style="color: var(--text-secondary); font-size: 14px;">${date}</div>
-                        <div style="color: var(--text-secondary); font-size: 12px; margin-top: 5px;">TxHash: ${deposit.txHash.substring(0, 30)}...</div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div style="font-size: 20px; font-weight: bold; color: var(--secondary); margin-bottom: 5px;">$${deposit.amount.toFixed(2)}</div>
-                        <span class="badge badge-${deposit.status}">${deposit.status.toUpperCase()}</span>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function searchDeposits() {
-            const query = document.getElementById('depositSearch').value.toLowerCase();
-            if (!window.allDeposits) return;
-            
-            const filtered = window.allDeposits.filter(deposit => {
-                return deposit.userId.toLowerCase().includes(query) ||
-                       deposit.txHash.toLowerCase().includes(query);
-            });
-            
-            displayDeposits(filtered);
-        }
-
-        async function approveDeposit(userId, depositId, amount) {
-            showLoading(true);
-            
+        async function approveDeposit(depositKey, userId, amount) {
             try {
                 // Update deposit status
-                await window.dbUpdate(window.dbRef(window.database, `deposits/${userId}/${depositId}`), {
-                    status: 'approved',
-                    approvedAt: Date.now()
-                });
-                
+                const depositRef = window.dbRef(window.database, `deposits/${depositKey}`);
+                await window.dbUpdate(depositRef, { status: 'approved' });
+
                 // Update user balance
                 const userRef = window.dbRef(window.database, `users/${userId}`);
-                const snapshot = await window.dbGet(userRef);
-                const user = snapshot.val();
+                const userSnapshot = await window.dbGet(userRef);
+                const userData = userSnapshot.val();
                 
                 await window.dbUpdate(userRef, {
-                    balance: user.balance + amount,
-                    totalDeposits: (user.totalDeposits || 0) + amount,
+                    balance: (userData.balance || 0) + amount,
+                    totalDeposit: (userData.totalDeposit || 0) + amount,
                     hasDeposited: true
                 });
-                
-                // Remove from pending
-                await window.dbRemove(window.dbRef(window.database, `pendingDeposits/${depositId}`));
-                
+
+                // Update history
+                const historyRef = window.dbRef(window.database, `history/${userId}`);
+                const historySnapshot = await window.dbGet(historyRef);
+                if (historySnapshot.exists()) {
+                    const history = historySnapshot.val();
+                    Object.keys(history).forEach(async (key) => {
+                        if (history[key].type === 'deposit' && history[key].amount === amount && history[key].status === 'pending') {
+                            await window.dbUpdate(window.dbRef(window.database, `history/${userId}/${key}`), { status: 'approved' });
+                        }
+                    });
+                }
+
+                // Add activity
+                const activityRef = window.dbPush(window.dbRef(window.database, `activities/${userId}`));
+                await window.dbSet(activityRef, {
+                    type: 'deposit',
+                    description: 'Deposit approved',
+                    amount: amount,
+                    timestamp: Date.now()
+                });
+
+                // Handle referral bonus
+                if (userData.referredBy) {
+                    const referrerRef = window.dbRef(window.database, `users/${userData.referredBy}`);
+                    const referrerSnapshot = await window.dbGet(referrerRef);
+                    if (referrerSnapshot.exists()) {
+                        const referrer = referrerSnapshot.val();
+                        const commission = amount * 0.2; // 20% commission
+                        
+                        await window.dbUpdate(referrerRef, {
+                            balance: (referrer.balance || 0) + commission,
+                            referralEarnings: (referrer.referralEarnings || 0) + commission
+                        });
+
+                        await sendTelegramNotification(
+                            userData.referredBy,
+                            `💰 Referral Commission!\n\nYou earned $${commission.toFixed(2)} from your referral's deposit!\nNew Balance: $${((referrer.balance || 0) + commission).toFixed(2)}`
+                        );
+                    }
+                }
+
                 // Send notification
-                await sendTelegramNotification(userId, `✅ Deposit Approved!\n\nAmount: $${amount.toFixed(2)}\nYour balance has been updated.\n\nNew Balance: $${(user.balance + amount).toFixed(2)}`);
-                
+                await sendTelegramNotification(
+                    userId,
+                    `✅ Deposit Approved!\n\nAmount: $${amount.toFixed(2)}\nDate: ${new Date().toLocaleString()}\n\nYour balance has been updated.`
+                );
+
                 showNotification('Deposit approved successfully', 'success');
                 loadDeposits();
                 loadDashboard();
@@ -1474,28 +1209,32 @@
                 console.error('Error approving deposit:', error);
                 showNotification('Error approving deposit', 'error');
             }
-            
-            showLoading(false);
         }
 
-        async function rejectDeposit(userId, depositId) {
-            if (!confirm('Are you sure you want to reject this deposit?')) return;
-            
-            showLoading(true);
-            
+        async function rejectDeposit(depositKey, userId) {
             try {
                 // Update deposit status
-                await window.dbUpdate(window.dbRef(window.database, `deposits/${userId}/${depositId}`), {
-                    status: 'rejected',
-                    rejectedAt: Date.now()
-                });
-                
-                // Remove from pending
-                await window.dbRemove(window.dbRef(window.database, `pendingDeposits/${depositId}`));
-                
+                const depositRef = window.dbRef(window.database, `deposits/${depositKey}`);
+                await window.dbUpdate(depositRef, { status: 'rejected' });
+
+                // Update history
+                const historyRef = window.dbRef(window.database, `history/${userId}`);
+                const historySnapshot = await window.dbGet(historyRef);
+                if (historySnapshot.exists()) {
+                    const history = historySnapshot.val();
+                    Object.keys(history).forEach(async (key) => {
+                        if (history[key].type === 'deposit' && history[key].status === 'pending') {
+                            await window.dbUpdate(window.dbRef(window.database, `history/${userId}/${key}`), { status: 'rejected' });
+                        }
+                    });
+                }
+
                 // Send notification
-                await sendTelegramNotification(userId, `❌ Deposit Rejected\n\nYour deposit request has been rejected. Please contact support if you believe this is an error.`);
-                
+                await sendTelegramNotification(
+                    userId,
+                    `❌ Deposit Rejected\n\nYour deposit has been rejected. Please contact support for more information.`
+                );
+
                 showNotification('Deposit rejected', 'success');
                 loadDeposits();
                 loadDashboard();
@@ -1503,160 +1242,76 @@
                 console.error('Error rejecting deposit:', error);
                 showNotification('Error rejecting deposit', 'error');
             }
-            
-            showLoading(false);
         }
 
-        // Withdrawals Management
+        // Withdrawals
         async function loadWithdrawals() {
-            await loadPendingWithdrawals();
-            await loadAllWithdrawals();
-        }
+            const withdrawalsRef = window.dbRef(window.database, 'withdrawals');
+            const snapshot = await window.dbGet(withdrawalsRef);
 
-        async function loadPendingWithdrawals() {
-            const container = document.getElementById('pendingWithdrawalsList');
-            container.innerHTML = '<p style="text-align: center; padding: 20px;">Loading...</p>';
-            
-            try {
-                const snapshot = await window.dbGet(window.dbRef(window.database, 'withdrawals'));
-                
-                if (!snapshot.exists()) {
-                    container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px;">No pending withdrawals</p>';
-                    return;
-                }
-                
-                const withdrawals = [];
-                Object.entries(snapshot.val()).forEach(([userId, userWithdrawals]) => {
-                    Object.entries(userWithdrawals).forEach(([withdrawalId, withdrawal]) => {
-                        if (withdrawal.status === 'pending') {
-                            withdrawals.push({ userId, withdrawalId, ...withdrawal });
-                        }
-                    });
-                });
-                
-                if (withdrawals.length === 0) {
-                    container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px;">No pending withdrawals</p>';
-                    return;
-                }
-                
-                container.innerHTML = '';
-                withdrawals.sort((a, b) => b.timestamp - a.timestamp).forEach(withdrawal => {
-                    const date = new Date(withdrawal.timestamp).toLocaleString();
-                    
-                    const card = document.createElement('div');
-                    card.className = 'user-card';
-                    card.innerHTML = `
-                        <div>
-                            <div style="font-weight: bold; margin-bottom: 5px;">User: ${withdrawal.userId}</div>
-                            <div style="color: var(--text-secondary); font-size: 14px;">${date}</div>
-                            <div style="color: var(--text-secondary); font-size: 12px; margin-top: 5px;">Address: ${withdrawal.address}</div>
-                            ${withdrawal.memo ? `<div style="color: var(--text-secondary); font-size: 12px;">Memo: ${withdrawal.memo}</div>` : ''}
-                        </div>
-                        <div style="text-align: right;">
-                            <div style="font-size: 24px; font-weight: bold; color: var(--secondary); margin-bottom: 10px;">$${withdrawal.amount.toFixed(2)}</div>
+            if (!snapshot.exists()) {
+                document.getElementById('withdrawalsTable').innerHTML = '<tr><td colspan="7" style="text-align: center;">No withdrawals yet</td></tr>';
+                return;
+            }
+
+            const withdrawals = snapshot.val();
+            const withdrawalsArray = Object.entries(withdrawals).map(([key, value]) => ({ key, ...value }));
+            withdrawalsArray.sort((a, b) => b.timestamp - a.timestamp);
+
+            const tbody = document.getElementById('withdrawalsTable');
+            tbody.innerHTML = withdrawalsArray.map(withdrawal => `
+                <tr>
+                    <td>${withdrawal.userName}</td>
+                    <td>$${withdrawal.amount.toFixed(2)}</td>
+                    <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis;">${withdrawal.address}</td>
+                    <td>${withdrawal.memo || '-'}</td>
+                    <td><span class="status-badge status-${withdrawal.status}">${withdrawal.status.toUpperCase()}</span></td>
+                    <td>${new Date(withdrawal.timestamp).toLocaleString()}</td>
+                    <td>
+                        ${withdrawal.status === 'pending' ? `
                             <div class="action-buttons">
-                                <button class="btn btn-success" onclick="approveWithdrawal('${withdrawal.userId}', '${withdrawal.withdrawalId}', ${withdrawal.amount})">✓ Approve</button>
-                                <button class="btn btn-danger" onclick="rejectWithdrawal('${withdrawal.userId}', '${withdrawal.withdrawalId}', ${withdrawal.amount})">✗ Reject</button>
+                                <button class="btn btn-success" onclick="approveWithdrawal('${withdrawal.key}', ${withdrawal.userId}, ${withdrawal.amount})">Approve</button>
+                                <button class="btn btn-danger" onclick="rejectWithdrawal('${withdrawal.key}', ${withdrawal.userId}, ${withdrawal.amount})">Reject</button>
                             </div>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
-            } catch (error) {
-                console.error('Error loading pending withdrawals:', error);
-                container.innerHTML = '<p style="text-align: center; color: var(--danger); padding: 20px;">Error loading withdrawals</p>';
-            }
+                        ` : '-'}
+                    </td>
+                </tr>
+            `).join('');
         }
 
-        async function loadAllWithdrawals() {
-            const container = document.getElementById('allWithdrawalsList');
-            container.innerHTML = '<p style="text-align: center; padding: 20px;">Loading...</p>';
-            
-            try {
-                const snapshot = await window.dbGet(window.dbRef(window.database, 'withdrawals'));
-                
-                if (!snapshot.exists()) {
-                    container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px;">No withdrawals yet</p>';
-                    return;
-                }
-                
-                const withdrawals = [];
-                Object.entries(snapshot.val()).forEach(([userId, userWithdrawals]) => {
-                    Object.entries(userWithdrawals).forEach(([withdrawalId, withdrawal]) => {
-                        withdrawals.push({ userId, withdrawalId, ...withdrawal });
-                    });
-                });
-                
-                window.allWithdrawals = withdrawals; // Store for search
-                displayWithdrawals(withdrawals);
-            } catch (error) {
-                console.error('Error loading withdrawals:', error);
-                container.innerHTML = '<p style="text-align: center; color: var(--danger); padding: 20px;">Error loading withdrawals</p>';
-            }
-        }
-
-        function displayWithdrawals(withdrawals) {
-            const container = document.getElementById('allWithdrawalsList');
-            container.innerHTML = '';
-            
-            withdrawals.sort((a, b) => b.timestamp - a.timestamp).forEach(withdrawal => {
-                const date = new Date(withdrawal.timestamp).toLocaleString();
-                
-                const card = document.createElement('div');
-                card.className = 'user-card';
-                card.innerHTML = `
-                    <div>
-                        <div style="font-weight: bold; margin-bottom: 5px;">User: ${withdrawal.userId}</div>
-                        <div style="color: var(--text-secondary); font-size: 14px;">${date}</div>
-                        <div style="color: var(--text-secondary); font-size: 12px; margin-top: 5px;">Address: ${withdrawal.address.substring(0, 30)}...</div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div style="font-size: 20px; font-weight: bold; color: var(--secondary); margin-bottom: 5px;">$${withdrawal.amount.toFixed(2)}</div>
-                        <span class="badge badge-${withdrawal.status}">${withdrawal.status.toUpperCase()}</span>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function searchWithdrawals() {
-            const query = document.getElementById('withdrawalSearch').value.toLowerCase();
-            if (!window.allWithdrawals) return;
-            
-            const filtered = window.allWithdrawals.filter(withdrawal => {
-                return withdrawal.userId.toLowerCase().includes(query) ||
-                       withdrawal.address.toLowerCase().includes(query);
-            });
-            
-            displayWithdrawals(filtered);
-        }
-
-        async function approveWithdrawal(userId, withdrawalId, amount) {
-            showLoading(true);
-            
+        async function approveWithdrawal(withdrawalKey, userId, amount) {
             try {
                 // Update withdrawal status
-                await window.dbUpdate(window.dbRef(window.database, `withdrawals/${userId}/${withdrawalId}`), {
-                    status: 'approved',
-                    approvedAt: Date.now()
-                });
-                
-                // Update user balance
+                const withdrawalRef = window.dbRef(window.database, `withdrawals/${withdrawalKey}`);
+                await window.dbUpdate(withdrawalRef, { status: 'approved' });
+
+                // Update user total withdraw
                 const userRef = window.dbRef(window.database, `users/${userId}`);
-                const snapshot = await window.dbGet(userRef);
-                const user = snapshot.val();
+                const userSnapshot = await window.dbGet(userRef);
+                const userData = userSnapshot.val();
                 
                 await window.dbUpdate(userRef, {
-                    balance: user.balance - amount,
-                    totalWithdrawals: (user.totalWithdrawals || 0) + amount
+                    totalWithdraw: (userData.totalWithdraw || 0) + amount
                 });
-                
-                // Remove from pending
-                await window.dbRemove(window.dbRef(window.database, `pendingWithdrawals/${withdrawalId}`));
-                
+
+                // Update history
+                const historyRef = window.dbRef(window.database, `history/${userId}`);
+                const historySnapshot = await window.dbGet(historyRef);
+                if (historySnapshot.exists()) {
+                    const history = historySnapshot.val();
+                    Object.keys(history).forEach(async (key) => {
+                        if (history[key].type === 'withdraw' && history[key].amount === amount && history[key].status === 'pending') {
+                            await window.dbUpdate(window.dbRef(window.database, `history/${userId}/${key}`), { status: 'approved' });
+                        }
+                    });
+                }
+
                 // Send notification
-                await sendTelegramNotification(userId, `✅ Withdrawal Approved!\n\nAmount: $${amount.toFixed(2)}\nYour withdrawal has been processed.\n\nNew Balance: $${(user.balance - amount).toFixed(2)}`);
-                
+                await sendTelegramNotification(
+                    userId,
+                    `✅ Withdrawal Approved!\n\nAmount: $${amount.toFixed(2)}\nDate: ${new Date().toLocaleString()}\n\nYour withdrawal has been processed.`
+                );
+
                 showNotification('Withdrawal approved successfully', 'success');
                 loadWithdrawals();
                 loadDashboard();
@@ -1664,37 +1319,41 @@
                 console.error('Error approving withdrawal:', error);
                 showNotification('Error approving withdrawal', 'error');
             }
-            
-            showLoading(false);
         }
 
-        async function rejectWithdrawal(userId, withdrawalId, amount) {
-            if (!confirm('Are you sure you want to reject this withdrawal?')) return;
-            
-            showLoading(true);
-            
+        async function rejectWithdrawal(withdrawalKey, userId, amount) {
             try {
                 // Update withdrawal status
-                await window.dbUpdate(window.dbRef(window.database, `withdrawals/${userId}/${withdrawalId}`), {
-                    status: 'rejected',
-                    rejectedAt: Date.now()
-                });
-                
+                const withdrawalRef = window.dbRef(window.database, `withdrawals/${withdrawalKey}`);
+                await window.dbUpdate(withdrawalRef, { status: 'rejected' });
+
                 // Refund balance
                 const userRef = window.dbRef(window.database, `users/${userId}`);
-                const snapshot = await window.dbGet(userRef);
-                const user = snapshot.val();
+                const userSnapshot = await window.dbGet(userRef);
+                const userData = userSnapshot.val();
                 
                 await window.dbUpdate(userRef, {
-                    balance: user.balance + amount
+                    balance: (userData.balance || 0) + amount
                 });
-                
-                // Remove from pending
-                await window.dbRemove(window.dbRef(window.database, `pendingWithdrawals/${withdrawalId}`));
-                
+
+                // Update history
+                const historyRef = window.dbRef(window.database, `history/${userId}`);
+                const historySnapshot = await window.dbGet(historyRef);
+                if (historySnapshot.exists()) {
+                    const history = historySnapshot.val();
+                    Object.keys(history).forEach(async (key) => {
+                        if (history[key].type === 'withdraw' && history[key].amount === amount && history[key].status === 'pending') {
+                            await window.dbUpdate(window.dbRef(window.database, `history/${userId}/${key}`), { status: 'rejected' });
+                        }
+                    });
+                }
+
                 // Send notification
-                await sendTelegramNotification(userId, `❌ Withdrawal Rejected\n\nYour withdrawal request has been rejected and the amount has been refunded to your balance.\n\nRefunded: $${amount.toFixed(2)}`);
-                
+                await sendTelegramNotification(
+                    userId,
+                    `❌ Withdrawal Rejected\n\nAmount: $${amount.toFixed(2)}\n\nYour withdrawal has been rejected and the amount has been refunded to your balance.`
+                );
+
                 showNotification('Withdrawal rejected and refunded', 'success');
                 loadWithdrawals();
                 loadDashboard();
@@ -1702,260 +1361,163 @@
                 console.error('Error rejecting withdrawal:', error);
                 showNotification('Error rejecting withdrawal', 'error');
             }
-            
-            showLoading(false);
         }
 
-        // Plans Management
-        async function loadPlans() {
-            const container = document.getElementById('plansList');
-            container.innerHTML = '<p style="text-align: center; padding: 20px;">Loading...</p>';
-            
-            try {
-                const snapshot = await window.dbGet(window.dbRef(window.database, 'plans'));
-                
-                if (!snapshot.exists()) {
-                    container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px;">No plans yet</p>';
-                    return;
-                }
-                
-                const plans = Object.entries(snapshot.val());
-                
-                container.innerHTML = '';
-                plans.forEach(([planId, plan]) => {
-                    const card = document.createElement('div');
-                    card.className = 'user-card';
-                    card.style.background = `linear-gradient(135deg, ${plan.color}44, ${plan.color}22)`;
-                    card.innerHTML = `
-                        <div>
-                            <div style="font-weight: bold; font-size: 20px; margin-bottom: 5px;">${plan.pair}</div>
-                            <div style="color: var(--text-secondary); font-size: 14px;">Daily: $${plan.daily} • Duration: ${plan.duration} days</div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div style="font-size: 24px; font-weight: bold; color: var(--secondary); margin-bottom: 10px;">$${plan.price}</div>
-                            <div class="action-buttons">
-                                <button class="btn btn-danger" onclick="deletePlan('${planId}')">🗑️ Delete</button>
-                            </div>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
-            } catch (error) {
-                console.error('Error loading plans:', error);
-                container.innerHTML = '<p style="text-align: center; color: var(--danger); padding: 20px;">Error loading plans</p>';
-            }
-        }
+        // User Plans
+        async function loadUserPlans() {
+            const plansRef = window.dbRef(window.database, 'userPlans');
+            const snapshot = await window.dbGet(plansRef);
 
-        function showAddPlanModal() {
-            document.getElementById('addPlanModal').classList.add('active');
-        }
-
-        async function addPlan() {
-            const pair = document.getElementById('planPair').value.trim();
-            const price = parseFloat(document.getElementById('planPrice').value);
-            const daily = parseFloat(document.getElementById('planDaily').value);
-            const duration = parseInt(document.getElementById('planDuration').value);
-            const color = document.getElementById('planColor').value;
-            
-            if (!pair || !price || !daily || !duration) {
-                showNotification('Please fill all fields', 'error');
+            if (!snapshot.exists()) {
+                document.getElementById('userPlansTable').innerHTML = '<tr><td colspan="7" style="text-align: center;">No active plans yet</td></tr>';
                 return;
             }
+
+            const allPlans = [];
+            const plans = snapshot.val();
             
-            showLoading(true);
-            
-            try {
-                const planRef = window.dbPush(window.dbRef(window.database, 'plans'));
-                await window.dbSet(planRef, {
-                    pair,
-                    price,
-                    daily,
-                    duration,
-                    color,
-                    createdAt: Date.now()
+            Object.keys(plans).forEach(userId => {
+                Object.values(plans[userId]).forEach(plan => {
+                    allPlans.push({ ...plan, userId });
                 });
-                
-                showNotification('Plan added successfully', 'success');
-                closeModal('addPlanModal');
-                loadPlans();
-                
-                // Clear form
-                document.getElementById('planPair').value = '';
-                document.getElementById('planPrice').value = '';
-                document.getElementById('planDaily').value = '';
-                document.getElementById('planDuration').value = '30';
-            } catch (error) {
-                console.error('Error adding plan:', error);
-                showNotification('Error adding plan', 'error');
-            }
-            
-            showLoading(false);
+            });
+
+            allPlans.sort((a, b) => b.purchasedAt - a.purchasedAt);
+
+            const tbody = document.getElementById('userPlansTable');
+            tbody.innerHTML = allPlans.map(plan => `
+                <tr>
+                    <td>User ${plan.userId}</td>
+                    <td>${plan.pair}</td>
+                    <td>$${plan.price.toFixed(2)}</td>
+                    <td>$${plan.dailyEarning.toFixed(2)}</td>
+                    <td>${plan.claimsRemaining}</td>
+                    <td>$${(plan.totalEarned || 0).toFixed(2)}</td>
+                    <td>${new Date(plan.purchasedAt).toLocaleDateString()}</td>
+                </tr>
+            `).join('');
         }
 
-        async function deletePlan(planId) {
-            if (!confirm('Are you sure you want to delete this plan?')) return;
-            
-            showLoading(true);
-            
-            try {
-                await window.dbRemove(window.dbRef(window.database, `plans/${planId}`));
-                showNotification('Plan deleted successfully', 'success');
-                loadPlans();
-            } catch (error) {
-                console.error('Error deleting plan:', error);
-                showNotification('Error deleting plan', 'error');
-            }
-            
-            showLoading(false);
-        }
-
-        // Tasks Management
+        // Tasks
         async function loadTasks() {
-            const container = document.getElementById('tasksList');
-            container.innerHTML = '<p style="text-align: center; padding: 20px;">Loading...</p>';
-            
-            try {
-                const snapshot = await window.dbGet(window.dbRef(window.database, 'tasks'));
-                
-                if (!snapshot.exists()) {
-                    container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px;">No tasks yet</p>';
-                    return;
-                }
-                
-                const tasks = Object.entries(snapshot.val());
-                
-                container.innerHTML = '';
-                tasks.forEach(([taskId, task]) => {
-                    const card = document.createElement('div');
-                    card.className = 'user-card';
-                    card.innerHTML = `
-                        <div style="display: flex; align-items: center; gap: 15px;">
-                            <div style="font-size: 40px;">${task.icon || '✅'}</div>
-                            <div>
-                                <div style="font-weight: bold; font-size: 18px; margin-bottom: 5px;">${task.title}</div>
-                                <div style="color: var(--text-secondary); font-size: 14px;">${task.description}</div>
-                                <div style="color: var(--secondary); font-size: 14px; margin-top: 5px;">Reward: $${task.reward}</div>
-                            </div>
-                        </div>
-                        <div class="action-buttons">
-                            <button class="btn btn-danger" onclick="deleteTask('${taskId}')">🗑️ Delete</button>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
-            } catch (error) {
-                console.error('Error loading tasks:', error);
-                container.innerHTML = '<p style="text-align: center; color: var(--danger); padding: 20px;">Error loading tasks</p>';
-            }
-        }
+            const tasksRef = window.dbRef(window.database, 'tasks');
+            const snapshot = await window.dbGet(tasksRef);
 
-        function showAddTaskModal() {
-            document.getElementById('addTaskModal').classList.add('active');
-        }
-
-        // Preview task logo
-        document.addEventListener('DOMContentLoaded', () => {
-            const logoInput = document.getElementById('taskLogo');
-            if (logoInput) {
-                logoInput.addEventListener('input', (e) => {
-                    const preview = document.getElementById('taskLogoPreview');
-                    if (e.target.value) {
-                        preview.src = e.target.value;
-                        preview.style.display = 'block';
-                    } else {
-                        preview.style.display = 'none';
-                    }
-                });
+            if (!snapshot.exists()) {
+                document.getElementById('tasksTable').innerHTML = '<tr><td colspan="5" style="text-align: center;">No tasks yet</td></tr>';
+                return;
             }
-        });
+
+            const tasks = snapshot.val();
+            const tbody = document.getElementById('tasksTable');
+            tbody.innerHTML = Object.entries(tasks).map(([key, task]) => `
+                <tr>
+                    <td><img src="${task.logo}" alt="Logo" style="width: 40px; height: 40px; border-radius: 8px;"></td>
+                    <td>${task.heading}</td>
+                    <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">${task.description}</td>
+                    <td>$${task.reward.toFixed(2)}</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="deleteTask('${key}')">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
 
         async function addTask() {
-            const title = document.getElementById('taskTitle').value.trim();
+            const logo = document.getElementById('taskLogo').value.trim();
+            const heading = document.getElementById('taskHeading').value.trim();
             const description = document.getElementById('taskDescription').value.trim();
             const link = document.getElementById('taskLink').value.trim();
             const reward = parseFloat(document.getElementById('taskReward').value);
-            const icon = document.getElementById('taskIcon').value.trim();
-            const logo = document.getElementById('taskLogo').value.trim();
-            
-            if (!title || !description || !link || !reward) {
-                showNotification('Please fill all required fields', 'error');
+
+            if (!logo || !heading || !description || !link || !reward) {
+                showNotification('Please fill all fields', 'error');
                 return;
             }
-            
-            showLoading(true);
-            
+
             try {
                 const taskRef = window.dbPush(window.dbRef(window.database, 'tasks'));
                 await window.dbSet(taskRef, {
-                    title,
+                    logo,
+                    heading,
                     description,
                     link,
                     reward,
-                    icon: icon || '✅',
-                    logo: logo || '',
                     createdAt: Date.now()
                 });
-                
+
                 showNotification('Task added successfully', 'success');
-                closeModal('addTaskModal');
-                loadTasks();
-                
-                // Clear form
-                document.getElementById('taskTitle').value = '';
+                document.getElementById('taskLogo').value = '';
+                document.getElementById('taskHeading').value = '';
                 document.getElementById('taskDescription').value = '';
                 document.getElementById('taskLink').value = '';
-                document.getElementById('taskReward').value = '0.50';
-                document.getElementById('taskIcon').value = '';
-                document.getElementById('taskLogo').value = '';
-                document.getElementById('taskLogoPreview').style.display = 'none';
+                document.getElementById('taskReward').value = '';
+                loadTasks();
             } catch (error) {
                 console.error('Error adding task:', error);
                 showNotification('Error adding task', 'error');
             }
-            
-            showLoading(false);
         }
 
-        async function deleteTask(taskId) {
+        async function deleteTask(taskKey) {
             if (!confirm('Are you sure you want to delete this task?')) return;
-            
-            showLoading(true);
-            
+
             try {
-                await window.dbRemove(window.dbRef(window.database, `tasks/${taskId}`));
+                const taskRef = window.dbRef(window.database, `tasks/${taskKey}`);
+                await window.dbRemove(taskRef);
                 showNotification('Task deleted successfully', 'success');
                 loadTasks();
             } catch (error) {
                 console.error('Error deleting task:', error);
                 showNotification('Error deleting task', 'error');
             }
-            
-            showLoading(false);
         }
 
-        // Redeem Codes Management
+        // Redeem Codes
+        async function loadRedeemCodes() {
+            const codesRef = window.dbRef(window.database, 'redeemCodes');
+            const snapshot = await window.dbGet(codesRef);
+
+            if (!snapshot.exists()) {
+                document.getElementById('redeemCodesTable').innerHTML = '<tr><td colspan="6" style="text-align: center;">No redeem codes yet</td></tr>';
+                return;
+            }
+
+            const codes = snapshot.val();
+            const tbody = document.getElementById('redeemCodesTable');
+            tbody.innerHTML = Object.entries(codes).map(([code, data]) => `
+                <tr>
+                    <td style="font-weight: bold; color: var(--success-color);">${code}</td>
+                    <td>$${data.minAmount.toFixed(2)} - $${data.maxAmount.toFixed(2)}</td>
+                    <td>${data.maxUses === 0 ? 'Unlimited' : data.maxUses}</td>
+                    <td><span class="status-badge ${data.used ? 'status-rejected' : 'status-approved'}">${data.used ? 'USED' : 'ACTIVE'}</span></td>
+                    <td>${new Date(data.createdAt).toLocaleDateString()}</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="deleteRedeemCode('${code}')">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
         async function generateRedeemCode() {
-            const minAmount = parseFloat(document.getElementById('redeemMinAmount').value);
-            const maxAmount = parseFloat(document.getElementById('redeemMaxAmount').value);
-            const maxUses = parseInt(document.getElementById('redeemMaxUses').value);
-            
-            if (!minAmount || !maxAmount || !maxUses) {
-                showNotification('Please fill all fields', 'error');
+            const minAmount = parseFloat(document.getElementById('redeemMin').value);
+            const maxAmount = parseFloat(document.getElementById('redeemMax').value);
+            const maxUses = parseInt(document.getElementById('redeemUses').value);
+
+            if (minAmount >= maxAmount) {
+                showNotification('Maximum amount must be greater than minimum', 'error');
                 return;
             }
-            
-            if (minAmount > maxAmount) {
-                showNotification('Minimum amount cannot be greater than maximum amount', 'error');
-                return;
-            }
-            
-            showLoading(true);
-            
+
             try {
-                // Generate random 8-character code
+                // Generate random 8-digit code
                 const code = Math.random().toString(36).substring(2, 10).toUpperCase();
-                
-                await window.dbSet(window.dbRef(window.database, `redeemCodes/${code}`), {
+                const amount = Math.random() * (maxAmount - minAmount) + minAmount;
+
+                const codeRef = window.dbRef(window.database, `redeemCodes/${code}`);
+                await window.dbSet(codeRef, {
+                    code,
+                    amount: parseFloat(amount.toFixed(2)),
                     minAmount,
                     maxAmount,
                     maxUses,
@@ -1963,168 +1525,101 @@
                     usedBy: [],
                     createdAt: Date.now()
                 });
-                
-                // Display generated code
-                document.getElementById('generatedCodeDisplay').innerHTML = `
+
+                document.getElementById('generatedCode').innerHTML = `
                     <div class="code-display">${code}</div>
-                    <button class="btn btn-primary" onclick="copyText('${code}')" style="width: 100%;">📋 Copy Code</button>
+                    <p style="text-align: center; color: var(--text-secondary);">
+                        Value: $${amount.toFixed(2)}
+                    </p>
                 `;
-                
+
                 showNotification('Redeem code generated successfully', 'success');
                 loadRedeemCodes();
             } catch (error) {
                 console.error('Error generating code:', error);
                 showNotification('Error generating code', 'error');
             }
-            
-            showLoading(false);
-        }
-
-        async function loadRedeemCodes() {
-            const container = document.getElementById('redeemCodesList');
-            container.innerHTML = '<p style="text-align: center; padding: 20px;">Loading...</p>';
-            
-            try {
-                const snapshot = await window.dbGet(window.dbRef(window.database, 'redeemCodes'));
-                
-                if (!snapshot.exists()) {
-                    container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px;">No redeem codes yet</p>';
-                    return;
-                }
-                
-                const codes = Object.entries(snapshot.val());
-                
-                container.innerHTML = '';
-                codes.sort((a, b) => b[1].createdAt - a[1].createdAt).forEach(([code, data]) => {
-                    const date = new Date(data.createdAt).toLocaleString();
-                    const usedCount = data.usedBy ? data.usedBy.length : 0;
-                    
-                    const card = document.createElement('div');
-                    card.className = 'user-card';
-                    card.innerHTML = `
-                        <div>
-                            <div style="font-weight: bold; font-size: 24px; margin-bottom: 5px; letter-spacing: 2px;">${code}</div>
-                            <div style="color: var(--text-secondary); font-size: 14px;">${date}</div>
-                            <div style="color: var(--text-secondary); font-size: 14px; margin-top: 5px;">
-                                Range: $${data.minAmount.toFixed(2)} - $${data.maxAmount.toFixed(2)}
-                            </div>
-                            <div style="color: var(--text-secondary); font-size: 14px;">
-                                Uses: ${usedCount} / ${data.maxUses}
-                            </div>
-                        </div>
-                        <div style="text-align: right;">
-                            <span class="badge ${data.used ? 'badge-rejected' : 'badge-active'}" style="margin-bottom: 10px;">
-                                ${data.used ? 'USED' : 'ACTIVE'}
-                            </span>
-                            <div class="action-buttons">
-                                <button class="btn btn-primary" onclick="copyText('${code}')">📋 Copy</button>
-                                <button class="btn btn-danger" onclick="deleteRedeemCode('${code}')">🗑️ Delete</button>
-                            </div>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
-            } catch (error) {
-                console.error('Error loading redeem codes:', error);
-                container.innerHTML = '<p style="text-align: center; color: var(--danger); padding: 20px;">Error loading codes</p>';
-            }
         }
 
         async function deleteRedeemCode(code) {
-            if (!confirm('Are you sure you want to delete this redeem code?')) return;
-            
-            showLoading(true);
-            
+            if (!confirm('Are you sure you want to delete this code?')) return;
+
             try {
-                await window.dbRemove(window.dbRef(window.database, `redeemCodes/${code}`));
-                showNotification('Redeem code deleted successfully', 'success');
+                const codeRef = window.dbRef(window.database, `redeemCodes/${code}`);
+                await window.dbRemove(codeRef);
+                showNotification('Code deleted successfully', 'success');
                 loadRedeemCodes();
             } catch (error) {
                 console.error('Error deleting code:', error);
                 showNotification('Error deleting code', 'error');
             }
-            
-            showLoading(false);
         }
 
-        // Settings
-        async function saveSettings() {
-            const settings = {
-                platformName: document.getElementById('platformName').value,
-                minDeposit: parseFloat(document.getElementById('minDeposit').value),
-                minWithdrawal: parseFloat(document.getElementById('minWithdrawal').value),
-                referralBonus: parseFloat(document.getElementById('referralBonus').value),
-                referralCommission: parseFloat(document.getElementById('referralCommission').value)
-            };
-            
-            showLoading(true);
-            
+        // Branding
+        async function saveBranding() {
+            const platformName = document.getElementById('platformName').value;
+            const welcomeMessage = document.getElementById('welcomeMessage').value;
+            const supportLink = document.getElementById('supportLink').value;
+            const minDeposit = parseFloat(document.getElementById('minDeposit').value);
+            const minWithdraw = parseFloat(document.getElementById('minWithdraw').value);
+
             try {
-                await window.dbSet(window.dbRef(window.database, 'settings'), settings);
+                const settingsRef = window.dbRef(window.database, 'settings');
+                await window.dbSet(settingsRef, {
+                    platformName,
+                    welcomeMessage,
+                    supportLink,
+                    minDeposit,
+                    minWithdraw,
+                    updatedAt: Date.now()
+                });
+
                 showNotification('Settings saved successfully', 'success');
             } catch (error) {
                 console.error('Error saving settings:', error);
                 showNotification('Error saving settings', 'error');
             }
-            
-            showLoading(false);
-        }
-
-        async function saveIcons() {
-            const icons = {
-                trade: document.getElementById('tradeIcon').value,
-                wallet: document.getElementById('walletIcon').value,
-                referral: document.getElementById('referralIcon').value
-            };
-            
-            showLoading(true);
-            
-            try {
-                await window.dbSet(window.dbRef(window.database, 'icons'), icons);
-                showNotification('Icons saved successfully', 'success');
-            } catch (error) {
-                console.error('Error saving icons:', error);
-                showNotification('Error saving icons', 'error');
-            }
-            
-            showLoading(false);
         }
 
         // Utility Functions
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.closest('.menu-item').classList.add('active');
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
         }
 
-        function copyText(text) {
-            navigator.clipboard.writeText(text);
-            showNotification('Copied to clipboard!', 'success');
-        }
-
-        function showNotification(message, type = 'info') {
+        function showNotification(message, type = 'success') {
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
-            notification.innerHTML = `
-                <div style="font-weight: bold; margin-bottom: 5px;">${type === 'success' ? '✓' : '✗'} ${type.toUpperCase()}</div>
-                <div>${message}</div>
-            `;
-            
+            notification.textContent = message;
             document.body.appendChild(notification);
-            
+
             setTimeout(() => {
                 notification.remove();
             }, 3000);
         }
 
-        function showLoading(show) {
-            document.getElementById('loadingOverlay').classList.toggle('active', show);
-        }
-
         async function sendTelegramNotification(userId, message) {
             try {
-                const url = `https://api.telegram.org/bot${window.BOT_TOKEN}/sendMessage`;
-                await fetch(url, {
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
                     body: JSON.stringify({
                         chat_id: userId,
                         text: message,
