@@ -1,10 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exotix - Admin Panel</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Exotix Admin Panel</title>
     <style>
         * {
             margin: 0;
@@ -13,162 +13,83 @@
         }
 
         :root {
-            --primary-color: #6366f1;
-            --secondary-color: #8b5cf6;
-            --success-color: #10b981;
-            --danger-color: #ef4444;
-            --warning-color: #f59e0b;
-            --dark-bg: #0f172a;
-            --card-bg: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --border-color: #334155;
+            --primary: #6C5CE7;
+            --secondary: #00B894;
+            --danger: #FF7675;
+            --warning: #FDCB6E;
+            --dark: #2D3436;
+            --light: #DFE6E9;
+            --bg: #0F1419;
+            --card-bg: #1A1F26;
+            --text: #FFFFFF;
+            --text-secondary: #8899A6;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: var(--text-primary);
-            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
         }
 
-        /* Login Screen */
-        .login-container {
+        .admin-container {
             display: flex;
-            align-items: center;
-            justify-content: center;
             min-height: 100vh;
-            padding: 20px;
         }
 
-        .login-box {
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
             background: var(--card-bg);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            max-width: 400px;
-            width: 100%;
+            padding: 20px;
+            border-right: 1px solid rgba(255,255,255,0.1);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
         }
 
-        .login-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .login-header h1 {
-            font-size: 32px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
+            margin-bottom: 30px;
+            text-align: center;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 16px;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border: none;
+        .menu-item {
+            padding: 15px 20px;
+            margin: 10px 0;
             border-radius: 10px;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-        }
-
-        .login-btn:hover {
-            transform: scale(1.02);
-        }
-
-        /* Admin Dashboard */
-        .admin-container {
-            display: none;
-        }
-
-        .admin-container.active {
-            display: block;
-        }
-
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 250px;
-            background: var(--card-bg);
-            padding: 20px;
-            overflow-y: auto;
-            box-shadow: 4px 0 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .sidebar-header {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 30px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .sidebar-menu {
-            list-style: none;
-        }
-
-        .sidebar-menu li {
-            margin-bottom: 10px;
-        }
-
-        .sidebar-menu a {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 12px 15px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s;
+            gap: 15px;
         }
 
-        .sidebar-menu a:hover,
-        .sidebar-menu a.active {
-            background: rgba(99, 102, 241, 0.2);
-            color: var(--primary-color);
+        .menu-item:hover {
+            background: rgba(108, 92, 231, 0.2);
         }
 
+        .menu-item.active {
+            background: linear-gradient(135deg, var(--primary), #5F4DD1);
+        }
+
+        .menu-icon {
+            font-size: 24px;
+        }
+
+        /* Main Content */
         .main-content {
-            margin-left: 250px;
+            flex: 1;
+            margin-left: 280px;
             padding: 30px;
         }
 
-        .top-bar {
+        .header {
             background: var(--card-bg);
-            padding: 20px;
+            padding: 20px 30px;
             border-radius: 15px;
             margin-bottom: 30px;
             display: flex;
@@ -176,23 +97,19 @@
             align-items: center;
         }
 
-        .page-title {
+        .header-title {
             font-size: 28px;
             font-weight: bold;
         }
 
         .logout-btn {
-            padding: 10px 20px;
-            background: var(--danger-color);
+            padding: 10px 25px;
+            background: var(--danger);
             border: none;
             border-radius: 8px;
             color: white;
             cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .logout-btn:hover {
-            background: #dc2626;
+            font-weight: bold;
         }
 
         /* Stats Cards */
@@ -207,124 +124,161 @@
             background: var(--card-bg);
             padding: 25px;
             border-radius: 15px;
-            border-left: 4px solid var(--primary-color);
+            border-left: 4px solid var(--primary);
         }
 
-        .stat-card.success {
-            border-left-color: var(--success-color);
-        }
-
-        .stat-card.warning {
-            border-left-color: var(--warning-color);
-        }
-
-        .stat-card.danger {
-            border-left-color: var(--danger-color);
-        }
-
-        .stat-icon {
-            font-size: 32px;
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 14px;
             margin-bottom: 10px;
         }
 
         .stat-value {
             font-size: 32px;
             font-weight: bold;
-            margin: 10px 0;
+            color: var(--secondary);
         }
 
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        /* Content Sections */
+        /* Content Section */
         .content-section {
             display: none;
         }
 
         .content-section.active {
             display: block;
+            animation: fadeIn 0.3s;
         }
 
-        .card {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .card-title {
-            font-size: 20px;
-            font-weight: bold;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Tables */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
+        .table-container {
             background: var(--card-bg);
             border-radius: 15px;
-            overflow: hidden;
+            padding: 20px;
+            overflow-x: auto;
         }
 
-        .data-table th {
-            background: rgba(99, 102, 241, 0.2);
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: rgba(108, 92, 231, 0.2);
             padding: 15px;
             text-align: left;
             font-weight: bold;
-            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary);
         }
 
-        .data-table td {
+        td {
             padding: 15px;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        .data-table tr:hover {
-            background: rgba(99, 102, 241, 0.05);
+        tr:hover {
+            background: rgba(255,255,255,0.05);
         }
 
         /* Buttons */
         .btn {
-            padding: 8px 16px;
+            padding: 8px 20px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 14px;
+            font-weight: bold;
             transition: all 0.3s;
-            margin-right: 5px;
-        }
-
-        .btn-primary {
-            background: var(--primary-color);
-            color: white;
+            margin: 0 5px;
         }
 
         .btn-success {
-            background: var(--success-color);
+            background: var(--secondary);
             color: white;
         }
 
         .btn-danger {
-            background: var(--danger-color);
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-primary {
+            background: var(--primary);
             color: white;
         }
 
         .btn-warning {
-            background: var(--warning-color);
-            color: white;
+            background: var(--warning);
+            color: var(--dark);
         }
 
         .btn:hover {
-            opacity: 0.8;
+            transform: scale(1.05);
+        }
+
+        /* Forms */
+        .form-container {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary), #5F4DD1);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.02);
         }
 
         /* Modal */
@@ -335,11 +289,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 2000;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
             align-items: center;
             justify-content: center;
-            padding: 20px;
         }
 
         .modal.active {
@@ -349,10 +302,10 @@
         .modal-content {
             background: var(--card-bg);
             padding: 30px;
-            border-radius: 20px;
+            border-radius: 15px;
             max-width: 600px;
-            width: 100%;
-            max-height: 90vh;
+            width: 90%;
+            max-height: 80vh;
             overflow-y: auto;
         }
 
@@ -363,76 +316,12 @@
             margin-bottom: 20px;
         }
 
-        .modal-title {
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .close-modal {
+        .close-btn {
             background: none;
             border: none;
-            color: var(--text-primary);
-            font-size: 24px;
+            color: var(--text);
+            font-size: 28px;
             cursor: pointer;
-        }
-
-        /* Status Badge */
-        .status-badge {
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .status-pending {
-            background: rgba(245, 158, 11, 0.2);
-            color: var(--warning-color);
-        }
-
-        .status-approved {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--success-color);
-        }
-
-        .status-rejected {
-            background: rgba(239, 68, 68, 0.2);
-            color: var(--danger-color);
-        }
-
-        .status-active {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--success-color);
-        }
-
-        /* Loading */
-        .loading {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 4000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .loading.active {
-            display: flex;
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid var(--border-color);
-            border-top-color: var(--primary-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
         }
 
         /* Notification */
@@ -441,68 +330,134 @@
             top: 20px;
             right: 20px;
             background: var(--card-bg);
-            padding: 15px 20px;
+            padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            z-index: 3000;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            z-index: 2000;
             animation: slideIn 0.3s;
-            border-left: 4px solid var(--success-color);
-            max-width: 300px;
+            max-width: 350px;
+            border-left: 4px solid var(--secondary);
         }
 
         @keyframes slideIn {
-            from { transform: translateX(400px); }
-            to { transform: translateX(0); }
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
         .notification.error {
-            border-left-color: var(--danger-color);
+            border-left-color: var(--danger);
         }
 
-        .notification.warning {
-            border-left-color: var(--warning-color);
+        /* Search Bar */
+        .search-bar {
+            margin-bottom: 20px;
         }
 
-        .search-box {
-            padding: 10px 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-primary);
-            width: 300px;
+        .search-input {
+            width: 100%;
+            padding: 15px;
+            background: var(--card-bg);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 16px;
         }
 
-        .search-box:focus {
+        .search-input:focus {
             outline: none;
-            border-color: var(--primary-color);
+            border-color: var(--primary);
         }
 
-        .action-buttons {
+        /* User Card */
+        .user-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-name {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .user-details {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .user-actions {
             display: flex;
             gap: 10px;
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-secondary);
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
         }
 
-        .empty-state i {
-            font-size: 64px;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
             margin-bottom: 20px;
-            opacity: 0.5;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .badge-pending {
+            background: rgba(253, 203, 110, 0.2);
+            color: var(--warning);
+        }
+
+        .badge-approved {
+            background: rgba(0, 184, 148, 0.2);
+            color: var(--secondary);
+        }
+
+        .badge-rejected {
+            background: rgba(255, 118, 117, 0.2);
+            color: var(--danger);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             .sidebar {
-                transform: translateX(-100%);
-                transition: transform 0.3s;
-            }
-
-            .sidebar.active {
-                transform: translateX(0);
+                width: 100%;
+                position: relative;
+                height: auto;
             }
 
             .main-content {
@@ -512,394 +467,386 @@
             .stats-grid {
                 grid-template-columns: 1fr;
             }
-        }
 
-        .submit-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
-        }
-
-        .submit-btn:hover {
-            transform: scale(1.02);
-        }
-
-        .info-box {
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid var(--primary-color);
-            border-radius: 10px;
-            padding: 15px;
-            margin: 15px 0;
-        }
-
-        .info-box i {
-            color: var(--primary-color);
-            margin-right: 10px;
-        }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        @media (max-width: 768px) {
-            .grid-2 {
+            .form-grid {
                 grid-template-columns: 1fr;
             }
         }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .plan-card-admin {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .plan-header-admin {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #636e72;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: var(--secondary);
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .toggle-switch.active .toggle-slider {
+            left: 33px;
+        }
+
+        .color-picker {
+            width: 60px;
+            height: 40px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            cursor: pointer;
+        }
     </style>
-<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
 </head>
 <body>
-    <!-- Login Screen -->
-    <div id="loginScreen" class="login-container">
-        <div class="login-box">
-            <div class="login-header">
-                <h1><i class="fas fa-shield-alt"></i> Exotix Admin</h1>
-                <p style="color: var(--text-secondary);">Secure Admin Access</p>
-            </div>
-            <form onsubmit="login(event)">
-                <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" id="adminUsername" placeholder="Enter username" required>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="adminPassword" placeholder="Enter password" required>
-                </div>
-                <button type="submit" class="login-btn">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                </button>
-            </form>
-            <div class="info-box" style="margin-top: 20px;">
-                <i class="fas fa-info-circle"></i>
-                Default credentials: admin / admin123
-            </div>
-        </div>
-    </div>
-
-    <!-- Admin Dashboard -->
-    <div id="adminDashboard" class="admin-container">
+    <div class="admin-container">
         <!-- Sidebar -->
         <div class="sidebar">
-            <div class="sidebar-header">
-                <i class="fas fa-chart-line"></i> Exotix Admin
+            <div class="logo">\u26a1 EXOTIX ADMIN</div>
+            
+            <div class="menu-item active" onclick="switchSection('dashboard')">
+                <span class="menu-icon">\ud83d\udcca</span>
+                <span>Dashboard</span>
             </div>
-            <ul class="sidebar-menu">
-                <li><a href="#" class="active" onclick="showAdminSection('dashboard')">
-                    <i class="fas fa-home"></i> Dashboard
-                </a></li>
-                <li><a href="#" onclick="showAdminSection('users')">
-                    <i class="fas fa-users"></i> Users
-                </a></li>
-                <li><a href="#" onclick="showAdminSection('deposits')">
-                    <i class="fas fa-arrow-down"></i> Deposits
-                </a></li>
-                <li><a href="#" onclick="showAdminSection('withdrawals')">
-                    <i class="fas fa-arrow-up"></i> Withdrawals
-                </a></li>
-                <li><a href="#" onclick="showAdminSection('trades')">
-                    <i class="fas fa-chart-line"></i> Trades
-                </a></li>
-                <li><a href="#" onclick="showAdminSection('tasks')">
-                    <i class="fas fa-tasks"></i> Tasks
-                </a></li>
-                <li><a href="#" onclick="showAdminSection('redeemCodes')">
-                    <i class="fas fa-gift"></i> Redeem Codes
-                </a></li>
-                <li><a href="#" onclick="showAdminSection('settings')">
-                    <i class="fas fa-cog"></i> Settings
-                </a></li>
-            </ul>
+            <div class="menu-item" onclick="switchSection('users')">
+                <span class="menu-icon">\ud83d\udc65</span>
+                <span>Users Management</span>
+            </div>
+            <div class="menu-item" onclick="switchSection('deposits')">
+                <span class="menu-icon">\ud83d\udcb3</span>
+                <span>Deposits</span>
+            </div>
+            <div class="menu-item" onclick="switchSection('withdrawals')">
+                <span class="menu-icon">\ud83d\udcb8</span>
+                <span>Withdrawals</span>
+            </div>
+            <div class="menu-item" onclick="switchSection('plans')">
+                <span class="menu-icon">\ud83d\udcc8</span>
+                <span>Trading Plans</span>
+            </div>
+            <div class="menu-item" onclick="switchSection('trades')">
+                <span class="menu-icon">\ud83d\udcbc</span>
+                <span>Active Trades</span>
+            </div>
+            <div class="menu-item" onclick="switchSection('tasks')">
+                <span class="menu-icon">\u2705</span>
+                <span>Tasks Management</span>
+            </div>
+            <div class="menu-item" onclick="switchSection('redeemCodes')">
+                <span class="menu-icon">\ud83c\udf81</span>
+                <span>Redeem Codes</span>
+            </div>
+            <div class="menu-item" onclick="switchSection('settings')">
+                <span class="menu-icon">\u2699\ufe0f</span>
+                <span>Settings</span>
+            </div>
         </div>
 
         <!-- Main Content -->
         <div class="main-content">
-            <!-- Top Bar -->
-            <div class="top-bar">
-                <div class="page-title" id="pageTitle">Dashboard</div>
-                <button class="logout-btn" onclick="logout()">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </button>
+            <div class="header">
+                <div class="header-title">Admin Dashboard</div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
 
             <!-- Dashboard Section -->
             <div id="dashboardSection" class="content-section active">
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-icon" style="color: var(--primary-color);">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="stat-value" id="totalUsers">0</div>
                         <div class="stat-label">Total Users</div>
+                        <div class="stat-value" id="totalUsers">0</div>
                     </div>
-                    <div class="stat-card success">
-                        <div class="stat-icon" style="color: var(--success-color);">
-                            <i class="fas fa-dollar-sign"></i>
-                        </div>
-                        <div class="stat-value" id="totalDeposits">$0</div>
+                    <div class="stat-card">
+                        <div class="stat-label">Daily Users</div>
+                        <div class="stat-value" id="dailyUsers">0</div>
+                    </div>
+                    <div class="stat-card">
                         <div class="stat-label">Total Deposits</div>
+                        <div class="stat-value">$<span id="totalDeposits">0</span></div>
                     </div>
-                    <div class="stat-card warning">
-                        <div class="stat-icon" style="color: var(--warning-color);">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="stat-value" id="activeTrades">0</div>
+                    <div class="stat-card">
+                        <div class="stat-label">Total Withdrawals</div>
+                        <div class="stat-value">$<span id="totalWithdrawals">0</span></div>
+                    </div>
+                    <div class="stat-card">
                         <div class="stat-label">Active Trades</div>
+                        <div class="stat-value" id="activeTrades">0</div>
                     </div>
-                    <div class="stat-card danger">
-                        <div class="stat-icon" style="color: var(--danger-color);">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="stat-value" id="pendingRequests">0</div>
-                        <div class="stat-label">Pending Requests</div>
+                    <div class="stat-card">
+                        <div class="stat-label">Pending Deposits</div>
+                        <div class="stat-value" id="pendingDeposits">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Pending Withdrawals</div>
+                        <div class="stat-value" id="pendingWithdrawals">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Platform Revenue</div>
+                        <div class="stat-value">$<span id="platformRevenue">0</span></div>
                     </div>
                 </div>
 
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Recent Activities</div>
-                    </div>
-                    <table class="data-table">
+                <div class="section-title">\ud83d\udcc8 Recent Activity</div>
+                <div class="table-container">
+                    <table>
                         <thead>
                             <tr>
-                                <th>User ID</th>
-                                <th>Activity</th>
+                                <th>Time</th>
+                                <th>User</th>
+                                <th>Action</th>
                                 <th>Amount</th>
-                                <th>Date</th>
                             </tr>
                         </thead>
-                        <tbody id="recentActivities">
-                            <tr><td colspan="4" style="text-align: center;">Loading...</td></tr>
-                        </tbody>
+                        <tbody id="recentActivity"></tbody>
                     </table>
                 </div>
             </div>
 
             <!-- Users Section -->
             <div id="usersSection" class="content-section">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">User Management</div>
-                        <input type="text" class="search-box" placeholder="Search users..." id="userSearch" onkeyup="searchUsers()">
-                    </div>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>User ID</th>
-                                <th>Balance</th>
-                                <th>Total Deposits</th>
-                                <th>Referrals</th>
-                                <th>Joined</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="usersTable">
-                            <tr><td colspan="6" style="text-align: center;">Loading...</td></tr>
-                        </tbody>
-                    </table>
+                <div class="section-title">\ud83d\udc65 Users Management</div>
+                
+                <div class="search-bar">
+                    <input type="text" class="search-input" placeholder="Search users..." onkeyup="searchUsers(this.value)">
                 </div>
+
+                <div id="usersList"></div>
             </div>
 
             <!-- Deposits Section -->
             <div id="depositsSection" class="content-section">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Deposit Requests</div>
-                    </div>
-                    <table class="data-table">
+                <div class="section-title">\ud83d\udcb3 Deposit Requests</div>
+                
+                <div class="table-container">
+                    <table>
                         <thead>
                             <tr>
-                                <th>User ID</th>
+                                <th>User</th>
                                 <th>Amount</th>
-                                <th>TX Hash</th>
+                                <th>TxHash</th>
+                                <th>Time</th>
                                 <th>Status</th>
-                                <th>Date</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="depositsTable">
-                            <tr><td colspan="6" style="text-align: center;">Loading...</td></tr>
-                        </tbody>
+                        <tbody id="depositsList"></tbody>
                     </table>
                 </div>
             </div>
 
             <!-- Withdrawals Section -->
             <div id="withdrawalsSection" class="content-section">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Withdrawal Requests</div>
-                    </div>
-                    <table class="data-table">
+                <div class="section-title">\ud83d\udcb8 Withdrawal Requests</div>
+                
+                <div class="table-container">
+                    <table>
                         <thead>
                             <tr>
-                                <th>User ID</th>
+                                <th>User</th>
                                 <th>Amount</th>
                                 <th>Address</th>
+                                <th>Time</th>
                                 <th>Status</th>
-                                <th>Date</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="withdrawalsTable">
-                            <tr><td colspan="6" style="text-align: center;">Loading...</td></tr>
-                        </tbody>
+                        <tbody id="withdrawalsList"></tbody>
                     </table>
                 </div>
             </div>
 
+            <!-- Plans Section -->
+            <div id="plansSection" class="content-section">
+                <div class="section-title">\ud83d\udcc8 Trading Plans Management</div>
+                
+                <button class="btn btn-primary" onclick="showAddPlanModal()" style="margin-bottom: 20px;">
+                    \u2795 Add New Plan
+                </button>
+
+                <div id="plansList"></div>
+            </div>
+
             <!-- Trades Section -->
             <div id="tradesSection" class="content-section">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">All Trades</div>
-                    </div>
-                    <table class="data-table">
+                <div class="section-title">\ud83d\udcbc Active Trades</div>
+                
+                <div class="table-container">
+                    <table>
                         <thead>
                             <tr>
-                                <th>User ID</th>
+                                <th>User</th>
                                 <th>Plan</th>
                                 <th>Investment</th>
                                 <th>Daily Earning</th>
-                                <th>Days Left</th>
-                                <th>Status</th>
-                                <th>Actions</th>
+                                <th>Total Earned</th>
+                                <th>Days Remaining</th>
+                                <th>Next Claim</th>
                             </tr>
                         </thead>
-                        <tbody id="tradesTable">
-                            <tr><td colspan="7" style="text-align: center;">Loading...</td></tr>
-                        </tbody>
+                        <tbody id="tradesList"></tbody>
                     </table>
                 </div>
             </div>
 
             <!-- Tasks Section -->
             <div id="tasksSection" class="content-section">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Task Management</div>
-                        <button class="btn btn-primary" onclick="showAddTaskModal()">
-                            <i class="fas fa-plus"></i> Add Task
-                        </button>
-                    </div>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Reward</th>
-                                <th>Link</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tasksTable">
-                            <tr><td colspan="5" style="text-align: center;">Loading...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+                <div class="section-title">\u2705 Tasks Management</div>
+                
+                <button class="btn btn-primary" onclick="showAddTaskModal()" style="margin-bottom: 20px;">
+                    \u2795 Add New Task
+                </button>
+
+                <div id="tasksList"></div>
             </div>
 
             <!-- Redeem Codes Section -->
             <div id="redeemCodesSection" class="content-section">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Redeem Codes</div>
-                        <button class="btn btn-primary" onclick="showGenerateCodeModal()">
-                            <i class="fas fa-plus"></i> Generate Code
-                        </button>
+                <div class="section-title">\ud83c\udf81 Redeem Codes</div>
+                
+                <div class="form-container">
+                    <h3 style="margin-bottom: 20px;">Generate New Code</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Min Reward ($)</label>
+                            <input type="number" class="form-input" id="minReward" value="0.10" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Max Reward ($)</label>
+                            <input type="number" class="form-input" id="maxReward" value="1.00" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Max Uses</label>
+                            <input type="number" class="form-input" id="maxUses" value="100">
+                        </div>
                     </div>
-                    <table class="data-table">
+                    <button class="submit-btn" onclick="generateRedeemCode()">
+                        \ud83c\udf81 Generate Code
+                    </button>
+                </div>
+
+                <div class="table-container" style="margin-top: 20px;">
+                    <table>
                         <thead>
                             <tr>
                                 <th>Code</th>
-                                <th>Amount</th>
-                                <th>Status</th>
-                                <th>Used By</th>
+                                <th>Min Reward</th>
+                                <th>Max Reward</th>
+                                <th>Uses</th>
                                 <th>Created</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="redeemCodesTable">
-                            <tr><td colspan="6" style="text-align: center;">Loading...</td></tr>
-                        </tbody>
+                        <tbody id="redeemCodesList"></tbody>
                     </table>
                 </div>
             </div>
 
             <!-- Settings Section -->
             <div id="settingsSection" class="content-section">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Platform Settings</div>
-                    </div>
+                <div class="section-title">\u2699\ufe0f Platform Settings</div>
+                
+                <div class="form-container">
+                    <h3 style="margin-bottom: 20px;">General Settings</h3>
+                    
                     <div class="form-group">
-                        <label>Platform Name</label>
-                        <input type="text" id="platformName" value="Exotix">
+                        <label class="form-label">Platform Name</label>
+                        <input type="text" class="form-input" id="platformName" value="Exotix">
                     </div>
+
                     <div class="form-group">
-                        <label>Minimum Deposit ($)</label>
-                        <input type="number" id="minDeposit" value="30">
+                        <label class="form-label">Minimum Deposit ($)</label>
+                        <input type="number" class="form-input" id="minDeposit" value="30">
                     </div>
+
                     <div class="form-group">
-                        <label>Minimum Withdrawal ($)</label>
-                        <input type="number" id="minWithdrawal" value="0.10" step="0.01">
+                        <label class="form-label">Minimum Withdrawal ($)</label>
+                        <input type="number" class="form-input" id="minWithdrawal" value="0.10">
                     </div>
+
                     <div class="form-group">
-                        <label>Referral Bonus ($)</label>
-                        <input type="number" id="referralBonus" value="0.20" step="0.01">
+                        <label class="form-label">Referral Bonus ($)</label>
+                        <input type="number" class="form-input" id="referralBonus" value="0.20">
                     </div>
+
                     <div class="form-group">
-                        <label>Referral Commission (%)</label>
-                        <input type="number" id="referralCommission" value="20">
+                        <label class="form-label">Referral Commission (%)</label>
+                        <input type="number" class="form-input" id="referralCommission" value="20">
                     </div>
-                    <div class="form-group">
-                        <label>Admin Password</label>
-                        <input type="password" id="newAdminPassword" placeholder="Enter new password">
-                    </div>
+
                     <button class="submit-btn" onclick="saveSettings()">
-                        <i class="fas fa-save"></i> Save Settings
+                        \ud83d\udcbe Save Settings
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Edit User Modal -->
-    <div id="editUserModal" class="modal">
+    <!-- Add Plan Modal -->
+    <div id="addPlanModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title">Edit User</div>
-                <button class="close-modal" onclick="closeModal('editUserModal')">&times;</button>
+                <h2>Add New Trading Plan</h2>
+                <button class="close-btn" onclick="closeModal('addPlanModal')">&times;</button>
             </div>
             <div class="form-group">
-                <label>User ID</label>
-                <input type="text" id="editUserId" readonly>
+                <label class="form-label">Trading Pair</label>
+                <input type="text" class="form-input" id="planPair" placeholder="BTC/USDT">
             </div>
             <div class="form-group">
-                <label>Balance ($)</label>
-                <input type="number" id="editUserBalance" step="0.01">
+                <label class="form-label">Price ($)</label>
+                <input type="number" class="form-input" id="planPrice" placeholder="3000">
             </div>
             <div class="form-group">
-                <label>Action</label>
-                <select id="balanceAction" class="form-group input" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
-                    <option value="set">Set Balance</option>
-                    <option value="add">Add to Balance</option>
-                    <option value="subtract">Subtract from Balance</option>
-                </select>
+                <label class="form-label">Daily Earning ($)</label>
+                <input type="number" class="form-input" id="planDailyEarning" placeholder="300">
             </div>
-            <button class="submit-btn" onclick="updateUserBalance()">
-                <i class="fas fa-save"></i> Update Balance
-            </button>
+            <div class="form-group">
+                <label class="form-label">Duration (Days)</label>
+                <input type="number" class="form-input" id="planDuration" value="30">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Min Investment ($)</label>
+                <input type="number" class="form-input" id="planMinInvestment" value="40">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Icon (Emoji)</label>
+                <input type="text" class="form-input" id="planIcon" placeholder="\u20bf">
+            </div>
+            <button class="submit-btn" onclick="addPlan()">Add Plan</button>
         </div>
     </div>
 
@@ -907,74 +854,64 @@
     <div id="addTaskModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title">Add New Task</div>
-                <button class="close-modal" onclick="closeModal('addTaskModal')">&times;</button>
+                <h2>Add New Task</h2>
+                <button class="close-btn" onclick="closeModal('addTaskModal')">&times;</button>
             </div>
             <div class="form-group">
-                <label>Task Title</label>
-                <input type="text" id="taskTitle" placeholder="Enter task title">
+                <label class="form-label">Task Title</label>
+                <input type="text" class="form-input" id="taskTitle" placeholder="Follow us on Twitter">
             </div>
             <div class="form-group">
-                <label>Description</label>
-                <textarea id="taskDescription" placeholder="Enter task description" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); min-height: 100px;"></textarea>
+                <label class="form-label">Description</label>
+                <textarea class="form-textarea" id="taskDescription" placeholder="Follow our Twitter account"></textarea>
             </div>
             <div class="form-group">
-                <label>Reward ($)</label>
-                <input type="number" id="taskReward" step="0.01" placeholder="Enter reward amount">
+                <label class="form-label">Task Link</label>
+                <input type="text" class="form-input" id="taskLink" placeholder="https://twitter.com/exotix">
             </div>
             <div class="form-group">
-                <label>Task Link</label>
-                <input type="url" id="taskLink" placeholder="Enter task URL">
+                <label class="form-label">Reward ($)</label>
+                <input type="number" class="form-input" id="taskReward" placeholder="0.50" step="0.01">
             </div>
             <div class="form-group">
-                <label>Logo URL (Optional)</label>
-                <input type="url" id="taskLogo" placeholder="Enter logo URL">
+                <label class="form-label">Logo URL</label>
+                <input type="text" class="form-input" id="taskLogo" placeholder="https://example.com/logo.png">
             </div>
-            <button class="submit-btn" onclick="addTask()">
-                <i class="fas fa-plus"></i> Add Task
-            </button>
+            <button class="submit-btn" onclick="addTask()">Add Task</button>
         </div>
     </div>
 
-    <!-- Generate Code Modal -->
-    <div id="generateCodeModal" class="modal">
+    <!-- Edit User Modal -->
+    <div id="editUserModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title">Generate Redeem Code</div>
-                <button class="close-modal" onclick="closeModal('generateCodeModal')">&times;</button>
+                <h2>Edit User</h2>
+                <button class="close-btn" onclick="closeModal('editUserModal')">&times;</button>
+            </div>
+            <input type="hidden" id="editUserId">
+            <div class="form-group">
+                <label class="form-label">Balance ($)</label>
+                <input type="number" class="form-input" id="editUserBalance" step="0.01">
             </div>
             <div class="form-group">
-                <label>Number of Codes</label>
-                <input type="number" id="numCodes" value="1" min="1">
+                <label class="form-label">Action</label>
+                <select class="form-select" id="editUserAction">
+                    <option value="set">Set Balance</option>
+                    <option value="add">Add to Balance</option>
+                    <option value="subtract">Subtract from Balance</option>
+                </select>
             </div>
-            <div class="form-group">
-                <label>Amount Range</label>
-                <div class="grid-2">
-                    <div>
-                        <label style="font-size: 12px;">Min ($)</label>
-                        <input type="number" id="minAmount" value="0.10" step="0.01">
-                    </div>
-                    <div>
-                        <label style="font-size: 12px;">Max ($)</label>
-                        <input type="number" id="maxAmount" value="1.00" step="0.01">
-                    </div>
-                </div>
+            <div class="action-buttons">
+                <button class="btn btn-success" onclick="updateUserBalance()">Update Balance</button>
+                <button class="btn btn-danger" onclick="banUser()">Ban User</button>
             </div>
-            <button class="submit-btn" onclick="generateRedeemCodes()">
-                <i class="fas fa-gift"></i> Generate Codes
-            </button>
         </div>
-    </div>
-
-    <!-- Loading Overlay -->
-    <div class="loading" id="loadingOverlay">
-        <div class="spinner"></div>
     </div>
 
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getDatabase, ref, set, get, update, push, onValue, remove } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+        import { getDatabase, ref, set, get, update, onValue, push, remove } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyBfR97veh6idxb81mH6N5_Gq8-CpW2D7bE",
@@ -989,241 +926,1007 @@
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
-
-        // Telegram Bot Configuration
-        const TELEGRAM_BOT_TOKEN = '7930967027:AAG3AkEZrkKGxTFOyVHwN8VpA9HgusAdRmw';
-        const TELEGRAM_API = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}`;
-
         window.db = database;
         window.dbRef = ref;
         window.dbSet = set;
         window.dbGet = get;
         window.dbUpdate = update;
-        window.dbPush = push;
         window.dbOnValue = onValue;
+        window.dbPush = push;
         window.dbRemove = remove;
 
-        // Send Telegram notification
-        window.sendTelegramNotification = async function(chatId, message) {
-            if (!chatId) return;
-            try {
-                await fetch(`${TELEGRAM_API}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: chatId,
-                        text: message,
-                        parse_mode: 'HTML'
-                    })
-                });
-            } catch (error) {
-                console.error('Telegram notification error:', error);
-            }
-        };
+        const BOT_TOKEN = '7930967027:AAG3AkEZrkKGxTFOyVHwN8VpA9HgusAdRmw';
+        window.BOT_TOKEN = BOT_TOKEN;
 
-        // Login
-        window.login = async function(event) {
-            event.preventDefault();
-            const username = document.getElementById('adminUsername').value;
-            const password = document.getElementById('adminPassword').value;
+        // Initialize admin panel
+        initializeAdmin();
+    </script>
 
-            showLoading(true);
+    <script>
+        let allUsers = [];
+        let allDeposits = [];
+        let allWithdrawals = [];
+        let allPlans = [];
+        let allTrades = [];
+        let allTasks = [];
 
-            try {
-                const adminRef = ref(database, 'admin');
-                const snapshot = await get(adminRef);
-
-                let isValid = false;
-                if (snapshot.exists()) {
-                    const adminData = snapshot.val();
-                    isValid = adminData.username === username && adminData.password === password;
+        async function initializeAdmin() {
+            // Check admin authentication (simple password check)
+            const password = localStorage.getItem('adminPassword');
+            if (password !== 'admin123') {
+                const inputPassword = prompt('Enter admin password:');
+                if (inputPassword === 'admin123') {
+                    localStorage.setItem('adminPassword', inputPassword);
                 } else {
-                    // Set default admin credentials
-                    if (username === 'admin' && password === 'admin123') {
-                        await set(adminRef, {
-                            username: 'admin',
-                            password: 'admin123'
-                        });
-                        isValid = true;
-                    }
+                    alert('Invalid password');
+                    window.location.href = 'index.html';
+                    return;
                 }
-
-                if (isValid) {
-                    document.getElementById('loginScreen').style.display = 'none';
-                    document.getElementById('adminDashboard').classList.add('active');
-                    loadDashboard();
-                } else {
-                    showNotification('Invalid credentials', 'error');
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                showNotification('Login failed', 'error');
             }
 
-            showLoading(false);
-        };
+            loadDashboard();
+            setupRealtimeListeners();
+        }
 
-        // Logout
-        window.logout = function() {
-            document.getElementById('loginScreen').style.display = 'flex';
-            document.getElementById('adminDashboard').classList.remove('active');
-        };
+        function setupRealtimeListeners() {
+            // Listen for users updates
+            window.dbOnValue(window.dbRef(window.db, 'users'), () => {
+                loadUsers();
+                loadDashboard();
+            });
 
-        // Load Dashboard
+            // Listen for deposits updates
+            window.dbOnValue(window.dbRef(window.db, 'deposits'), () => {
+                loadDeposits();
+                loadDashboard();
+            });
+
+            // Listen for withdrawals updates
+            window.dbOnValue(window.dbRef(window.db, 'withdrawals'), () => {
+                loadWithdrawals();
+                loadDashboard();
+            });
+
+            // Listen for plans updates
+            window.dbOnValue(window.dbRef(window.db, 'tradingPlans'), () => {
+                loadPlans();
+            });
+
+            // Listen for trades updates
+            window.dbOnValue(window.dbRef(window.db, 'trades'), () => {
+                loadTrades();
+            });
+
+            // Listen for tasks updates
+            window.dbOnValue(window.dbRef(window.db, 'tasks'), () => {
+                loadTasks();
+            });
+        }
+
         async function loadDashboard() {
             try {
-                // Load stats
-                const usersRef = ref(database, 'users');
-                const usersSnapshot = await get(usersRef);
-                
-                let totalUsers = 0;
-                let totalDeposits = 0;
-                
-                if (usersSnapshot.exists()) {
-                    const users = Object.values(usersSnapshot.val());
-                    totalUsers = users.length;
-                    totalDeposits = users.reduce((sum, user) => sum + (user.totalDeposits || 0), 0);
-                }
+                // Load users
+                const usersRef = window.dbRef(window.db, 'users');
+                const usersSnapshot = await window.dbGet(usersRef);
+                const users = usersSnapshot.exists() ? Object.values(usersSnapshot.val()) : [];
 
-                document.getElementById('totalUsers').textContent = totalUsers;
-                document.getElementById('totalDeposits').textContent = '$' + totalDeposits.toFixed(2);
+                // Calculate stats
+                const totalUsers = users.length;
+                const today = new Date().setHours(0, 0, 0, 0);
+                const dailyUsers = users.filter(u => u.createdAt >= today).length;
 
-                // Load active trades
-                const tradesRef = ref(database, 'trades');
-                const tradesSnapshot = await get(tradesRef);
+                // Load deposits
+                const depositsRef = window.dbRef(window.db, 'deposits');
+                const depositsSnapshot = await window.dbGet(depositsRef);
+                const deposits = depositsSnapshot.exists() ? Object.values(depositsSnapshot.val()) : [];
+                const approvedDeposits = deposits.filter(d => d.status === 'approved');
+                const totalDeposits = approvedDeposits.reduce((sum, d) => sum + d.amount, 0);
+                const pendingDeposits = deposits.filter(d => d.status === 'pending').length;
+
+                // Load withdrawals
+                const withdrawalsRef = window.dbRef(window.db, 'withdrawals');
+                const withdrawalsSnapshot = await window.dbGet(withdrawalsRef);
+                const withdrawals = withdrawalsSnapshot.exists() ? Object.values(withdrawalsSnapshot.val()) : [];
+                const approvedWithdrawals = withdrawals.filter(w => w.status === 'approved');
+                const totalWithdrawals = approvedWithdrawals.reduce((sum, w) => sum + w.amount, 0);
+                const pendingWithdrawals = withdrawals.filter(w => w.status === 'pending').length;
+
+                // Load trades
+                const tradesRef = window.dbRef(window.db, 'trades');
+                const tradesSnapshot = await window.dbGet(tradesRef);
                 let activeTrades = 0;
-                
                 if (tradesSnapshot.exists()) {
                     Object.values(tradesSnapshot.val()).forEach(userTrades => {
-                        Object.values(userTrades).forEach(trade => {
-                            if (trade.status === 'active') activeTrades++;
-                        });
+                        activeTrades += Object.values(userTrades).filter(t => t.active).length;
                     });
                 }
-                
+
+                // Calculate platform revenue (deposits - withdrawals)
+                const platformRevenue = totalDeposits - totalWithdrawals;
+
+                // Update stats
+                document.getElementById('totalUsers').textContent = totalUsers;
+                document.getElementById('dailyUsers').textContent = dailyUsers;
+                document.getElementById('totalDeposits').textContent = totalDeposits.toFixed(2);
+                document.getElementById('totalWithdrawals').textContent = totalWithdrawals.toFixed(2);
                 document.getElementById('activeTrades').textContent = activeTrades;
+                document.getElementById('pendingDeposits').textContent = pendingDeposits;
+                document.getElementById('pendingWithdrawals').textContent = pendingWithdrawals;
+                document.getElementById('platformRevenue').textContent = platformRevenue.toFixed(2);
 
-                // Load pending requests
-                const depositsRef = ref(database, 'deposits');
-                const withdrawalsRef = ref(database, 'withdrawals');
-                const depositsSnapshot = await get(depositsRef);
-                const withdrawalsSnapshot = await get(withdrawalsRef);
-                
-                let pendingRequests = 0;
-                
-                if (depositsSnapshot.exists()) {
-                    Object.values(depositsSnapshot.val()).forEach(deposit => {
-                        if (deposit.status === 'pending') pendingRequests++;
-                    });
-                }
-                
-                if (withdrawalsSnapshot.exists()) {
-                    Object.values(withdrawalsSnapshot.val()).forEach(withdrawal => {
-                        if (withdrawal.status === 'pending') pendingRequests++;
-                    });
-                }
-                
-                document.getElementById('pendingRequests').textContent = pendingRequests;
+                // Load recent activity
+                loadRecentActivity();
 
-                // Load recent activities
-                loadRecentActivities();
             } catch (error) {
-                console.error('Dashboard load error:', error);
+                console.error('Error loading dashboard:', error);
             }
         }
 
-        // Load Recent Activities
-        async function loadRecentActivities() {
-            const tbody = document.getElementById('recentActivities');
-            tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Loading...</td></tr>';
-
+        async function loadRecentActivity() {
             try {
                 const activities = [];
-                
-                // Get all user activities
-                const usersRef = ref(database, 'users');
-                const usersSnapshot = await get(usersRef);
-                
-                if (usersSnapshot.exists()) {
-                    for (const userId of Object.keys(usersSnapshot.val())) {
-                        const activitiesRef = ref(database, `activities/${userId}`);
-                        const activitiesSnapshot = await get(activitiesRef);
-                        
-                        if (activitiesSnapshot.exists()) {
-                            Object.values(activitiesSnapshot.val()).forEach(activity => {
-                                activities.push({
-                                    userId: userId,
-                                    ...activity
-                                });
+
+                // Get recent deposits
+                const depositsRef = window.dbRef(window.db, 'deposits');
+                const depositsSnapshot = await window.dbGet(depositsRef);
+                if (depositsSnapshot.exists()) {
+                    Object.entries(depositsSnapshot.val()).forEach(([id, deposit]) => {
+                        activities.push({
+                            time: deposit.timestamp,
+                            userId: deposit.userId,
+                            action: 'Deposit',
+                            amount: deposit.amount,
+                            status: deposit.status
+                        });
+                    });
+                }
+
+                // Get recent withdrawals
+                const withdrawalsRef = window.dbRef(window.db, 'withdrawals');
+                const withdrawalsSnapshot = await window.dbGet(withdrawalsRef);
+                if (withdrawalsSnapshot.exists()) {
+                    Object.entries(withdrawalsSnapshot.val()).forEach(([id, withdrawal]) => {
+                        activities.push({
+                            time: withdrawal.timestamp,
+                            userId: withdrawal.userId,
+                            action: 'Withdrawal',
+                            amount: withdrawal.amount,
+                            status: withdrawal.status
+                        });
+                    });
+                }
+
+                // Sort by time
+                activities.sort((a, b) => b.time - a.time);
+
+                // Display recent 10
+                const tbody = document.getElementById('recentActivity');
+                tbody.innerHTML = '';
+                activities.slice(0, 10).forEach(activity => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${new Date(activity.time).toLocaleString()}</td>
+                        <td>${activity.userId}</td>
+                        <td>${activity.action}</td>
+                        <td>$${activity.amount.toFixed(2)}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+            } catch (error) {
+                console.error('Error loading recent activity:', error);
+            }
+        }
+
+        async function loadUsers() {
+            try {
+                const usersRef = window.dbRef(window.db, 'users');
+                const snapshot = await window.dbGet(usersRef);
+
+                if (!snapshot.exists()) {
+                    document.getElementById('usersList').innerHTML = '<p>No users found</p>';
+                    return;
+                }
+
+                allUsers = Object.entries(snapshot.val()).map(([id, user]) => ({
+                    id,
+                    ...user
+                }));
+
+                renderUsers(allUsers);
+
+            } catch (error) {
+                console.error('Error loading users:', error);
+            }
+        }
+
+        function renderUsers(users) {
+            const container = document.getElementById('usersList');
+            container.innerHTML = '';
+
+            users.forEach(user => {
+                const card = document.createElement('div');
+                card.className = 'user-card';
+                card.innerHTML = `
+                    <img src="${user.photoUrl || 'https://via.placeholder.com/60'}" alt="Avatar" class="user-avatar">
+                    <div class="user-info">
+                        <div class="user-name">${user.firstName} ${user.lastName}</div>
+                        <div class="user-details">
+                            ID: ${user.id} | Balance: $${(user.balance || 0).toFixed(2)} | 
+                            Referrals: ${(user.referrals || []).length}
+                        </div>
+                    </div>
+                    <div class="user-actions">
+                        <button class="btn btn-primary" onclick="editUser('${user.id}')">Edit</button>
+                        <button class="btn btn-warning" onclick="viewUserDetails('${user.id}')">Details</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function searchUsers(query) {
+            if (!query) {
+                renderUsers(allUsers);
+                return;
+            }
+
+            const filtered = allUsers.filter(user => 
+                user.firstName.toLowerCase().includes(query.toLowerCase()) ||
+                user.lastName.toLowerCase().includes(query.toLowerCase()) ||
+                user.id.toString().includes(query)
+            );
+
+            renderUsers(filtered);
+        }
+
+        function editUser(userId) {
+            const user = allUsers.find(u => u.id === userId);
+            if (!user) return;
+
+            document.getElementById('editUserId').value = userId;
+            document.getElementById('editUserBalance').value = user.balance || 0;
+            document.getElementById('editUserModal').classList.add('active');
+        }
+
+        async function updateUserBalance() {
+            try {
+                const userId = document.getElementById('editUserId').value;
+                const amount = parseFloat(document.getElementById('editUserBalance').value);
+                const action = document.getElementById('editUserAction').value;
+
+                const userRef = window.dbRef(window.db, `users/${userId}`);
+                const snapshot = await window.dbGet(userRef);
+
+                if (!snapshot.exists()) return;
+
+                const user = snapshot.val();
+                let newBalance = user.balance || 0;
+
+                switch (action) {
+                    case 'set':
+                        newBalance = amount;
+                        break;
+                    case 'add':
+                        newBalance += amount;
+                        break;
+                    case 'subtract':
+                        newBalance -= amount;
+                        break;
+                }
+
+                await window.dbUpdate(userRef, { balance: newBalance });
+
+                // Send notification
+                await sendTelegramNotification(userId, 
+                    `\ud83d\udcb0 Balance Updated\
+\
+Your balance has been updated by admin.\
+New Balance: $${newBalance.toFixed(2)}`
+                );
+
+                showNotification('User balance updated successfully');
+                closeModal('editUserModal');
+                loadUsers();
+
+            } catch (error) {
+                console.error('Error updating user balance:', error);
+                showNotification('Error updating balance', 'error');
+            }
+        }
+
+        async function banUser() {
+            const userId = document.getElementById('editUserId').value;
+            if (!confirm('Are you sure you want to ban this user?')) return;
+
+            try {
+                await window.dbUpdate(window.dbRef(window.db, `users/${userId}`), {
+                    banned: true,
+                    balance: 0
+                });
+
+                showNotification('User banned successfully');
+                closeModal('editUserModal');
+                loadUsers();
+
+            } catch (error) {
+                console.error('Error banning user:', error);
+                showNotification('Error banning user', 'error');
+            }
+        }
+
+        async function loadDeposits() {
+            try {
+                const depositsRef = window.dbRef(window.db, 'deposits');
+                const snapshot = await window.dbGet(depositsRef);
+
+                const tbody = document.getElementById('depositsList');
+                tbody.innerHTML = '';
+
+                if (!snapshot.exists()) {
+                    tbody.innerHTML = '<tr><td colspan="6">No deposits found</td></tr>';
+                    return;
+                }
+
+                allDeposits = Object.entries(snapshot.val()).map(([id, deposit]) => ({
+                    id,
+                    ...deposit
+                })).sort((a, b) => b.timestamp - a.timestamp);
+
+                allDeposits.forEach(deposit => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${deposit.userId}</td>
+                        <td>$${deposit.amount.toFixed(2)}</td>
+                        <td>${deposit.txHash.substring(0, 20)}...</td>
+                        <td>${new Date(deposit.timestamp).toLocaleString()}</td>
+                        <td><span class="badge badge-${deposit.status}">${deposit.status.toUpperCase()}</span></td>
+                        <td>
+                            ${deposit.status === 'pending' ? `
+                                <button class="btn btn-success" onclick="approveDeposit('${deposit.id}', '${deposit.userId}', ${deposit.amount})">Approve</button>
+                                <button class="btn btn-danger" onclick="rejectDeposit('${deposit.id}', '${deposit.userId}')">Reject</button>
+                            ` : '-'}
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+            } catch (error) {
+                console.error('Error loading deposits:', error);
+            }
+        }
+
+        async function approveDeposit(depositId, userId, amount) {
+            try {
+                // Update deposit status
+                await window.dbUpdate(window.dbRef(window.db, `deposits/${depositId}`), {
+                    status: 'approved',
+                    approvedAt: Date.now()
+                });
+
+                // Update transaction history
+                const transactions = await window.dbGet(window.dbRef(window.db, `transactions/${userId}`));
+                if (transactions.exists()) {
+                    const txs = Object.entries(transactions.val());
+                    for (const [txId, tx] of txs) {
+                        if (tx.txHash === allDeposits.find(d => d.id === depositId).txHash) {
+                            await window.dbUpdate(window.dbRef(window.db, `transactions/${userId}/${txId}`), {
+                                status: 'approved'
                             });
                         }
                     }
                 }
 
-                activities.sort((a, b) => b.timestamp - a.timestamp);
-                const recentActivities = activities.slice(0, 10);
+                // Add balance to user
+                const userRef = window.dbRef(window.db, `users/${userId}`);
+                const userSnapshot = await window.dbGet(userRef);
+                
+                if (userSnapshot.exists()) {
+                    const user = userSnapshot.val();
+                    const newBalance = (user.balance || 0) + amount;
+                    await window.dbUpdate(userRef, {
+                        balance: newBalance,
+                        totalDeposits: (user.totalDeposits || 0) + amount,
+                        hasDeposited: true
+                    });
 
-                if (recentActivities.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">No activities yet</td></tr>';
-                    return;
+                    // Send notification
+                    await sendTelegramNotification(userId,
+                        `\u2705 Deposit Approved!\
+\
+` +
+                        `Amount: $${amount.toFixed(2)}\
+` +
+                        `New Balance: $${newBalance.toFixed(2)}\
+` +
+                        `Time: ${new Date().toLocaleString()}`
+                    );
                 }
 
-                tbody.innerHTML = recentActivities.map(activity => `
-                    <tr>
-                        <td>${activity.userId.substr(0, 12)}...</td>
-                        <td>${activity.description}</td>
-                        <td>$${(activity.amount || 0).toFixed(2)}</td>
-                        <td>${new Date(activity.timestamp).toLocaleString()}</td>
-                    </tr>
-                `).join('');
+                showNotification('Deposit approved successfully');
+                loadDeposits();
+
             } catch (error) {
-                console.error('Activities load error:', error);
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Error loading activities</td></tr>';
+                console.error('Error approving deposit:', error);
+                showNotification('Error approving deposit', 'error');
             }
         }
 
-        // Show Admin Section
-        window.showAdminSection = function(section) {
-            document.querySelectorAll('.content-section').forEach(sec => {
-                sec.classList.remove('active');
-            });
-            
-            document.querySelectorAll('.sidebar-menu a').forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            event.target.classList.add('active');
-            
+        async function rejectDeposit(depositId, userId) {
+            try {
+                // Update deposit status
+                await window.dbUpdate(window.dbRef(window.db, `deposits/${depositId}`), {
+                    status: 'rejected',
+                    rejectedAt: Date.now()
+                });
+
+                // Update transaction history
+                const transactions = await window.dbGet(window.dbRef(window.db, `transactions/${userId}`));
+                if (transactions.exists()) {
+                    const txs = Object.entries(transactions.val());
+                    for (const [txId, tx] of txs) {
+                        if (tx.txHash === allDeposits.find(d => d.id === depositId).txHash) {
+                            await window.dbUpdate(window.dbRef(window.db, `transactions/${userId}/${txId}`), {
+                                status: 'rejected'
+                            });
+                        }
+                    }
+                }
+
+                // Send notification
+                await sendTelegramNotification(userId,
+                    `\u274c Deposit Rejected\
+\
+` +
+                    `Your deposit request has been rejected.\
+` +
+                    `Please contact support for more information.`
+                );
+
+                showNotification('Deposit rejected');
+                loadDeposits();
+
+            } catch (error) {
+                console.error('Error rejecting deposit:', error);
+                showNotification('Error rejecting deposit', 'error');
+            }
+        }
+
+        async function loadWithdrawals() {
+            try {
+                const withdrawalsRef = window.dbRef(window.db, 'withdrawals');
+                const snapshot = await window.dbGet(withdrawalsRef);
+
+                const tbody = document.getElementById('withdrawalsList');
+                tbody.innerHTML = '';
+
+                if (!snapshot.exists()) {
+                    tbody.innerHTML = '<tr><td colspan="6">No withdrawals found</td></tr>';
+                    return;
+                }
+
+                allWithdrawals = Object.entries(snapshot.val()).map(([id, withdrawal]) => ({
+                    id,
+                    ...withdrawal
+                })).sort((a, b) => b.timestamp - a.timestamp);
+
+                allWithdrawals.forEach(withdrawal => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${withdrawal.userId}</td>
+                        <td>$${withdrawal.amount.toFixed(2)}</td>
+                        <td>${withdrawal.address.substring(0, 20)}...</td>
+                        <td>${new Date(withdrawal.timestamp).toLocaleString()}</td>
+                        <td><span class="badge badge-${withdrawal.status}">${withdrawal.status.toUpperCase()}</span></td>
+                        <td>
+                            ${withdrawal.status === 'pending' ? `
+                                <button class="btn btn-success" onclick="approveWithdrawal('${withdrawal.id}', '${withdrawal.userId}', ${withdrawal.amount})">Approve</button>
+                                <button class="btn btn-danger" onclick="rejectWithdrawal('${withdrawal.id}', '${withdrawal.userId}', ${withdrawal.amount})">Reject</button>
+                            ` : '-'}
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+            } catch (error) {
+                console.error('Error loading withdrawals:', error);
+            }
+        }
+
+        async function approveWithdrawal(withdrawalId, userId, amount) {
+            try {
+                // Update withdrawal status
+                await window.dbUpdate(window.dbRef(window.db, `withdrawals/${withdrawalId}`), {
+                    status: 'approved',
+                    approvedAt: Date.now()
+                });
+
+                // Update transaction history
+                const transactions = await window.dbGet(window.dbRef(window.db, `transactions/${userId}`));
+                if (transactions.exists()) {
+                    const txs = Object.entries(transactions.val());
+                    for (const [txId, tx] of txs) {
+                        if (tx.amount === amount && tx.type === 'withdraw' && tx.status === 'pending') {
+                            await window.dbUpdate(window.dbRef(window.db, `transactions/${userId}/${txId}`), {
+                                status: 'approved'
+                            });
+                            break;
+                        }
+                    }
+                }
+
+                // Update user stats
+                const userRef = window.dbRef(window.db, `users/${userId}`);
+                const userSnapshot = await window.dbGet(userRef);
+                
+                if (userSnapshot.exists()) {
+                    const user = userSnapshot.val();
+                    await window.dbUpdate(userRef, {
+                        totalWithdrawals: (user.totalWithdrawals || 0) + amount
+                    });
+
+                    // Send notification
+                    await sendTelegramNotification(userId,
+                        `\u2705 Withdrawal Approved!\
+\
+` +
+                        `Amount: $${amount.toFixed(2)}\
+` +
+                        `The funds have been sent to your wallet.\
+` +
+                        `Time: ${new Date().toLocaleString()}`
+                    );
+                }
+
+                showNotification('Withdrawal approved successfully');
+                loadWithdrawals();
+
+            } catch (error) {
+                console.error('Error approving withdrawal:', error);
+                showNotification('Error approving withdrawal', 'error');
+            }
+        }
+
+        async function rejectWithdrawal(withdrawalId, userId, amount) {
+            try {
+                // Update withdrawal status
+                await window.dbUpdate(window.dbRef(window.db, `withdrawals/${withdrawalId}`), {
+                    status: 'rejected',
+                    rejectedAt: Date.now()
+                });
+
+                // Update transaction history
+                const transactions = await window.dbGet(window.dbRef(window.db, `transactions/${userId}`));
+                if (transactions.exists()) {
+                    const txs = Object.entries(transactions.val());
+                    for (const [txId, tx] of txs) {
+                        if (tx.amount === amount && tx.type === 'withdraw' && tx.status === 'pending') {
+                            await window.dbUpdate(window.dbRef(window.db, `transactions/${userId}/${txId}`), {
+                                status: 'rejected'
+                            });
+                            break;
+                        }
+                    }
+                }
+
+                // Refund balance to user
+                const userRef = window.dbRef(window.db, `users/${userId}`);
+                const userSnapshot = await window.dbGet(userRef);
+                
+                if (userSnapshot.exists()) {
+                    const user = userSnapshot.val();
+                    const newBalance = (user.balance || 0) + amount;
+                    await window.dbUpdate(userRef, {
+                        balance: newBalance
+                    });
+
+                    // Send notification
+                    await sendTelegramNotification(userId,
+                        `\u274c Withdrawal Rejected\
+\
+` +
+                        `Amount: $${amount.toFixed(2)}\
+` +
+                        `Your balance has been refunded.\
+` +
+                        `New Balance: $${newBalance.toFixed(2)}`
+                    );
+                }
+
+                showNotification('Withdrawal rejected and balance refunded');
+                loadWithdrawals();
+
+            } catch (error) {
+                console.error('Error rejecting withdrawal:', error);
+                showNotification('Error rejecting withdrawal', 'error');
+            }
+        }
+
+        async function loadPlans() {
+            try {
+                const plansRef = window.dbRef(window.db, 'tradingPlans');
+                const snapshot = await window.dbGet(plansRef);
+
+                const container = document.getElementById('plansList');
+                container.innerHTML = '';
+
+                if (!snapshot.exists()) {
+                    container.innerHTML = '<p>No plans found</p>';
+                    return;
+                }
+
+                allPlans = Object.entries(snapshot.val()).map(([id, plan]) => ({
+                    id,
+                    ...plan
+                }));
+
+                allPlans.forEach(plan => {
+                    const card = document.createElement('div');
+                    card.className = 'plan-card-admin';
+                    card.innerHTML = `
+                        <div class="plan-header-admin">
+                            <div>
+                                <h3>${plan.pair}</h3>
+                                <p style="color: var(--text-secondary);">
+                                    Price: $${plan.price} | Daily: $${plan.dailyEarning} | Duration: ${plan.duration} days
+                                </p>
+                            </div>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <div class="toggle-switch ${plan.active ? 'active' : ''}" onclick="togglePlan('${plan.id}', ${!plan.active})">
+                                    <div class="toggle-slider"></div>
+                                </div>
+                                <button class="btn btn-danger" onclick="deletePlan('${plan.id}')">Delete</button>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error('Error loading plans:', error);
+            }
+        }
+
+        function showAddPlanModal() {
+            document.getElementById('addPlanModal').classList.add('active');
+        }
+
+        async function addPlan() {
+            try {
+                const plan = {
+                    pair: document.getElementById('planPair').value,
+                    price: parseFloat(document.getElementById('planPrice').value),
+                    dailyEarning: parseFloat(document.getElementById('planDailyEarning').value),
+                    duration: parseInt(document.getElementById('planDuration').value),
+                    minInvestment: parseFloat(document.getElementById('planMinInvestment').value),
+                    icon: document.getElementById('planIcon').value,
+                    active: true,
+                    color: getRandomGradient(),
+                    createdAt: Date.now()
+                };
+
+                const planRef = window.dbPush(window.dbRef(window.db, 'tradingPlans'));
+                await window.dbSet(planRef, plan);
+
+                showNotification('Plan added successfully');
+                closeModal('addPlanModal');
+                loadPlans();
+
+                // Clear form
+                document.getElementById('planPair').value = '';
+                document.getElementById('planPrice').value = '';
+                document.getElementById('planDailyEarning').value = '';
+                document.getElementById('planDuration').value = '30';
+                document.getElementById('planMinInvestment').value = '40';
+                document.getElementById('planIcon').value = '';
+
+            } catch (error) {
+                console.error('Error adding plan:', error);
+                showNotification('Error adding plan', 'error');
+            }
+        }
+
+        async function togglePlan(planId, active) {
+            try {
+                await window.dbUpdate(window.dbRef(window.db, `tradingPlans/${planId}`), {
+                    active: active
+                });
+                showNotification(`Plan ${active ? 'activated' : 'deactivated'}`);
+            } catch (error) {
+                console.error('Error toggling plan:', error);
+            }
+        }
+
+        async function deletePlan(planId) {
+            if (!confirm('Are you sure you want to delete this plan?')) return;
+
+            try {
+                await window.dbRemove(window.dbRef(window.db, `tradingPlans/${planId}`));
+                showNotification('Plan deleted successfully');
+                loadPlans();
+            } catch (error) {
+                console.error('Error deleting plan:', error);
+                showNotification('Error deleting plan', 'error');
+            }
+        }
+
+        function getRandomGradient() {
+            const gradients = [
+                'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+            ];
+            return gradients[Math.floor(Math.random() * gradients.length)];
+        }
+
+        async function loadTrades() {
+            try {
+                const tradesRef = window.dbRef(window.db, 'trades');
+                const snapshot = await window.dbGet(tradesRef);
+
+                const tbody = document.getElementById('tradesList');
+                tbody.innerHTML = '';
+
+                if (!snapshot.exists()) {
+                    tbody.innerHTML = '<tr><td colspan="7">No active trades found</td></tr>';
+                    return;
+                }
+
+                const trades = [];
+                Object.entries(snapshot.val()).forEach(([userId, userTrades]) => {
+                    Object.entries(userTrades).forEach(([tradeId, trade]) => {
+                        if (trade.active) {
+                            trades.push({
+                                userId,
+                                tradeId,
+                                ...trade
+                            });
+                        }
+                    });
+                });
+
+                trades.sort((a, b) => b.purchaseDate - a.purchaseDate);
+
+                trades.forEach(trade => {
+                    const row = document.createElement('tr');
+                    const nextClaim = new Date(trade.nextClaimTime).toLocaleString();
+                    row.innerHTML = `
+                        <td>${trade.userId}</td>
+                        <td>${trade.planName}</td>
+                        <td>$${trade.investment.toFixed(2)}</td>
+                        <td>$${trade.dailyEarning.toFixed(2)}</td>
+                        <td>$${trade.totalEarned.toFixed(2)}</td>
+                        <td>${trade.daysRemaining} / ${trade.duration}</td>
+                        <td>${nextClaim}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+            } catch (error) {
+                console.error('Error loading trades:', error);
+            }
+        }
+
+        async function loadTasks() {
+            try {
+                const tasksRef = window.dbRef(window.db, 'tasks');
+                const snapshot = await window.dbGet(tasksRef);
+
+                const container = document.getElementById('tasksList');
+                container.innerHTML = '';
+
+                if (!snapshot.exists()) {
+                    container.innerHTML = '<p>No tasks found</p>';
+                    return;
+                }
+
+                allTasks = Object.entries(snapshot.val()).map(([id, task]) => ({
+                    id,
+                    ...task
+                }));
+
+                allTasks.forEach(task => {
+                    const card = document.createElement('div');
+                    card.className = 'plan-card-admin';
+                    card.innerHTML = `
+                        <div class="plan-header-admin">
+                            <div>
+                                <h3>${task.title}</h3>
+                                <p style="color: var(--text-secondary);">${task.description}</p>
+                                <p style="color: var(--secondary); font-weight: bold;">Reward: $${task.reward}</p>
+                            </div>
+                            <button class="btn btn-danger" onclick="deleteTask('${task.id}')">Delete</button>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error('Error loading tasks:', error);
+            }
+        }
+
+        function showAddTaskModal() {
+            document.getElementById('addTaskModal').classList.add('active');
+        }
+
+        async function addTask() {
+            try {
+                const task = {
+                    title: document.getElementById('taskTitle').value,
+                    description: document.getElementById('taskDescription').value,
+                    link: document.getElementById('taskLink').value,
+                    reward: parseFloat(document.getElementById('taskReward').value),
+                    logo: document.getElementById('taskLogo').value,
+                    createdAt: Date.now()
+                };
+
+                const taskRef = window.dbPush(window.dbRef(window.db, 'tasks'));
+                await window.dbSet(taskRef, task);
+
+                showNotification('Task added successfully');
+                closeModal('addTaskModal');
+                loadTasks();
+
+                // Clear form
+                document.getElementById('taskTitle').value = '';
+                document.getElementById('taskDescription').value = '';
+                document.getElementById('taskLink').value = '';
+                document.getElementById('taskReward').value = '';
+                document.getElementById('taskLogo').value = '';
+
+            } catch (error) {
+                console.error('Error adding task:', error);
+                showNotification('Error adding task', 'error');
+            }
+        }
+
+        async function deleteTask(taskId) {
+            if (!confirm('Are you sure you want to delete this task?')) return;
+
+            try {
+                await window.dbRemove(window.dbRef(window.db, `tasks/${taskId}`));
+                showNotification('Task deleted successfully');
+                loadTasks();
+            } catch (error) {
+                console.error('Error deleting task:', error);
+                showNotification('Error deleting task', 'error');
+            }
+        }
+
+        async function generateRedeemCode() {
+            try {
+                const code = generateRandomCode();
+                const minReward = parseFloat(document.getElementById('minReward').value);
+                const maxReward = parseFloat(document.getElementById('maxReward').value);
+                const maxUses = parseInt(document.getElementById('maxUses').value);
+
+                const codeData = {
+                    code: code,
+                    minReward: minReward,
+                    maxReward: maxReward,
+                    maxUses: maxUses,
+                    used: false,
+                    usedBy: [],
+                    createdAt: Date.now()
+                };
+
+                const codeRef = window.dbPush(window.dbRef(window.db, 'redeemCodes'));
+                await window.dbSet(codeRef, codeData);
+
+                showNotification(`Code generated: ${code}`);
+                loadRedeemCodes();
+
+            } catch (error) {
+                console.error('Error generating code:', error);
+                showNotification('Error generating code', 'error');
+            }
+        }
+
+        function generateRandomCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            for (let i = 0; i < 8; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+
+        async function loadRedeemCodes() {
+            try {
+                const codesRef = window.dbRef(window.db, 'redeemCodes');
+                const snapshot = await window.dbGet(codesRef);
+
+                const tbody = document.getElementById('redeemCodesList');
+                tbody.innerHTML = '';
+
+                if (!snapshot.exists()) {
+                    tbody.innerHTML = '<tr><td colspan="6">No codes found</td></tr>';
+                    return;
+                }
+
+                const codes = Object.entries(snapshot.val()).map(([id, code]) => ({
+                    id,
+                    ...code
+                })).sort((a, b) => b.createdAt - a.createdAt);
+
+                codes.forEach(code => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td><strong>${code.code}</strong></td>
+                        <td>$${code.minReward.toFixed(2)}</td>
+                        <td>$${code.maxReward.toFixed(2)}</td>
+                        <td>${(code.usedBy || []).length} / ${code.maxUses}</td>
+                        <td>${new Date(code.createdAt).toLocaleString()}</td>
+                        <td>
+                            <button class="btn btn-danger" onclick="deleteRedeemCode('${code.id}')">Delete</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+            } catch (error) {
+                console.error('Error loading redeem codes:', error);
+            }
+        }
+
+        async function deleteRedeemCode(codeId) {
+            if (!confirm('Are you sure you want to delete this code?')) return;
+
+            try {
+                await window.dbRemove(window.dbRef(window.db, `redeemCodes/${codeId}`));
+                showNotification('Code deleted successfully');
+                loadRedeemCodes();
+            } catch (error) {
+                console.error('Error deleting code:', error);
+                showNotification('Error deleting code', 'error');
+            }
+        }
+
+        async function saveSettings() {
+            try {
+                const settings = {
+                    platformName: document.getElementById('platformName').value,
+                    minDeposit: parseFloat(document.getElementById('minDeposit').value),
+                    minWithdrawal: parseFloat(document.getElementById('minWithdrawal').value),
+                    referralBonus: parseFloat(document.getElementById('referralBonus').value),
+                    referralCommission: parseFloat(document.getElementById('referralCommission').value)
+                };
+
+                await window.dbSet(window.dbRef(window.db, 'settings'), settings);
+                showNotification('Settings saved successfully');
+
+            } catch (error) {
+                console.error('Error saving settings:', error);
+                showNotification('Error saving settings', 'error');
+            }
+        }
+
+        function switchSection(section) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+
+            // Show selected section
             const sectionMap = {
                 'dashboard': 'dashboardSection',
                 'users': 'usersSection',
                 'deposits': 'depositsSection',
                 'withdrawals': 'withdrawalsSection',
+                'plans': 'plansSection',
                 'trades': 'tradesSection',
                 'tasks': 'tasksSection',
                 'redeemCodes': 'redeemCodesSection',
                 'settings': 'settingsSection'
             };
-            
-            const titleMap = {
-                'dashboard': 'Dashboard',
-                'users': 'User Management',
-                'deposits': 'Deposit Requests',
-                'withdrawals': 'Withdrawal Requests',
-                'trades': 'Trade Management',
-                'tasks': 'Task Management',
-                'redeemCodes': 'Redeem Codes',
-                'settings': 'Platform Settings'
-            };
-            
+
             document.getElementById(sectionMap[section]).classList.add('active');
-            document.getElementById('pageTitle').textContent = titleMap[section];
-            
+            event.currentTarget.classList.add('active');
+
             // Load section data
             switch(section) {
-                case 'dashboard':
-                    loadDashboard();
-                    break;
                 case 'users':
                     loadUsers();
                     break;
@@ -1232,6 +1935,9 @@
                     break;
                 case 'withdrawals':
                     loadWithdrawals();
+                    break;
+                case 'plans':
+                    loadPlans();
                     break;
                 case 'trades':
                     loadTrades();
@@ -1243,716 +1949,13 @@
                     loadRedeemCodes();
                     break;
             }
-        };
+        }
 
-        // Load Users
-        window.loadUsers = async function() {
-            const tbody = document.getElementById('usersTable');
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Loading...</td></tr>';
-
-            try {
-                const usersRef = ref(database, 'users');
-                const snapshot = await get(usersRef);
-
-                if (!snapshot.exists()) {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No users yet</td></tr>';
-                    return;
-                }
-
-                const users = Object.entries(snapshot.val());
-                window.allUsers = users;
-
-                tbody.innerHTML = users.map(([userId, user]) => `
-                    <tr>
-                        <td>${userId.substr(0, 12)}...</td>
-                        <td>$${(user.balance || 0).toFixed(2)}</td>
-                        <td>$${(user.totalDeposits || 0).toFixed(2)}</td>
-                        <td>${(user.referrals || []).length}</td>
-                        <td>${new Date(user.createdAt).toLocaleDateString()}</td>
-                        <td>
-                            <button class="btn btn-primary" onclick="editUser('${userId}')">
-                                <i class="fas fa-edit"></i> Edit
-                            </button>
-                            <button class="btn btn-danger" onclick="banUser('${userId}')">
-                                <i class="fas fa-ban"></i> Ban
-                            </button>
-                        </td>
-                    </tr>
-                `).join('');
-            } catch (error) {
-                console.error('Users load error:', error);
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Error loading users</td></tr>';
-            }
-        };
-
-        // Search Users
-        window.searchUsers = function() {
-            const searchTerm = document.getElementById('userSearch').value.toLowerCase();
-            const tbody = document.getElementById('usersTable');
-
-            if (!window.allUsers) return;
-
-            const filtered = window.allUsers.filter(([userId, user]) => 
-                userId.toLowerCase().includes(searchTerm)
-            );
-
-            tbody.innerHTML = filtered.map(([userId, user]) => `
-                <tr>
-                    <td>${userId.substr(0, 12)}...</td>
-                    <td>$${(user.balance || 0).toFixed(2)}</td>
-                    <td>$${(user.totalDeposits || 0).toFixed(2)}</td>
-                    <td>${(user.referrals || []).length}</td>
-                    <td>${new Date(user.createdAt).toLocaleDateString()}</td>
-                    <td>
-                        <button class="btn btn-primary" onclick="editUser('${userId}')">
-                            <i class="fas fa-edit"></i> Edit
-                        </button>
-                        <button class="btn btn-danger" onclick="banUser('${userId}')">
-                            <i class="fas fa-ban"></i> Ban
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-        };
-
-        // Edit User
-        window.editUser = async function(userId) {
-            const userRef = ref(database, `users/${userId}`);
-            const snapshot = await get(userRef);
-            
-            if (snapshot.exists()) {
-                const user = snapshot.val();
-                document.getElementById('editUserId').value = userId;
-                document.getElementById('editUserBalance').value = user.balance || 0;
-                document.getElementById('editUserModal').classList.add('active');
-            }
-        };
-
-        // Update User Balance
-        window.updateUserBalance = async function() {
-            const userId = document.getElementById('editUserId').value;
-            const newBalance = parseFloat(document.getElementById('editUserBalance').value);
-            const action = document.getElementById('balanceAction').value;
-
-            showLoading(true);
-
-            try {
-                const userRef = ref(database, `users/${userId}`);
-                const snapshot = await get(userRef);
-                const currentBalance = snapshot.val().balance || 0;
-
-                let finalBalance = newBalance;
-                if (action === 'add') {
-                    finalBalance = currentBalance + newBalance;
-                } else if (action === 'subtract') {
-                    finalBalance = currentBalance - newBalance;
-                }
-
-                await update(userRef, { balance: finalBalance });
-
-                await push(ref(database, `activities/${userId}`), {
-                    type: 'admin',
-                    description: `Admin ${action} balance`,
-                    amount: newBalance,
-                    timestamp: Date.now()
-                });
-
-                showNotification('Balance updated successfully', 'success');
-                closeModal('editUserModal');
-                loadUsers();
-            } catch (error) {
-                console.error('Balance update error:', error);
-                showNotification('Balance update failed', 'error');
-            }
-
-            showLoading(false);
-        };
-
-        // Ban User
-        window.banUser = async function(userId) {
-            if (!confirm('Are you sure you want to ban this user?')) return;
-
-            showLoading(true);
-
-            try {
-                await update(ref(database, `users/${userId}`), {
-                    banned: true,
-                    bannedAt: Date.now()
-                });
-
-                showNotification('User banned successfully', 'success');
-                loadUsers();
-            } catch (error) {
-                console.error('Ban error:', error);
-                showNotification('Ban failed', 'error');
-            }
-
-            showLoading(false);
-        };
-
-        // Load Deposits
-        window.loadDeposits = async function() {
-            const tbody = document.getElementById('depositsTable');
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Loading...</td></tr>';
-
-            try {
-                const depositsRef = ref(database, 'deposits');
-                const snapshot = await get(depositsRef);
-
-                if (!snapshot.exists()) {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No deposits yet</td></tr>';
-                    return;
-                }
-
-                const deposits = Object.entries(snapshot.val()).sort((a, b) => b[1].timestamp - a[1].timestamp);
-
-                tbody.innerHTML = deposits.map(([depositId, deposit]) => `
-                    <tr>
-                        <td>${deposit.userId.substr(0, 12)}...</td>
-                        <td>$${deposit.amount.toFixed(2)}</td>
-                        <td>${deposit.txHash.substr(0, 20)}...</td>
-                        <td><span class="status-badge status-${deposit.status}">${deposit.status}</span></td>
-                        <td>${new Date(deposit.timestamp).toLocaleString()}</td>
-                        <td>
-                            ${deposit.status === 'pending' ? `
-                                <button class="btn btn-success" onclick="approveDeposit('${depositId}', '${deposit.userId}', ${deposit.amount})">
-                                    <i class="fas fa-check"></i> Approve
-                                </button>
-                                <button class="btn btn-danger" onclick="rejectDeposit('${depositId}', '${deposit.userId}')">
-                                    <i class="fas fa-times"></i> Reject
-                                </button>
-                            ` : '-'}
-                        </td>
-                    </tr>
-                `).join('');
-            } catch (error) {
-                console.error('Deposits load error:', error);
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Error loading deposits</td></tr>';
-            }
-        };
-
-        // Approve Deposit
-        window.approveDeposit = async function(depositId, userId, amount) {
-            showLoading(true);
-
-            try {
-                const userRef = ref(database, `users/${userId}`);
-                const userSnapshot = await get(userRef);
-                const userData = userSnapshot.val();
-
-                const newBalance = (userData.balance || 0) + amount;
-                const newTotalDeposits = (userData.totalDeposits || 0) + amount;
-
-                await update(userRef, {
-                    balance: newBalance,
-                    totalDeposits: newTotalDeposits,
-                    hasDeposited: true
-                });
-
-                await update(ref(database, `deposits/${depositId}`), {
-                    status: 'approved',
-                    approvedAt: Date.now()
-                });
-
-                await push(ref(database, `activities/${userId}`), {
-                    type: 'deposit',
-                    description: 'Deposit approved',
-                    amount: amount,
-                    timestamp: Date.now()
-                });
-
-                // Handle referral bonus
-                if (userData.referredBy) {
-                    const referrerRef = ref(database, `users/${userData.referredBy}`);
-                    const referrerSnapshot = await get(referrerRef);
-                    
-                    if (referrerSnapshot.exists()) {
-                        const referrer = referrerSnapshot.val();
-                        const commission = amount * 0.2;
-                        const newReferrerBalance = (referrer.balance || 0) + commission;
-                        const newReferralEarnings = (referrer.referralEarnings || 0) + commission;
-
-                        await update(referrerRef, {
-                            balance: newReferrerBalance,
-                            referralEarnings: newReferralEarnings
-                        });
-
-                        await sendTelegramNotification(userData.referredBy, 
-                            `💰 <b>Referral Commission Earned!</b>\n\n` +
-                            `Your referral made a deposit of $${amount.toFixed(2)}\n` +
-                            `Commission: $${commission.toFixed(2)}\n` +
-                            `New Balance: $${newReferrerBalance.toFixed(2)}`
-                        );
-                    }
-                }
-
-                await sendTelegramNotification(userId,
-                    `✅ <b>Deposit Approved!</b>\n\n` +
-                    `Amount: $${amount.toFixed(2)}\n` +
-                    `New Balance: $${newBalance.toFixed(2)}\n` +
-                    `Date: ${new Date().toLocaleString()}`
-                );
-
-                showNotification('Deposit approved successfully', 'success');
-                loadDeposits();
-                loadDashboard();
-            } catch (error) {
-                console.error('Approve deposit error:', error);
-                showNotification('Approval failed', 'error');
-            }
-
-            showLoading(false);
-        };
-
-        // Reject Deposit
-        window.rejectDeposit = async function(depositId, userId) {
-            showLoading(true);
-
-            try {
-                await update(ref(database, `deposits/${depositId}`), {
-                    status: 'rejected',
-                    rejectedAt: Date.now()
-                });
-
-                await sendTelegramNotification(userId,
-                    `❌ <b>Deposit Rejected</b>\n\n` +
-                    `Your deposit request has been rejected.\n` +
-                    `Please contact support for more information.`
-                );
-
-                showNotification('Deposit rejected', 'success');
-                loadDeposits();
-            } catch (error) {
-                console.error('Reject deposit error:', error);
-                showNotification('Rejection failed', 'error');
-            }
-
-            showLoading(false);
-        };
-
-        // Load Withdrawals
-        window.loadWithdrawals = async function() {
-            const tbody = document.getElementById('withdrawalsTable');
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Loading...</td></tr>';
-
-            try {
-                const withdrawalsRef = ref(database, 'withdrawals');
-                const snapshot = await get(withdrawalsRef);
-
-                if (!snapshot.exists()) {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No withdrawals yet</td></tr>';
-                    return;
-                }
-
-                const withdrawals = Object.entries(snapshot.val()).sort((a, b) => b[1].timestamp - a[1].timestamp);
-
-                tbody.innerHTML = withdrawals.map(([withdrawalId, withdrawal]) => `
-                    <tr>
-                        <td>${withdrawal.userId.substr(0, 12)}...</td>
-                        <td>$${withdrawal.amount.toFixed(2)}</td>
-                        <td>${withdrawal.address.substr(0, 20)}...</td>
-                        <td><span class="status-badge status-${withdrawal.status}">${withdrawal.status}</span></td>
-                        <td>${new Date(withdrawal.timestamp).toLocaleString()}</td>
-                        <td>
-                            ${withdrawal.status === 'pending' ? `
-                                <button class="btn btn-success" onclick="approveWithdrawal('${withdrawalId}', '${withdrawal.userId}', ${withdrawal.amount})">
-                                    <i class="fas fa-check"></i> Approve
-                                </button>
-                                <button class="btn btn-danger" onclick="rejectWithdrawal('${withdrawalId}', '${withdrawal.userId}', ${withdrawal.amount})">
-                                    <i class="fas fa-times"></i> Reject
-                                </button>
-                            ` : '-'}
-                        </td>
-                    </tr>
-                `).join('');
-            } catch (error) {
-                console.error('Withdrawals load error:', error);
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Error loading withdrawals</td></tr>';
-            }
-        };
-
-        // Approve Withdrawal
-        window.approveWithdrawal = async function(withdrawalId, userId, amount) {
-            showLoading(true);
-
-            try {
-                const userRef = ref(database, `users/${userId}`);
-                const userSnapshot = await get(userRef);
-                const userData = userSnapshot.val();
-
-                const newBalance = (userData.balance || 0) - amount;
-                const newTotalWithdrawals = (userData.totalWithdrawals || 0) + amount;
-
-                await update(userRef, {
-                    balance: newBalance,
-                    totalWithdrawals: newTotalWithdrawals
-                });
-
-                await update(ref(database, `withdrawals/${withdrawalId}`), {
-                    status: 'approved',
-                    approvedAt: Date.now()
-                });
-
-                await push(ref(database, `activities/${userId}`), {
-                    type: 'withdrawal',
-                    description: 'Withdrawal approved',
-                    amount: amount,
-                    timestamp: Date.now()
-                });
-
-                await sendTelegramNotification(userId,
-                    `✅ <b>Withdrawal Approved!</b>\n\n` +
-                    `Amount: $${amount.toFixed(2)}\n` +
-                    `New Balance: $${newBalance.toFixed(2)}\n` +
-                    `Date: ${new Date().toLocaleString()}`
-                );
-
-                showNotification('Withdrawal approved successfully', 'success');
-                loadWithdrawals();
-            } catch (error) {
-                console.error('Approve withdrawal error:', error);
-                showNotification('Approval failed', 'error');
-            }
-
-            showLoading(false);
-        };
-
-        // Reject Withdrawal
-        window.rejectWithdrawal = async function(withdrawalId, userId, amount) {
-            showLoading(true);
-
-            try {
-                await update(ref(database, `withdrawals/${withdrawalId}`), {
-                    status: 'rejected',
-                    rejectedAt: Date.now()
-                });
-
-                await sendTelegramNotification(userId,
-                    `❌ <b>Withdrawal Rejected</b>\n\n` +
-                    `Amount: $${amount.toFixed(2)}\n` +
-                    `Your withdrawal request has been rejected.\n` +
-                    `Balance refunded.`
-                );
-
-                showNotification('Withdrawal rejected', 'success');
-                loadWithdrawals();
-            } catch (error) {
-                console.error('Reject withdrawal error:', error);
-                showNotification('Rejection failed', 'error');
-            }
-
-            showLoading(false);
-        };
-
-        // Load Trades
-        window.loadTrades = async function() {
-            const tbody = document.getElementById('tradesTable');
-            tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Loading...</td></tr>';
-
-            try {
-                const tradesRef = ref(database, 'trades');
-                const snapshot = await get(tradesRef);
-
-                if (!snapshot.exists()) {
-                    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No trades yet</td></tr>';
-                    return;
-                }
-
-                const allTrades = [];
-                Object.entries(snapshot.val()).forEach(([userId, userTrades]) => {
-                    Object.entries(userTrades).forEach(([tradeId, trade]) => {
-                        allTrades.push({ userId, tradeId, ...trade });
-                    });
-                });
-
-                allTrades.sort((a, b) => b.purchaseDate - a.purchaseDate);
-
-                tbody.innerHTML = allTrades.map(trade => `
-                    <tr>
-                        <td>${trade.userId.substr(0, 12)}...</td>
-                        <td>${trade.pair}</td>
-                        <td>$${trade.investment.toFixed(2)}</td>
-                        <td>$${trade.dailyEarning.toFixed(2)}</td>
-                        <td>${trade.daysRemaining} / ${trade.duration}</td>
-                        <td><span class="status-badge status-${trade.status}">${trade.status}</span></td>
-                        <td>
-                            ${trade.status === 'active' ? `
-                                <button class="btn btn-danger" onclick="cancelTrade('${trade.userId}', '${trade.tradeId}')">
-                                    <i class="fas fa-times"></i> Cancel
-                                </button>
-                            ` : '-'}
-                        </td>
-                    </tr>
-                `).join('');
-            } catch (error) {
-                console.error('Trades load error:', error);
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Error loading trades</td></tr>';
-            }
-        };
-
-        // Cancel Trade
-        window.cancelTrade = async function(userId, tradeId) {
-            if (!confirm('Are you sure you want to cancel this trade?')) return;
-
-            showLoading(true);
-
-            try {
-                await update(ref(database, `trades/${userId}/${tradeId}`), {
-                    status: 'cancelled',
-                    cancelledAt: Date.now()
-                });
-
-                showNotification('Trade cancelled successfully', 'success');
-                loadTrades();
-            } catch (error) {
-                console.error('Cancel trade error:', error);
-                showNotification('Cancellation failed', 'error');
-            }
-
-            showLoading(false);
-        };
-
-        // Load Tasks
-        window.loadTasks = async function() {
-            const tbody = document.getElementById('tasksTable');
-            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Loading...</td></tr>';
-
-            try {
-                const tasksRef = ref(database, 'tasks');
-                const snapshot = await get(tasksRef);
-
-                if (!snapshot.exists()) {
-                    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No tasks yet</td></tr>';
-                    return;
-                }
-
-                const tasks = Object.entries(snapshot.val());
-
-                tbody.innerHTML = tasks.map(([taskId, task]) => `
-                    <tr>
-                        <td>${task.title}</td>
-                        <td>${task.description}</td>
-                        <td>$${task.reward.toFixed(2)}</td>
-                        <td><a href="${task.link}" target="_blank">${task.link.substr(0, 30)}...</a></td>
-                        <td>
-                            <button class="btn btn-danger" onclick="deleteTask('${taskId}')">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
-                        </td>
-                    </tr>
-                `).join('');
-            } catch (error) {
-                console.error('Tasks load error:', error);
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Error loading tasks</td></tr>';
-            }
-        };
-
-        // Show Add Task Modal
-        window.showAddTaskModal = function() {
-            document.getElementById('addTaskModal').classList.add('active');
-        };
-
-        // Add Task
-        window.addTask = async function() {
-            const title = document.getElementById('taskTitle').value.trim();
-            const description = document.getElementById('taskDescription').value.trim();
-            const reward = parseFloat(document.getElementById('taskReward').value);
-            const link = document.getElementById('taskLink').value.trim();
-            const logo = document.getElementById('taskLogo').value.trim();
-
-            if (!title || !description || !reward || !link) {
-                showNotification('Please fill all required fields', 'error');
-                return;
-            }
-
-            showLoading(true);
-
-            try {
-                await push(ref(database, 'tasks'), {
-                    title,
-                    description,
-                    reward,
-                    link,
-                    logo: logo || null,
-                    createdAt: Date.now()
-                });
-
-                showNotification('Task added successfully', 'success');
-                closeModal('addTaskModal');
-                loadTasks();
-                
-                // Clear form
-                document.getElementById('taskTitle').value = '';
-                document.getElementById('taskDescription').value = '';
-                document.getElementById('taskReward').value = '';
-                document.getElementById('taskLink').value = '';
-                document.getElementById('taskLogo').value = '';
-            } catch (error) {
-                console.error('Add task error:', error);
-                showNotification('Failed to add task', 'error');
-            }
-
-            showLoading(false);
-        };
-
-        // Delete Task
-        window.deleteTask = async function(taskId) {
-            if (!confirm('Are you sure you want to delete this task?')) return;
-
-            showLoading(true);
-
-            try {
-                await remove(ref(database, `tasks/${taskId}`));
-                showNotification('Task deleted successfully', 'success');
-                loadTasks();
-            } catch (error) {
-                console.error('Delete task error:', error);
-                showNotification('Failed to delete task', 'error');
-            }
-
-            showLoading(false);
-        };
-
-        // Load Redeem Codes
-        window.loadRedeemCodes = async function() {
-            const tbody = document.getElementById('redeemCodesTable');
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Loading...</td></tr>';
-
-            try {
-                const codesRef = ref(database, 'redeemCodes');
-                const snapshot = await get(codesRef);
-
-                if (!snapshot.exists()) {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No codes yet</td></tr>';
-                    return;
-                }
-
-                const codes = Object.entries(snapshot.val()).sort((a, b) => b[1].createdAt - a[1].createdAt);
-
-                tbody.innerHTML = codes.map(([codeId, code]) => `
-                    <tr>
-                        <td><strong>${code.code}</strong></td>
-                        <td>$${code.amount.toFixed(2)}</td>
-                        <td><span class="status-badge ${code.used ? 'status-approved' : 'status-pending'}">${code.used ? 'Used' : 'Active'}</span></td>
-                        <td>${code.used ? code.usedBy.substr(0, 12) + '...' : '-'}</td>
-                        <td>${new Date(code.createdAt).toLocaleString()}</td>
-                        <td>
-                            ${!code.used ? `
-                                <button class="btn btn-danger" onclick="deleteCode('${codeId}')">
-                                    <i class="fas fa-trash"></i> Delete
-                                </button>
-                            ` : '-'}
-                        </td>
-                    </tr>
-                `).join('');
-            } catch (error) {
-                console.error('Codes load error:', error);
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Error loading codes</td></tr>';
-            }
-        };
-
-        // Show Generate Code Modal
-        window.showGenerateCodeModal = function() {
-            document.getElementById('generateCodeModal').classList.add('active');
-        };
-
-        // Generate Redeem Codes
-        window.generateRedeemCodes = async function() {
-            const numCodes = parseInt(document.getElementById('numCodes').value);
-            const minAmount = parseFloat(document.getElementById('minAmount').value);
-            const maxAmount = parseFloat(document.getElementById('maxAmount').value);
-
-            if (numCodes < 1 || minAmount <= 0 || maxAmount <= 0 || minAmount > maxAmount) {
-                showNotification('Invalid input values', 'error');
-                return;
-            }
-
-            showLoading(true);
-
-            try {
-                for (let i = 0; i < numCodes; i++) {
-                    const code = Math.random().toString(36).substr(2, 8).toUpperCase();
-                    const amount = Math.random() * (maxAmount - minAmount) + minAmount;
-
-                    await push(ref(database, 'redeemCodes'), {
-                        code,
-                        amount: parseFloat(amount.toFixed(2)),
-                        used: false,
-                        createdAt: Date.now()
-                    });
-                }
-
-                showNotification(`${numCodes} code(s) generated successfully`, 'success');
-                closeModal('generateCodeModal');
-                loadRedeemCodes();
-            } catch (error) {
-                console.error('Generate codes error:', error);
-                showNotification('Failed to generate codes', 'error');
-            }
-
-            showLoading(false);
-        };
-
-        // Delete Code
-        window.deleteCode = async function(codeId) {
-            if (!confirm('Are you sure you want to delete this code?')) return;
-
-            showLoading(true);
-
-            try {
-                await remove(ref(database, `redeemCodes/${codeId}`));
-                showNotification('Code deleted successfully', 'success');
-                loadRedeemCodes();
-            } catch (error) {
-                console.error('Delete code error:', error);
-                showNotification('Failed to delete code', 'error');
-            }
-
-            showLoading(false);
-        };
-
-        // Save Settings
-        window.saveSettings = async function() {
-            const platformName = document.getElementById('platformName').value;
-            const minDeposit = parseFloat(document.getElementById('minDeposit').value);
-            const minWithdrawal = parseFloat(document.getElementById('minWithdrawal').value);
-            const referralBonus = parseFloat(document.getElementById('referralBonus').value);
-            const referralCommission = parseFloat(document.getElementById('referralCommission').value);
-            const newPassword = document.getElementById('newAdminPassword').value;
-
-            showLoading(true);
-
-            try {
-                await set(ref(database, 'settings'), {
-                    platformName,
-                    minDeposit,
-                    minWithdrawal,
-                    referralBonus,
-                    referralCommission
-                });
-
-                if (newPassword) {
-                    await update(ref(database, 'admin'), {
-                        password: newPassword
-                    });
-                }
-
-                showNotification('Settings saved successfully', 'success');
-                document.getElementById('newAdminPassword').value = '';
-            } catch (error) {
-                console.error('Save settings error:', error);
-                showNotification('Failed to save settings', 'error');
-            }
-
-            showLoading(false);
-        };
-
-        // Utility functions
-        window.closeModal = function(modalId) {
+        function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
-        };
+        }
 
-        window.showNotification = function(message, type = 'success') {
+        function showNotification(message, type = 'success') {
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
             notification.textContent = message;
@@ -1961,11 +1964,36 @@
             setTimeout(() => {
                 notification.remove();
             }, 3000);
-        };
+        }
 
-        window.showLoading = function(show) {
-            document.getElementById('loadingOverlay').classList.toggle('active', show);
-        };
+        async function sendTelegramNotification(userId, message) {
+            try {
+                const url = `https://api.telegram.org/bot${window.BOT_TOKEN}/sendMessage`;
+                await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: userId,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+            } catch (error) {
+                console.error('Error sending Telegram notification:', error);
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('adminPassword');
+            window.location.href = 'index.html';
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
+        }
     </script>
 </body>
 </html>
