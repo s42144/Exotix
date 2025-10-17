@@ -1,2607 +1,1182 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,maximum-scale=1" />
-  <title>Exotix | Professional Crypto Trading</title>
-  <link rel="icon" href="https://github.com/s42144/Shark-Bounty/blob/dc7c6b7451be7e4767f4c84bdecf7dfed3082bed/HOME.png?raw=true" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  
-  <!-- Telegram WebApp SDK -->
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
-  
-  <!-- Chart.js for crypto charts -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
-  <!-- QR Code Generator -->
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-  
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-    
-    :root {
-      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      --gold-gradient: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-      --dark-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-      --card-bg: rgba(255, 255, 255, 0.08);
-      --card-border: rgba(255, 255, 255, 0.15);
-      --text-primary: #ffffff;
-      --text-secondary: #b8c5d6;
-      --accent-blue: #4facfe;
-      --accent-purple: #764ba2;
-      --accent-pink: #f5576c;
-      --accent-cyan: #00f2fe;
-      --accent-gold: #ffd700;
-      --accent-green: #00ff88;
-      --accent-red: #ff4444;
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
-      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
-      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
-      --shadow-glow: 0 0 20px rgba(79, 172, 254, 0.3);
-    }
-    
-    html, body {
-      width: 100%;
-      height: 100%;
-      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-      color: var(--text-primary);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-    
-    /* Loading Screen */
-    #loading-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-    
-    .loading-logo {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      margin-bottom: 30px;
-      animation: float 3s ease-in-out infinite;
-      filter: drop-shadow(0 10px 30px rgba(79, 172, 254, 0.5));
-    }
-    
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
-    }
-    
-    .loading-text {
-      font-size: 32px;
-      font-weight: 800;
-      color: var(--text-primary);
-      margin-bottom: 10px;
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: 2px;
-    }
-    
-    .loading-subtext {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      margin-bottom: 30px;
-    }
-    
-    .loading-spinner {
-      width: 50px;
-      height: 50px;
-      border: 5px solid rgba(255, 255, 255, 0.2);
-      border-top-color: var(--accent-cyan);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-    
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    
-    .loading-progress {
-      margin-top: 20px;
-      font-size: 12px;
-      color: var(--text-secondary);
-      font-weight: 600;
-    }
-    
-    /* Main App Container */
-    #app {
-      display: none;
-      min-height: 100vh;
-      padding-bottom: 80px;
-      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-      background-attachment: fixed;
-    }
-    
-    #main-content {
-      width: 100%;
-      max-width: 480px;
-      margin: 0 auto;
-      padding: 0 16px;
-    }
-    
-    /* Balance Header */
-    .balance-header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(15, 12, 41, 0.95);
-      backdrop-filter: blur(20px);
-      padding: 16px;
-      border-bottom: 1px solid var(--card-border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-    }
-    
-    .balance-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    
-    .usdt-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: 2px solid var(--accent-cyan);
-    }
-    
-    .balance-details {
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .balance-label {
-      font-size: 11px;
-      color: var(--text-secondary);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    
-    .balance-amount {
-      font-size: 24px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    .platform-logo {
-      font-size: 20px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: 1px;
-    }
-    
-    /* Navigation Bar */
-    .nav-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(15, 12, 41, 0.95);
-      backdrop-filter: blur(20px);
-      border-top: 1px solid var(--card-border);
-      display: flex;
-      justify-content: space-around;
-      padding: 12px 0 8px;
-      z-index: 1000;
-      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.2);
-    }
-    
-    .nav-btn {
-      flex: 1;
-      background: none;
-      border: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      padding: 8px;
-      border-radius: 12px;
-    }
-    
-    .nav-icon {
-      font-size: 24px;
-      transition: all 0.3s ease;
-      filter: grayscale(100%) brightness(0.7);
-    }
-    
-    .nav-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      transition: all 0.3s ease;
-    }
-    
-    .nav-btn.active .nav-icon {
-      filter: grayscale(0%) brightness(1);
-      transform: scale(1.1);
-    }
-    
-    .nav-btn.active .nav-label {
-      color: var(--accent-cyan);
-    }
-    
-    /* Section Headers */
-    .section-header {
-      width: 100%;
-      text-align: center;
-      padding: 24px 0 20px;
-    }
-    
-    .section-title {
-      font-size: 28px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 8px;
-    }
-    
-    .section-subtitle {
-      font-size: 14px;
-      color: var(--text-secondary);
-      font-weight: 400;
-    }
-    
-    /* Trading Plans - Mastercard Style */
-    .trading-plans-container {
-      padding: 20px 0;
-    }
-    
-    .plan-card {
-      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-      border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 20px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-lg);
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
-    
-    .plan-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-    }
-    
-    .plan-card::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-      animation: shimmer 3s infinite;
-    }
-    
-    @keyframes shimmer {
-      0%, 100% { transform: translate(0, 0); }
-      50% { transform: translate(-20%, -20%); }
-    }
-    
-    .plan-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 20px;
-      position: relative;
-      z-index: 2;
-    }
-    
-    .plan-pair {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    
-    .plan-pair-name {
-      font-size: 24px;
-      font-weight: 800;
-      color: var(--text-primary);
-      letter-spacing: 1px;
-    }
-    
-    .plan-pair-subtitle {
-      font-size: 12px;
-      color: var(--text-secondary);
-      font-weight: 500;
-    }
-    
-    .plan-logo {
-      width: 60px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--accent-gold);
-      backdrop-filter: blur(10px);
-    }
-    
-    .plan-chart-container {
-      width: 100%;
-      height: 120px;
-      margin-bottom: 20px;
-      position: relative;
-      z-index: 2;
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 12px;
-      padding: 10px;
-    }
-    
-    .plan-details {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-bottom: 20px;
-      position: relative;
-      z-index: 2;
-    }
-    
-    .plan-detail-item {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      padding: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .plan-detail-label {
-      font-size: 11px;
-      color: var(--text-secondary);
-      font-weight: 600;
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-    
-    .plan-detail-value {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--accent-cyan);
-    }
-    
-    .plan-detail-value.price {
-      color: var(--accent-gold);
-    }
-    
-    .plan-detail-value.earning {
-      color: var(--accent-green);
-    }
-    
-    .plan-action-btn {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      color: #fff;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      position: relative;
-      z-index: 2;
-    }
-    
-    .plan-action-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(79, 172, 254, 0.4);
-    }
-    
-    .plan-action-btn:disabled {
-      background: rgba(255, 255, 255, 0.1);
-      color: rgba(255, 255, 255, 0.4);
-      cursor: not-allowed;
-      box-shadow: none;
-    }
-    
-    .plan-action-btn.purchased {
-      background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
-    }
-    
-    /* My Trades Section */
-    .my-trades-container {
-      padding: 20px 0;
-    }
-    
-    .active-trade-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 20px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-lg);
-    }
-    
-    .trade-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-    
-    .trade-pair {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-    
-    .trade-status {
-      padding: 6px 12px;
-      background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 700;
-      color: #fff;
-      text-transform: uppercase;
-    }
-    
-    .trade-progress-bar {
-      width: 100%;
-      height: 40px;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 20px;
-      overflow: hidden;
-      margin-bottom: 16px;
-      position: relative;
-    }
-    
-    .trade-progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #4facfe 0%, #00f2fe 50%, #4facfe 100%);
-      background-size: 200% 100%;
-      animation: progressShine 2s linear infinite;
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      font-weight: 700;
-      color: #fff;
-    }
-    
-    @keyframes progressShine {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
-    }
-    
-    .trade-countdown {
-      text-align: center;
-      margin-bottom: 16px;
-    }
-    
-    .countdown-label {
-      font-size: 12px;
-      color: var(--text-secondary);
-      margin-bottom: 8px;
-    }
-    
-    .countdown-timer {
-      font-size: 32px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-family: 'Courier New', monospace;
-    }
-    
-    .trade-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    
-    .trade-stat-item {
-      text-align: center;
-      padding: 12px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .trade-stat-label {
-      font-size: 10px;
-      color: var(--text-secondary);
-      margin-bottom: 4px;
-    }
-    
-    .trade-stat-value {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--accent-cyan);
-    }
-    
-    .claim-btn {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      color: #0f0c29;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    
-    .claim-btn:disabled {
-      background: rgba(255, 255, 255, 0.1);
-      color: rgba(255, 255, 255, 0.4);
-      cursor: not-allowed;
-    }
-    
-    /* Wallet Section */
-    .wallet-container {
-      padding: 20px 0;
-    }
-    
-    .wallet-tabs {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-    
-    .wallet-tab-btn {
-      padding: 14px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-    }
-    
-    .wallet-tab-btn.active {
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      color: #fff;
-      border-color: transparent;
-    }
-    
-    .wallet-content {
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 20px;
-      padding: 24px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-lg);
-    }
-    
-    .form-group {
-      margin-bottom: 20px;
-    }
-    
-    .form-label {
-      font-size: 13px;
-      color: var(--text-secondary);
-      font-weight: 600;
-      margin-bottom: 8px;
-      display: block;
-    }
-    
-    .form-input {
-      width: 100%;
-      padding: 14px 16px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      font-size: 15px;
-      color: var(--text-primary);
-      font-family: 'Poppins', sans-serif;
-      outline: none;
-      transition: all 0.3s ease;
-    }
-    
-    .form-input:focus {
-      border-color: var(--accent-cyan);
-      background: rgba(255, 255, 255, 0.08);
-    }
-    
-    .qr-code-container {
-      text-align: center;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      margin-bottom: 20px;
-    }
-    
-    .qr-code {
-      width: 200px;
-      height: 200px;
-      margin: 0 auto 16px;
-      background: #fff;
-      padding: 10px;
-      border-radius: 12px;
-    }
-    
-    .copy-box {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 12px;
-    }
-    
-    .copy-text {
-      flex: 1;
-      font-size: 13px;
-      color: var(--text-primary);
-      font-weight: 600;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    
-    .copy-btn {
-      padding: 8px 16px;
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      border: none;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      color: #fff;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-    }
-    
-    .timer-box {
-      text-align: center;
-      padding: 16px;
-      background: rgba(255, 87, 108, 0.1);
-      border: 2px solid var(--accent-pink);
-      border-radius: 12px;
-      margin-bottom: 20px;
-    }
-    
-    .timer-label {
-      font-size: 12px;
-      color: var(--text-secondary);
-      margin-bottom: 8px;
-    }
-    
-    .timer-value {
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--accent-pink);
-      font-family: 'Courier New', monospace;
-    }
-    
-    .transaction-item {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 12px;
-      border: 1px solid var(--card-border);
-    }
-    
-    .transaction-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    
-    .transaction-type {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-    
-    .transaction-status {
-      padding: 4px 12px;
-      border-radius: 12px;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-    
-    .transaction-status.pending {
-      background: rgba(255, 215, 0, 0.2);
-      color: var(--accent-gold);
-    }
-    
-    .transaction-status.approved {
-      background: rgba(0, 255, 136, 0.2);
-      color: var(--accent-green);
-    }
-    
-    .transaction-status.rejected {
-      background: rgba(255, 68, 68, 0.2);
-      color: var(--accent-red);
-    }
-    
-    .transaction-details {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    
-    .transaction-detail-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-    }
-    
-    .transaction-detail-label {
-      color: var(--text-secondary);
-    }
-    
-    .transaction-detail-value {
-      color: var(--text-primary);
-      font-weight: 600;
-    }
-    
-    /* Referral Section */
-    .referral-container {
-      padding: 20px 0;
-    }
-    
-    .referral-rules {
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 20px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-lg);
-    }
-    
-    .rules-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    .rule-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 12px;
-      padding: 12px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-    }
-    
-    .rule-icon {
-      font-size: 20px;
-      flex-shrink: 0;
-    }
-    
-    .rule-text {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-    
-    .referral-stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-    
-    .referral-stat-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 16px;
-      padding: 20px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-md);
-      text-align: center;
-    }
-    
-    .referral-stat-icon {
-      font-size: 32px;
-      margin-bottom: 12px;
-    }
-    
-    .referral-stat-value {
-      font-size: 28px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 4px;
-    }
-    
-    .referral-stat-label {
-      font-size: 12px;
-      color: var(--text-secondary);
-      font-weight: 600;
-    }
-    
-    .referral-link-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 20px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-lg);
-    }
-    
-    .share-telegram-btn {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #0088cc 0%, #0066aa 100%);
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      color: #fff;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-    
-    .referral-list-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 20px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-lg);
-    }
-    
-    .referral-user-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 16px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      margin-bottom: 12px;
-      border: 1px solid var(--card-border);
-    }
-    
-    .referral-user-avatar {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      border: 2px solid var(--accent-cyan);
-      object-fit: cover;
-    }
-    
-    .referral-user-info {
-      flex: 1;
-    }
-    
-    .referral-user-name {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 4px;
-    }
-    
-    .referral-user-balance {
-      font-size: 13px;
-      color: var(--text-secondary);
-    }
-    
-    .referral-user-commission {
-      text-align: right;
-    }
-    
-    .commission-amount {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--accent-green);
-    }
-    
-    .commission-label {
-      font-size: 11px;
-      color: var(--text-secondary);
-    }
-    
-    /* Profile Section */
-    .profile-container {
-      padding: 20px 0;
-    }
-    
-    .profile-header {
-      text-align: center;
-      padding: 24px 0 20px;
-    }
-    
-    .profile-avatar-container {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 16px;
-      position: relative;
-    }
-    
-    .profile-avatar-glow {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(79, 172, 254, 0.4) 0%, transparent 70%);
-      animation: pulse 2s ease-in-out infinite;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.6; }
-      50% { transform: scale(1.1); opacity: 1; }
-    }
-    
-    .profile-avatar {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      border: 4px solid var(--accent-cyan);
-      object-fit: cover;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    }
-    
-    .profile-name {
-      font-size: 24px;
-      font-weight: 800;
-      color: var(--text-primary);
-      margin-bottom: 8px;
-    }
-    
-    .profile-id {
-      font-size: 14px;
-      color: var(--text-secondary);
-      font-weight: 600;
-    }
-    
-    .redemption-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 20px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-lg);
-    }
-    
-    .redemption-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 16px;
-      text-align: center;
-    }
-    
-    .redemption-input {
-      width: 100%;
-      padding: 16px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      font-size: 20px;
-      color: var(--text-primary);
-      font-family: 'Courier New', monospace;
-      text-align: center;
-      letter-spacing: 4px;
-      font-weight: 700;
-      outline: none;
-      transition: all 0.3s ease;
-      margin-bottom: 16px;
-    }
-    
-    .redemption-input:focus {
-      border-color: var(--accent-cyan);
-      background: rgba(255, 255, 255, 0.08);
-    }
-    
-    .btn-primary {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      color: #fff;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(79, 172, 254, 0.4);
-    }
-    
-    .btn-primary:disabled {
-      background: rgba(255, 255, 255, 0.1);
-      color: rgba(255, 255, 255, 0.4);
-      cursor: not-allowed;
-      box-shadow: none;
-    }
-    
-    /* Notification */
-    .notification {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      color: #fff;
-      padding: 16px 32px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 600;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-      z-index: 10000;
-      animation: slideDown 0.3s ease;
-      max-width: 90%;
-      text-align: center;
-    }
-    
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-      }
-    }
-    
-    .notification.success {
-      background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
-    }
-    
-    .notification.error {
-      background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
-    }
-    
-    .notification.warning {
-      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-      color: #0f0c29;
-    }
-    
-    /* Empty State */
-    .empty-state {
-      text-align: center;
-      padding: 60px 20px;
-    }
-    
-    .empty-icon {
-      font-size: 64px;
-      margin-bottom: 16px;
-      opacity: 0.5;
-    }
-    
-    .empty-text {
-      font-size: 16px;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-    
-    /* Modal */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.8);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      padding: 20px;
-    }
-    
-    .modal-content {
-      background: linear-gradient(135deg, #0f0c29 0%, #302b63 100%);
-      border-radius: 24px;
-      padding: 24px;
-      max-width: 480px;
-      width: 100%;
-      max-height: 80vh;
-      overflow-y: auto;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-lg);
-      animation: slideUp 0.3s ease;
-    }
-    
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-    
-    .modal-title {
-      font-size: 24px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    .modal-close {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      border: none;
-      color: var(--text-primary);
-      font-size: 20px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-    }
-    
-    .modal-close:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-    
-    /* Responsive Design */
-    @media (max-width: 360px) {
-      .balance-amount {
-        font-size: 20px;
-      }
-      
-      .plan-pair-name {
-        font-size: 20px;
-      }
-      
-      .countdown-timer {
-        font-size: 24px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exotix - Crypto Trading Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6C5CE7;
+            --secondary: #A29BFE;
+            --success: #00B894;
+            --danger: #FF7675;
+            --warning: #FDCB6E;
+            --dark: #2D3436;
+            --light: #DFE6E9;
+            --bg: #0F1419;
+            --card-bg: #1A1F2E;
+            --text: #FFFFFF;
+            --text-secondary: #B2BAC2;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0F1419 0%, #1A1F2E 100%);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .loading-logo {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(108, 92, 231, 0.1);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Header */
+        .header {
+            background: var(--card-bg);
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .balance-display {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(108, 92, 231, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid var(--primary);
+        }
+
+        .balance-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+        }
+
+        .balance-amount {
+            font-weight: bold;
+            color: var(--success);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* Section */
+        .section {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Trading Plans */
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .plan-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .plan-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .plan-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3);
+        }
+
+        .plan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .plan-pair {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .plan-badge {
+            background: var(--success);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .plan-chart {
+            width: 100%;
+            height: 150px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+        }
+
+        .plan-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .plan-detail {
+            text-align: center;
+        }
+
+        .plan-detail-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .plan-detail-value {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--success);
+        }
+
+        .plan-price {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 1rem 0;
+            color: var(--warning);
+        }
+
+        .plan-button {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .plan-button:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(108, 92, 231, 0.5);
+        }
+
+        .plan-button:disabled {
+            background: var(--light);
+            color: var(--dark);
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        /* My Trades */
+        .trades-container {
+            margin-top: 1.5rem;
+        }
+
+        .trade-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .trade-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .countdown-container {
+            margin: 1rem 0;
+        }
+
+        .countdown-bar {
+            width: 100%;
+            height: 40px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .countdown-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), var(--primary));
+            transition: width 1s linear;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .claim-button {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            background: var(--success);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .claim-button:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0, 184, 148, 0.5);
+        }
+
+        .claim-button:disabled {
+            background: var(--light);
+            color: var(--dark);
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        /* Wallet */
+        .wallet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .wallet-option {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .wallet-option:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3);
+        }
+
+        .wallet-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .wallet-label {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* Forms */
+        .form-container {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 1.5rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--light);
+            border-radius: 10px;
+            background: rgba(0,0,0,0.2);
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-button {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(108, 92, 231, 0.5);
+        }
+
+        .qr-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .qr-image {
+            max-width: 250px;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .copy-box {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0,0,0,0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 0.5rem 0;
+        }
+
+        .copy-text {
+            flex: 1;
+            word-break: break-all;
+        }
+
+        .copy-button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-button:hover {
+            background: var(--secondary);
+        }
+
+        .timer-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            color: var(--warning);
+            margin: 1rem 0;
+        }
+
+        /* History */
+        .history-table {
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 1.5rem;
+        }
+
+        .history-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .history-table th {
+            background: rgba(108, 92, 231, 0.2);
+            font-weight: bold;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            background: var(--warning);
+            color: var(--dark);
+        }
+
+        .status-approved {
+            background: var(--success);
+            color: white;
+        }
+
+        .status-rejected {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* Referrals */
+        .referral-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 2px solid var(--primary);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--success);
+            margin: 0.5rem 0;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+        }
+
+        .referral-link-box {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .share-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .share-button {
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .share-telegram {
+            background: #0088cc;
+            color: white;
+        }
+
+        .share-twitter {
+            background: #1DA1F2;
+            color: white;
+        }
+
+        .referral-list {
+            margin-top: 1.5rem;
+        }
+
+        .referral-item {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .referral-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+
+        .referral-info {
+            flex: 1;
+        }
+
+        .referral-name {
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .referral-earnings {
+            color: var(--success);
+            font-size: 0.9rem;
+        }
+
+        /* Tasks */
+        .tasks-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .task-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .task-card:hover {
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .task-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .task-content {
+            flex: 1;
+        }
+
+        .task-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .task-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .task-reward {
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .task-button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            background: var(--primary);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .task-button:hover:not(:disabled) {
+            background: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        .task-button:disabled {
+            background: var(--light);
+            color: var(--dark);
+            cursor: not-allowed;
+        }
+
+        /* Profile */
+        .profile-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .profile-header {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            border: 4px solid var(--primary);
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-id {
+            color: var(--text-secondary);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--card-bg);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            padding: 0.5rem;
+        }
+
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+            color: var(--text-secondary);
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            background: rgba(108, 92, 231, 0.1);
+        }
+
+        .nav-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .nav-label {
+            font-size: 0.8rem;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: var(--card-bg);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            z-index: 1000;
+            animation: slideIn 0.3s ease-in;
+            border-left: 4px solid var(--success);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .notification.error {
+            border-left-color: var(--danger);
+        }
+
+        .notification.warning {
+            border-left-color: var(--warning);
+        }
+
+        /* Back Button */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            color: var(--text);
+            cursor: pointer;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: var(--primary);
+            transform: translateX(-5px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .plans-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wallet-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .share-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .history-table {
+                overflow-x: auto;
+            }
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-text {
+            font-size: 1.2rem;
+        }
+    </style>
 <script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
 </head>
 <body>
-  <!-- Loading Screen -->
-  <div id="loading-screen">
-    <img src="https://github.com/akhterefti-del/Shark/blob/eec9a5de183800435c0f781a44b5da5722479f20/sharkcoin.png?raw=true" 
-         class="loading-logo" 
-         alt="Exotix" />
-    <div class="loading-text">EXOTIX</div>
-    <div class="loading-subtext">Professional Crypto Trading Platform</div>
-    <div class="loading-spinner"></div>
-    <div class="loading-progress" id="loadingProgress">Initializing...</div>
-  </div>
-  
-  <!-- Main App -->
-  <div id="app">
-    <!-- Balance Header -->
-    <div class="balance-header">
-      <div class="balance-info">
-        <img src="https://i.postimg.cc/kG1SJTf9/Screenshot-2025-10-09-23-39-32-878-com-ton-keeper-edit.jpg" 
-             class="usdt-icon" 
-             alt="USDT" />
-        <div class="balance-details">
-          <div class="balance-label">USDT Balance</div>
-          <div class="balance-amount" id="headerBalance">0.00</div>
-        </div>
-      </div>
-      <div class="platform-logo">EXOTIX</div>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">EXOTIX</div>
+        <div class="loading-spinner"></div>
     </div>
-    
-    <div id="main-content"></div>
-    
-    <!-- Navigation Bar -->
-    <div class="nav-bar">
-      <button class="nav-btn active" data-tab="trade">
-        <div class="nav-icon">📈</div>
-        <span class="nav-label">Trade</span>
-      </button>
-      <button class="nav-btn" data-tab="my-trades">
-        <div class="nav-icon">💼</div>
-        <span class="nav-label">My Trades</span>
-      </button>
-      <button class="nav-btn" data-tab="wallet">
-        <div class="nav-icon">💰</div>
-        <span class="nav-label">Wallet</span>
-      </button>
-      <button class="nav-btn" data-tab="referral">
-        <div class="nav-icon">👥</div>
-        <span class="nav-label">Referral</span>
-      </button>
-      <button class="nav-btn" data-tab="profile">
-        <div class="nav-icon">👤</div>
-        <span class="nav-label">Profile</span>
-      </button>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">EXOTIX</div>
+            <div class="balance-display">
+                <img src="https://i.postimg.cc/85tyqGqs/images-6.jpg" alt="USDT" class="balance-icon">
+                <span class="balance-amount" id="balanceDisplay">0.00</span>
+                <span>USDT</span>
+            </div>
+        </div>
     </div>
-  </div>
-  
-  <!-- Modals -->
-  <div class="modal-overlay" id="referralListModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title">My Referrals</div>
-        <button class="modal-close" onclick="closeModal('referralListModal')">×</button>
-      </div>
-      <div id="referralListContent"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Trade Section -->
+        <div class="section active" id="tradeSection">
+            <h2>Trading Plans</h2>
+            <div class="plans-grid" id="plansGrid">
+                <!-- Plans will be loaded here -->
+            </div>
+        </div>
+
+        <!-- My Trades Section -->
+        <div class="section" id="myTradesSection">
+            <h2>My Active Trades</h2>
+            <div class="trades-container" id="tradesContainer">
+                <!-- Active trades will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Wallet Section -->
+        <div class="section" id="walletSection">
+            <h2>Wallet</h2>
+            <div class="wallet-grid">
+                <div class="wallet-option" onclick="showDeposit()">
+                    <div class="wallet-icon"><i class="fas fa-arrow-down"></i></div>
+                    <div class="wallet-label">Deposit</div>
+                </div>
+                <div class="wallet-option" onclick="showWithdraw()">
+                    <div class="wallet-icon"><i class="fas fa-arrow-up"></i></div>
+                    <div class="wallet-label">Withdraw</div>
+                </div>
+                <div class="wallet-option" onclick="showHistory()">
+                    <div class="wallet-icon"><i class="fas fa-history"></i></div>
+                    <div class="wallet-label">History</div>
+                </div>
+                <div class="wallet-option" onclick="showActivities()">
+                    <div class="wallet-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="wallet-label">Activities</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Deposit Form -->
+        <div class="section" id="depositSection">
+            <button class="back-button" onclick="showSection('walletSection')">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <h2>Deposit USDT</h2>
+            <div class="form-container" id="depositForm">
+                <div class="form-group">
+                    <label class="form-label">Enter Amount (Min: $30)</label>
+                    <input type="number" class="form-input" id="depositAmount" placeholder="30.00" min="30" step="0.01">
+                </div>
+                <button class="form-button" onclick="showDepositQR()">Continue</button>
+            </div>
+            <div class="form-container" id="depositQRContainer" style="display: none;">
+                <div class="timer-display" id="depositTimer">15:00</div>
+                <div class="qr-container">
+                    <img src="https://i.postimg.cc/g2mgknm3/Screenshot-2025-10-17-16-28-28-211-com-ton-keeper-edit.jpg" alt="QR Code" class="qr-image">
+                    <h3>Scan QR Code or Copy Details</h3>
+                </div>
+                <div class="copy-box">
+                    <div class="copy-text">UQBWOgFgB4B8qBCo8CNjDUNAtvUSosw4v7v9gkt0GVOaNLSz</div>
+                    <button class="copy-button" onclick="copyText('UQBWOgFgB4B8qBCo8CNjDUNAtvUSosw4v7v9gkt0GVOaNLSz')">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                <div class="copy-box">
+                    <div class="copy-text" id="depositAmountDisplay">Amount: $0.00</div>
+                    <button class="copy-button" onclick="copyText(document.getElementById('depositAmount').value)">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                <div class="copy-box">
+                    <div class="copy-text" id="depositMemo">Memo: ExotixDP_</div>
+                    <button class="copy-button" onclick="copyText(document.getElementById('depositMemo').textContent.split(': ')[1])">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Enter Transaction Hash</label>
+                    <input type="text" class="form-input" id="depositTxHash" placeholder="Enter TRX hash">
+                </div>
+                <button class="form-button" onclick="submitDeposit()">Confirm Deposit</button>
+            </div>
+        </div>
+
+        <!-- Withdraw Form -->
+        <div class="section" id="withdrawSection">
+            <button class="back-button" onclick="showSection('walletSection')">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <h2>Withdraw USDT</h2>
+            <div class="form-container">
+                <div class="form-group">
+                    <label class="form-label">USDT TON Address *</label>
+                    <input type="text" class="form-input" id="withdrawAddress" placeholder="Enter your USDT TON address" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Amount (Min: $0.10) *</label>
+                    <input type="number" class="form-input" id="withdrawAmount" placeholder="0.10" min="0.10" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Memo/Comment (Optional)</label>
+                    <input type="text" class="form-input" id="withdrawMemo" placeholder="Enter memo">
+                </div>
+                <button class="form-button" onclick="submitWithdraw()">Confirm Withdraw</button>
+            </div>
+        </div>
+
+        <!-- History Section -->
+        <div class="section" id="historySection">
+            <button class="back-button" onclick="showSection('walletSection')">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <h2>Transaction History</h2>
+            <div class="history-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTableBody">
+                        <!-- History will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Activities Section -->
+        <div class="section" id="activitiesSection">
+            <button class="back-button" onclick="showSection('walletSection')">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <h2>All Activities</h2>
+            <div class="history-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Activity</th>
+                            <th>Details</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="activitiesTableBody">
+                        <!-- Activities will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Referrals Section -->
+        <div class="section" id="referralsSection">
+            <h2>Referral Program</h2>
+            <div class="referral-stats">
+                <div class="stat-card">
+                    <div class="stat-label">Total Referrals</div>
+                    <div class="stat-value" id="totalReferrals">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Earnings</div>
+                    <div class="stat-value" id="totalReferralEarnings">$0.00</div>
+                </div>
+            </div>
+            <div class="referral-link-box">
+                <h3>Your Referral Link</h3>
+                <div class="copy-box">
+                    <div class="copy-text" id="referralLink">http://t.me/Exotix_Robot/myapp</div>
+                    <button class="copy-button" onclick="copyReferralLink()">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                <div class="share-buttons">
+                    <button class="share-button share-telegram" onclick="shareOnTelegram()">
+                        <i class="fab fa-telegram"></i> Share on Telegram
+                    </button>
+                    <button class="share-button share-twitter" onclick="shareOnTwitter()">
+                        <i class="fab fa-twitter"></i> Share on Twitter
+                    </button>
+                </div>
+            </div>
+            <div style="text-align: center; margin: 2rem 0;">
+                <button class="form-button" style="max-width: 300px;" onclick="showReferralList()">Show My Referrals</button>
+            </div>
+            <div class="referral-list" id="referralList" style="display: none;">
+                <!-- Referral list will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Tasks Section -->
+        <div class="section" id="tasksSection">
+            <h2>Complete Tasks & Earn</h2>
+            <div class="tasks-grid" id="tasksGrid">
+                <!-- Tasks will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Profile Section -->
+        <div class="section" id="profileSection">
+            <div class="profile-container">
+                <div class="profile-header">
+                    <img src="" alt="Profile" class="profile-avatar" id="profileAvatar">
+                    <div class="profile-name" id="profileName">Loading...</div>
+                    <div class="profile-id">User ID: <span id="profileUserId"></span></div>
+                </div>
+                <div class="form-container">
+                    <h3>Redeem Code</h3>
+                    <div class="form-group">
+                        <label class="form-label">Enter 8-Digit Code</label>
+                        <input type="text" class="form-input" id="redeemCode" placeholder="XXXXXXXX" maxlength="8">
+                    </div>
+                    <button class="form-button" onclick="redeemCode()">Redeem</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  
-  <script>
-    // Telegram WebApp Initialization
-    const tg = window.Telegram.WebApp;
-    tg.expand();
-    tg.ready();
-    
-    // Firebase Configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyBfR97veh6idxb81mH6N5_Gq8-CpW2D7bE",
-      authDomain: "jbhigfi.firebaseapp.com",
-      databaseURL: "https://jbhigfi-default-rtdb.firebaseio.com",
-      projectId: "jbhigfi",
-      storageBucket: "jbhigfi.firebasestorage.app",
-      messagingSenderId: "736760492095",
-      appId: "1:736760492095:web:47b94412495e21c561c88a",
-      measurementId: "G-ZZMHC9RTVT"
-    };
-    
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-    
-    // Telegram Bot API
-    const BOT_TOKEN = '8237387201:AAFI98932KS3M5uJDLaTbu27FCFOJ40wwxI';
-    const TELEGRAM_API = `https://api.telegram.org/bot${BOT_TOKEN}`;
-    
-    // Global State
-    let userId = null;
-    let userName = null;
-    let userAvatar = null;
-    let userData = null;
-    let userBalance = 0;
-    let tradingPlans = [];
-    let userTrades = [];
-    let cryptoPrices = {};
-    let priceUpdateInterval = null;
-    let countdownIntervals = {};
-    
-    // Trading Plans Configuration
-    const TRADING_PLANS_CONFIG = [
-      { pair: 'BTC/USDT', price: 3000, dailyEarning: 300, duration: 30, symbol: 'BTCUSDT' },
-      { pair: 'ETH/USDT', price: 2000, dailyEarning: 200, duration: 30, symbol: 'ETHUSDT' },
-      { pair: 'BNB/USDT', price: 1500, dailyEarning: 150, duration: 30, symbol: 'BNBUSDT' },
-      { pair: 'SOL/USDT', price: 1200, dailyEarning: 120, duration: 30, symbol: 'SOLUSDT' },
-      { pair: 'XRP/USDT', price: 1000, dailyEarning: 100, duration: 30, symbol: 'XRPUSDT' },
-      { pair: 'ADA/USDT', price: 800, dailyEarning: 80, duration: 30, symbol: 'ADAUSDT' },
-      { pair: 'DOGE/USDT', price: 600, dailyEarning: 60, duration: 30, symbol: 'DOGEUSDT' },
-      { pair: 'DOT/USDT', price: 500, dailyEarning: 50, duration: 30, symbol: 'DOTUSDT' },
-      { pair: 'MATIC/USDT', price: 400, dailyEarning: 40, duration: 30, symbol: 'MATICUSDT' },
-      { pair: 'AVAX/USDT', price: 350, dailyEarning: 35, duration: 30, symbol: 'AVAXUSDT' },
-      { pair: 'LINK/USDT', price: 300, dailyEarning: 30, duration: 30, symbol: 'LINKUSDT' },
-      { pair: 'UNI/USDT', price: 250, dailyEarning: 25, duration: 30, symbol: 'UNIUSDT' },
-      { pair: 'ATOM/USDT', price: 200, dailyEarning: 20, duration: 30, symbol: 'ATOMUSDT' },
-      { pair: 'LTC/USDT', price: 180, dailyEarning: 18, duration: 30, symbol: 'LTCUSDT' },
-      { pair: 'TRX/USDT', price: 150, dailyEarning: 15, duration: 30, symbol: 'TRXUSDT' },
-      { pair: 'APT/USDT', price: 120, dailyEarning: 12, duration: 30, symbol: 'APTUSDT' },
-      { pair: 'ARB/USDT', price: 100, dailyEarning: 10, duration: 30, symbol: 'ARBUSDT' },
-      { pair: 'OP/USDT', price: 80, dailyEarning: 8, duration: 30, symbol: 'OPUSDT' },
-      { pair: 'FTM/USDT', price: 60, dailyEarning: 6, duration: 30, symbol: 'FTMUSDT' },
-      { pair: 'ALGO/USDT', price: 40, dailyEarning: 4, duration: 30, symbol: 'ALGOUSDT' }
-    ];
-    
-    // Utility Functions
-    function now() {
-      return Math.floor(Date.now() / 1000);
-    }
-    
-    function formatDate(timestamp) {
-      const date = new Date(timestamp * 1000);
-      return date.toLocaleString();
-    }
-    
-    function formatCountdown(seconds) {
-      const hours = Math.floor(seconds / 3600);
-      const minutes = Math.floor((seconds % 3600) / 60);
-      const secs = seconds % 60;
-      return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-    }
-    
-    function updateLoadingProgress(text) {
-      const progressEl = document.getElementById('loadingProgress');
-      if (progressEl) {
-        progressEl.textContent = text;
-      }
-    }
-    
-    function notify(message, type = 'info', duration = 2500) {
-      const notification = document.createElement('div');
-      notification.className = `notification ${type}`;
-      notification.textContent = message;
-      document.body.appendChild(notification);
-      
-      setTimeout(() => {
-        notification.remove();
-      }, duration);
-    }
-    
-    function getTelegramUserData() {
-      updateLoadingProgress('Getting Telegram user data...');
-      
-      const user = tg.initDataUnsafe?.user;
-      
-      if (user && user.id) {
-        userId = user.id.toString();
-        userName = user.first_name + (user.last_name ? ' ' + user.last_name : '');
-        
-        if (user.photo_url) {
-          userAvatar = user.photo_url;
-        } else {
-          userAvatar = "https://github.com/akhterefti-del/Shark/blob/76091d5ce35c6707100f0269223352d0b5c1a163/Gemini_Generated_Image_ad2lr0ad2lr0ad2l.png?raw=true";
-        }
-        
-        console.log('Telegram User ID:', userId);
-        console.log('Telegram User Name:', userName);
-        return true;
-      }
-      
-      console.warn('Running outside Telegram environment - using test user');
-      userId = 'test_' + Math.floor(10000 + Math.random() * 89999).toString();
-      userName = 'Test User';
-      userAvatar = "https://github.com/akhterefti-del/Shark/blob/76091d5ce35c6707100f0269223352d0b5c1a163/Gemini_Generated_Image_ad2lr0ad2lr0ad2l.png?raw=true";
-      return true;
-    }
-    
-    // Crypto Price Fetching
-    async function fetchCryptoPrices() {
-      try {
-        const symbols = TRADING_PLANS_CONFIG.map(plan => plan.symbol).join(',');
-        const response = await fetch(`https://api.binance.com/api/v3/ticker/price?symbols=["${TRADING_PLANS_CONFIG.map(p => p.symbol).join('","')}"]`);
-        const data = await response.json();
-        
-        data.forEach(item => {
-          cryptoPrices[item.symbol] = parseFloat(item.price);
-        });
-        
-        console.log('Crypto prices updated:', cryptoPrices);
-      } catch (error) {
-        console.error('Error fetching crypto prices:', error);
-      }
-    }
-    
-    function startPriceUpdates() {
-      fetchCryptoPrices();
-      if (priceUpdateInterval) clearInterval(priceUpdateInterval);
-      priceUpdateInterval = setInterval(fetchCryptoPrices, 30000); // Update every 30 seconds
-    }
-    
-    // User Data Management
-    function loadUserData() {
-      updateLoadingProgress('Loading your data...');
-      
-      return db.ref('users/' + userId).once('value').then(snap => {
-        if (snap.exists()) {
-          userData = snap.val();
-          console.log('Existing user data loaded');
-        } else {
-          userData = {
-            balance: 0,
-            name: userName,
-            avatar: userAvatar,
-            trades: {},
-            transactions: {},
-            referrals: {},
-            referredBy: null,
-            totalReferrals: 0,
-            totalReferralEarnings: 0,
-            createdAt: now(),
-            lastSeen: now()
-          };
-          db.ref('users/' + userId).set(userData);
-          console.log('New user created');
-        }
-        
-        userBalance = userData.balance || 0;
-        updateBalanceDisplay();
-        
-        // Process referral if exists
-        return processReferral();
-      });
-    }
-    
-    function processReferral() {
-      return new Promise((resolve) => {
-        const startParam = tg.initDataUnsafe?.start_param;
-        console.log('Start Param:', startParam);
-        
-        if (startParam && startParam !== userId && !userData.referredBy) {
-          const referrerId = startParam;
-          
-          db.ref('users/' + referrerId).once('value').then(refSnap => {
-            if (refSnap.exists()) {
-              // Award referrer $0.20 bonus
-              const referrerData = refSnap.val();
-              const newBalance = (referrerData.balance || 0) + 0.20;
-              
-              db.ref('users/' + referrerId).update({
-                balance: newBalance,
-                totalReferrals: (referrerData.totalReferrals || 0) + 1,
-                totalReferralEarnings: (referrerData.totalReferralEarnings || 0) + 0.20,
-                [`referrals/${userId}`]: {
-                  name: userName,
-                  avatar: userAvatar,
-                  joinedAt: now(),
-                  totalCommission: 0.20
-                }
-              });
-              
-              // Set referredBy for current user
-              db.ref('users/' + userId).update({
-                referredBy: referrerId
-              });
-              
-              userData.referredBy = referrerId;
-              
-              notify('Welcome! Your referrer earned $0.20!', 'success', 3000);
-              
-              // Send Telegram notification to referrer
-              sendTelegramNotification(referrerId, `🎉 New referral! ${userName} joined using your link. You earned $0.20!`);
-            }
-            resolve();
-          });
-        } else {
-          resolve();
-        }
-      });
-    }
-    
-    function updateUserData(updates) {
-      Object.assign(userData, updates);
-      db.ref('users/' + userId).update(updates);
-      
-      if (updates.balance !== undefined) {
-        userBalance = updates.balance;
-        updateBalanceDisplay();
-      }
-    }
-    
-    function updateBalanceDisplay() {
-      const balanceEl = document.getElementById('headerBalance');
-      if (balanceEl) {
-        balanceEl.textContent = userBalance.toFixed(2);
-      }
-    }
-    
-    // Telegram Notifications
-    async function sendTelegramNotification(targetUserId, message) {
-      try {
-        await fetch(`${TELEGRAM_API}/sendMessage`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            chat_id: targetUserId,
-            text: message,
-            parse_mode: 'HTML'
-          })
-        });
-      } catch (error) {
-        console.error('Error sending Telegram notification:', error);
-      }
-    }
-    
-    // Navigation
-    function showTab(tab) {
-      document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.tab === tab);
-      });
-      
-      // Clear countdown intervals
-      Object.values(countdownIntervals).forEach(interval => clearInterval(interval));
-      countdownIntervals = {};
-      
-      if (tab === 'trade') renderTrade();
-      if (tab === 'my-trades') renderMyTrades();
-      if (tab === 'wallet') renderWallet();
-      if (tab === 'referral') renderReferral();
-      if (tab === 'profile') renderProfile();
-    }
-    
-    // Trade Section
-    function renderTrade() {
-      let html = `
-        <div class="trading-plans-container">
-          <div class="section-header">
-            <div class="section-title">Trading Plans</div>
-            <div class="section-subtitle">Choose your investment plan</div>
-          </div>
-      `;
-      
-      TRADING_PLANS_CONFIG.forEach((plan, index) => {
-        const isPurchased = userData.trades && userData.trades[plan.pair];
-        const currentPrice = cryptoPrices[plan.symbol] || 0;
-        
-        html += `
-          <div class="plan-card">
-            <div class="plan-header">
-              <div class="plan-pair">
-                <div class="plan-pair-name">${plan.pair}</div>
-                <div class="plan-pair-subtitle">Spot Trading</div>
-              </div>
-              <div class="plan-logo">EXOTIX</div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="nav-container">
+            <div class="nav-item active" onclick="showSection('tradeSection')">
+                <div class="nav-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="nav-label">Trade</div>
             </div>
-            
-            <div class="plan-chart-container">
-              <canvas id="chart-${index}" width="400" height="120"></canvas>
+            <div class="nav-item" onclick="showSection('myTradesSection')">
+                <div class="nav-icon"><i class="fas fa-briefcase"></i></div>
+                <div class="nav-label">My Trades</div>
             </div>
-            
-            <div class="plan-details">
-              <div class="plan-detail-item">
-                <div class="plan-detail-label">Investment</div>
-                <div class="plan-detail-value price">$${plan.price}</div>
-              </div>
-              <div class="plan-detail-item">
-                <div class="plan-detail-label">Daily Profit</div>
-                <div class="plan-detail-value earning">$${plan.dailyEarning}</div>
-              </div>
-              <div class="plan-detail-item">
-                <div class="plan-detail-label">Duration</div>
-                <div class="plan-detail-value">${plan.duration} Days</div>
-              </div>
-              <div class="plan-detail-item">
-                <div class="plan-detail-label">Live Price</div>
-                <div class="plan-detail-value">$${currentPrice.toFixed(2)}</div>
-              </div>
+            <div class="nav-item" onclick="showSection('walletSection')">
+                <div class="nav-icon"><i class="fas fa-wallet"></i></div>
+                <div class="nav-label">Wallet</div>
             </div>
-            
-            <button class="plan-action-btn ${isPurchased ? 'purchased' : ''}" 
-                    onclick="handlePlanAction('${plan.pair}', ${plan.price})"
-                    ${isPurchased ? 'disabled' : ''}>
-              ${isPurchased ? '✓ Purchased' : 'Buy Plan'}
-            </button>
-          </div>
-        `;
-      });
-      
-      html += '</div>';
-      document.getElementById('main-content').innerHTML = html;
-      
-      // Render mini charts
-      setTimeout(() => {
-        TRADING_PLANS_CONFIG.forEach((plan, index) => {
-          renderMiniChart(`chart-${index}`, plan.symbol);
-        });
-      }, 100);
-    }
-    
-    function renderMiniChart(canvasId, symbol) {
-      const canvas = document.getElementById(canvasId);
-      if (!canvas) return;
-      
-      const ctx = canvas.getContext('2d');
-      
-      // Generate random price data for demo
-      const data = [];
-      let basePrice = cryptoPrices[symbol] || 100;
-      for (let i = 0; i < 20; i++) {
-        basePrice += (Math.random() - 0.5) * (basePrice * 0.02);
-        data.push(basePrice);
-      }
-      
-      new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: Array(20).fill(''),
-          datasets: [{
-            data: data,
-            borderColor: '#4facfe',
-            backgroundColor: 'rgba(79, 172, 254, 0.1)',
-            borderWidth: 2,
-            fill: true,
-            tension: 0.4,
-            pointRadius: 0
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: { enabled: false }
-          },
-          scales: {
-            x: { display: false },
-            y: { display: false }
-          }
-        }
-      });
-    }
-    
-    function handlePlanAction(pair, price) {
-      if (userBalance < price) {
-        notify('Insufficient balance! Please deposit USDT.', 'error', 3000);
-        return;
-      }
-      
-      if (userData.trades && userData.trades[pair]) {
-        notify('You already purchased this plan!', 'warning', 3000);
-        return;
-      }
-      
-      // Deduct balance
-      const newBalance = userBalance - price;
-      
-      // Create trade
-      const tradeData = {
-        pair: pair,
-        investment: price,
-        dailyEarning: TRADING_PLANS_CONFIG.find(p => p.pair === pair).dailyEarning,
-        duration: 30,
-        startTime: now(),
-        lastClaimTime: now(),
-        totalClaimed: 0,
-        status: 'active'
-      };
-      
-      // Update user data
-      updateUserData({
-        balance: newBalance,
-        [`trades/${pair}`]: tradeData
-      });
-      
-      // Award referral commission if user was referred
-      if (userData.referredBy) {
-        awardReferralCommission(userData.referredBy, price * 0.2, 'trade_purchase');
-      }
-      
-      // Log transaction
-      logTransaction('trade_purchase', price, 'approved', { pair: pair });
-      
-      notify(`Successfully purchased ${pair} plan!`, 'success', 3000);
-      
-      // Send Telegram notification
-      sendTelegramNotification(userId, `✅ Trade activated! ${pair} - Investment: $${price}`);
-      
-      renderTrade();
-    }
-    
-    // My Trades Section
-    function renderMyTrades() {
-      const activeTrades = userData.trades || {};
-      const tradeKeys = Object.keys(activeTrades);
-      
-      let html = `
-        <div class="my-trades-container">
-          <div class="section-header">
-            <div class="section-title">My Active Trades</div>
-            <div class="section-subtitle">Manage your investments</div>
-          </div>
-      `;
-      
-      if (tradeKeys.length === 0) {
-        html += `
-          <div class="empty-state">
-            <div class="empty-icon">📊</div>
-            <div class="empty-text">No active trades yet.<br>Start trading to see your investments here!</div>
-          </div>
-        `;
-      } else {
-        tradeKeys.forEach(pair => {
-          const trade = activeTrades[pair];
-          const currentTime = now();
-          const elapsedTime = currentTime - trade.startTime;
-          const elapsedDays = Math.floor(elapsedTime / 86400);
-          const progress = Math.min((elapsedDays / trade.duration) * 100, 100);
-          
-          const timeSinceLastClaim = currentTime - trade.lastClaimTime;
-          const canClaim = timeSinceLastClaim >= 86400; // 24 hours
-          const timeUntilNextClaim = canClaim ? 0 : 86400 - timeSinceLastClaim;
-          
-          html += `
-            <div class="active-trade-card">
-              <div class="trade-header">
-                <div class="trade-pair">${trade.pair}</div>
-                <div class="trade-status">Active</div>
-              </div>
-              
-              <div class="trade-progress-bar">
-                <div class="trade-progress-fill" style="width: ${progress}%">
-                  ${progress.toFixed(1)}%
-                </div>
-              </div>
-              
-              <div class="trade-countdown">
-                <div class="countdown-label">Next Claim Available In</div>
-                <div class="countdown-timer" id="countdown-${pair}">
-                  ${formatCountdown(timeUntilNextClaim)}
-                </div>
-              </div>
-              
-              <div class="trade-stats">
-                <div class="trade-stat-item">
-                  <div class="trade-stat-label">Investment</div>
-                  <div class="trade-stat-value">$${trade.investment}</div>
-                </div>
-                <div class="trade-stat-item">
-                  <div class="trade-stat-label">Daily Profit</div>
-                  <div class="trade-stat-value">$${trade.dailyEarning}</div>
-                </div>
-                <div class="trade-stat-item">
-                  <div class="trade-stat-label">Total Claimed</div>
-                  <div class="trade-stat-value">$${trade.totalClaimed}</div>
-                </div>
-              </div>
-              
-              <button class="claim-btn" 
-                      onclick="handleClaim('${pair}')"
-                      ${!canClaim ? 'disabled' : ''}>
-                ${canClaim ? 'Claim $' + trade.dailyEarning : 'Claim Locked'}
-              </button>
+            <div class="nav-item" onclick="showSection('referralsSection')">
+                <div class="nav-icon"><i class="fas fa-users"></i></div>
+                <div class="nav-label">Referrals</div>
             </div>
-          `;
-        });
-      }
-      
-      html += '</div>';
-      document.getElementById('main-content').innerHTML = html;
-      
-      // Start countdown timers
-      tradeKeys.forEach(pair => {
-        const trade = activeTrades[pair];
-        const currentTime = now();
-        const timeSinceLastClaim = currentTime - trade.lastClaimTime;
-        const canClaim = timeSinceLastClaim >= 86400;
-        
-        if (!canClaim) {
-          const timeUntilNextClaim = 86400 - timeSinceLastClaim;
-          startCountdown(pair, timeUntilNextClaim);
-        }
-      });
-    }
-    
-    function startCountdown(pair, initialSeconds) {
-      let seconds = initialSeconds;
-      
-      const updateCountdown = () => {
-        const countdownEl = document.getElementById(`countdown-${pair}`);
-        if (countdownEl) {
-          countdownEl.textContent = formatCountdown(seconds);
-          
-          if (seconds <= 0) {
-            clearInterval(countdownIntervals[pair]);
-            renderMyTrades(); // Refresh to enable claim button
-          }
-          
-          seconds--;
-        } else {
-          clearInterval(countdownIntervals[pair]);
-        }
-      };
-      
-      updateCountdown();
-      countdownIntervals[pair] = setInterval(updateCountdown, 1000);
-    }
-    
-    function handleClaim(pair) {
-      const trade = userData.trades[pair];
-      if (!trade) return;
-      
-      const currentTime = now();
-      const timeSinceLastClaim = currentTime - trade.lastClaimTime;
-      
-      if (timeSinceLastClaim < 86400) {
-        notify('You can only claim once every 24 hours!', 'warning', 3000);
-        return;
-      }
-      
-      // Add earnings to balance
-      const newBalance = userBalance + trade.dailyEarning;
-      const newTotalClaimed = trade.totalClaimed + trade.dailyEarning;
-      
-      // Update trade data
-      updateUserData({
-        balance: newBalance,
-        [`trades/${pair}/lastClaimTime`]: currentTime,
-        [`trades/${pair}/totalClaimed`]: newTotalClaimed
-      });
-      
-      // Award referral commission
-      if (userData.referredBy) {
-        awardReferralCommission(userData.referredBy, trade.dailyEarning * 0.2, 'trade_claim');
-      }
-      
-      // Log transaction
-      logTransaction('trade_claim', trade.dailyEarning, 'approved', { pair: pair });
-      
-      notify(`Claimed $${trade.dailyEarning} from ${pair}!`, 'success', 3000);
-      
-      // Send Telegram notification
-      sendTelegramNotification(userId, `💰 Claim successful! ${pair} - Earned: $${trade.dailyEarning}`);
-      
-      renderMyTrades();
-    }
-    
-    // Wallet Section
-    function renderWallet() {
-      let html = `
-        <div class="wallet-container">
-          <div class="section-header">
-            <div class="section-title">Wallet</div>
-            <div class="section-subtitle">Manage your funds</div>
-          </div>
-          
-          <div class="wallet-tabs">
-            <button class="wallet-tab-btn active" onclick="showWalletTab('deposit')">Deposit</button>
-            <button class="wallet-tab-btn" onclick="showWalletTab('withdraw')">Withdraw</button>
-            <button class="wallet-tab-btn" onclick="showWalletTab('history')">History</button>
-            <button class="wallet-tab-btn" onclick="showWalletTab('activities')">Activities</button>
-          </div>
-          
-          <div id="walletContent"></div>
+            <div class="nav-item" onclick="showSection('tasksSection')">
+                <div class="nav-icon"><i class="fas fa-tasks"></i></div>
+                <div class="nav-label">Tasks</div>
+            </div>
+            <div class="nav-item" onclick="showSection('profileSection')">
+                <div class="nav-icon"><i class="fas fa-user"></i></div>
+                <div class="nav-label">Profile</div>
+            </div>
         </div>
-      `;
-      
-      document.getElementById('main-content').innerHTML = html;
-      showWalletTab('deposit');
-    }
-    
-    function showWalletTab(tab) {
-      document.querySelectorAll('.wallet-tab-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
-      event.target.classList.add('active');
-      
-      if (tab === 'deposit') renderDepositTab();
-      if (tab === 'withdraw') renderWithdrawTab();
-      if (tab === 'history') renderHistoryTab();
-      if (tab === 'activities') renderActivitiesTab();
-    }
-    
-    function renderDepositTab() {
-      const html = `
-        <div class="wallet-content">
-          <form onsubmit="handleDepositSubmit(event)">
-            <div class="form-group">
-              <label class="form-label">Deposit Amount (Min: $30)</label>
-              <input type="number" 
-                     class="form-input" 
-                     id="depositAmount" 
-                     placeholder="Enter amount" 
-                     min="30" 
-                     step="0.01" 
-                     required />
-            </div>
-            
-            <button type="submit" class="btn-primary">Continue to Payment</button>
-          </form>
-        </div>
-      `;
-      
-      document.getElementById('walletContent').innerHTML = html;
-    }
-    
-    function handleDepositSubmit(event) {
-      event.preventDefault();
-      
-      const amount = parseFloat(document.getElementById('depositAmount').value);
-      
-      if (amount < 30) {
-        notify('Minimum deposit amount is $30!', 'error', 3000);
-        return;
-      }
-      
-      showDepositPayment(amount);
-    }
-    
-    function showDepositPayment(amount) {
-      const depositAddress = 'UQBWOgFgB4B8qBCo8CNjDUNAtvUSosw4v7v9gkt0GVOaNLSz';
-      const memo = `ExotixDP_${userId}`;
-      const depositId = `DEP_${now()}_${Math.random().toString(36).substr(2, 9)}`;
-      
-      // Start 15-minute timer
-      let timeRemaining = 900; // 15 minutes in seconds
-      
-      const html = `
-        <div class="wallet-content">
-          <div class="timer-box">
-            <div class="timer-label">Complete payment within</div>
-            <div class="timer-value" id="depositTimer">15:00</div>
-          </div>
-          
-          <div class="qr-code-container">
-            <canvas id="depositQR" class="qr-code"></canvas>
-            <div style="font-size: 14px; color: var(--text-secondary); margin-top: 12px;">
-              Scan QR code to deposit
-            </div>
-          </div>
-          
-          <div class="copy-box">
-            <div class="copy-text">${depositAddress}</div>
-            <button class="copy-btn" onclick="copyToClipboard('${depositAddress}', 'Address')">Copy</button>
-          </div>
-          
-          <div class="copy-box">
-            <div class="copy-text">$${amount.toFixed(2)}</div>
-            <button class="copy-btn" onclick="copyToClipboard('${amount.toFixed(2)}', 'Amount')">Copy</button>
-          </div>
-          
-          <div class="copy-box">
-            <div class="copy-text">${memo}</div>
-            <button class="copy-btn" onclick="copyToClipboard('${memo}', 'Memo')">Copy</button>
-          </div>
-          
-          <div class="form-group">
-            <label class="form-label">Transaction Hash</label>
-            <input type="text" 
-                   class="form-input" 
-                   id="txHash" 
-                   placeholder="Enter transaction hash" 
-                   required />
-          </div>
-          
-          <button class="btn-primary" onclick="submitDeposit('${depositId}', ${amount})">
-            Confirm Deposit
-          </button>
-        </div>
-      `;
-      
-      document.getElementById('walletContent').innerHTML = html;
-      
-      // Generate QR code
-      QRCode.toCanvas(document.getElementById('depositQR'), depositAddress, {
-        width: 200,
-        margin: 1,
-        color: {
-          dark: '#000000',
-          light: '#ffffff'
-        }
-      });
-      
-      // Start timer
-      const timerInterval = setInterval(() => {
-        timeRemaining--;
-        const minutes = Math.floor(timeRemaining / 60);
-        const seconds = timeRemaining % 60;
-        const timerEl = document.getElementById('depositTimer');
-        
-        if (timerEl) {
-          timerEl.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-          
-          if (timeRemaining <= 0) {
-            clearInterval(timerInterval);
-            notify('Deposit time expired! Please try again.', 'error', 3000);
-            renderDepositTab();
-          }
-        } else {
-          clearInterval(timerInterval);
-        }
-      }, 1000);
-    }
-    
-    function submitDeposit(depositId, amount) {
-      const txHash = document.getElementById('txHash').value.trim();
-      
-      if (!txHash) {
-        notify('Please enter transaction hash!', 'error', 3000);
-        return;
-      }
-      
-      // Create deposit transaction
-      const transactionData = {
-        id: depositId,
-        type: 'deposit',
-        amount: amount,
-        address: 'UQBWOgFgB4B8qBCo8CNjDUNAtvUSosw4v7v9gkt0GVOaNLSz',
-        memo: `ExotixDP_${userId}`,
-        txHash: txHash,
-        status: 'pending',
-        timestamp: now()
-      };
-      
-      // Save to user transactions
-      db.ref(`users/${userId}/transactions/${depositId}`).set(transactionData);
-      
-      // Save to admin pending deposits
-      db.ref(`admin/pendingDeposits/${depositId}`).set({
-        userId: userId,
-        userName: userName,
-        ...transactionData
-      });
-      
-      notify('Deposit submitted! Waiting for admin approval.', 'success', 3000);
-      
-      // Send Telegram notification to admin
-      sendTelegramNotification('ADMIN_CHAT_ID', `💵 New deposit request!\nUser: ${userName} (${userId})\nAmount: $${amount}\nTx Hash: ${txHash}`);
-      
-      renderHistoryTab();
-    }
-    
-    function renderWithdrawTab() {
-      const html = `
-        <div class="wallet-content">
-          <form onsubmit="handleWithdrawSubmit(event)">
-            <div class="form-group">
-              <label class="form-label">USDT TON Address *</label>
-              <input type="text" 
-                     class="form-input" 
-                     id="withdrawAddress" 
-                     placeholder="Enter your USDT TON address" 
-                     required />
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">Amount (Min: $0.10) *</label>
-              <input type="number" 
-                     class="form-input" 
-                     id="withdrawAmount" 
-                     placeholder="Enter amount" 
-                     min="0.10" 
-                     step="0.01" 
-                     max="${userBalance}" 
-                     required />
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">Memo / Comment (Optional)</label>
-              <input type="text" 
-                     class="form-input" 
-                     id="withdrawMemo" 
-                     placeholder="Enter memo (optional)" />
-            </div>
-            
-            <button type="submit" class="btn-primary">Submit Withdrawal</button>
-          </form>
-        </div>
-      `;
-      
-      document.getElementById('walletContent').innerHTML = html;
-    }
-    
-    function handleWithdrawSubmit(event) {
-      event.preventDefault();
-      
-      const address = document.getElementById('withdrawAddress').value.trim();
-      const amount = parseFloat(document.getElementById('withdrawAmount').value);
-      const memo = document.getElementById('withdrawMemo').value.trim();
-      
-      if (amount < 0.10) {
-        notify('Minimum withdrawal amount is $0.10!', 'error', 3000);
-        return;
-      }
-      
-      if (amount > userBalance) {
-        notify('Insufficient balance!', 'error', 3000);
-        return;
-      }
-      
-      const withdrawId = `WD_${now()}_${Math.random().toString(36).substr(2, 9)}`;
-      
-      // Create withdrawal transaction
-      const transactionData = {
-        id: withdrawId,
-        type: 'withdraw',
-        amount: amount,
-        address: address,
-        memo: memo,
-        status: 'pending',
-        timestamp: now()
-      };
-      
-      // Save to user transactions
-      db.ref(`users/${userId}/transactions/${withdrawId}`).set(transactionData);
-      
-      // Save to admin pending withdrawals
-      db.ref(`admin/pendingWithdrawals/${withdrawId}`).set({
-        userId: userId,
-        userName: userName,
-        currentBalance: userBalance,
-        ...transactionData
-      });
-      
-      notify('Withdrawal submitted! Waiting for admin approval.', 'success', 3000);
-      
-      // Send Telegram notification to admin
-      sendTelegramNotification('ADMIN_CHAT_ID', `💸 New withdrawal request!\nUser: ${userName} (${userId})\nAmount: $${amount}\nAddress: ${address}`);
-      
-      renderHistoryTab();
-    }
-    
-    function renderHistoryTab() {
-      const transactions = userData.transactions || {};
-      const transactionKeys = Object.keys(transactions).sort((a, b) => transactions[b].timestamp - transactions[a].timestamp);
-      
-      let html = '<div class="wallet-content">';
-      
-      if (transactionKeys.length === 0) {
-        html += `
-          <div class="empty-state">
-            <div class="empty-icon">📋</div>
-            <div class="empty-text">No transaction history yet.</div>
-          </div>
-        `;
-      } else {
-        transactionKeys.forEach(txId => {
-          const tx = transactions[txId];
-          
-          html += `
-            <div class="transaction-item">
-              <div class="transaction-header">
-                <div class="transaction-type">
-                  ${tx.type === 'deposit' ? '💵 Deposit' : '💸 Withdrawal'}
-                </div>
-                <div class="transaction-status ${tx.status}">
-                  ${tx.status}
-                </div>
-              </div>
-              
-              <div class="transaction-details">
-                <div class="transaction-detail-row">
-                  <span class="transaction-detail-label">Amount:</span>
-                  <span class="transaction-detail-value">$${tx.amount.toFixed(2)}</span>
-                </div>
-                <div class="transaction-detail-row">
-                  <span class="transaction-detail-label">Time:</span>
-                  <span class="transaction-detail-value">${formatDate(tx.timestamp)}</span>
-                </div>
-                ${tx.address ? `
-                <div class="transaction-detail-row">
-                  <span class="transaction-detail-label">Address:</span>
-                  <span class="transaction-detail-value" style="font-size: 11px; word-break: break-all;">${tx.address}</span>
-                </div>
-                ` : ''}
-                ${tx.txHash ? `
-                <div class="transaction-detail-row">
-                  <span class="transaction-detail-label">Tx Hash:</span>
-                  <span class="transaction-detail-value" style="font-size: 11px; word-break: break-all;">${tx.txHash}</span>
-                </div>
-                ` : ''}
-              </div>
-            </div>
-          `;
-        });
-      }
-      
-      html += '</div>';
-      document.getElementById('walletContent').innerHTML = html;
-    }
-    
-    function renderActivitiesTab() {
-      // Get all activities (trades, claims, deposits, withdrawals)
-      const activities = [];
-      
-      // Add trade purchases
-      if (userData.trades) {
-        Object.keys(userData.trades).forEach(pair => {
-          const trade = userData.trades[pair];
-          activities.push({
-            type: 'trade_purchase',
-            description: `Purchased ${pair} trading plan`,
-            amount: trade.investment,
-            timestamp: trade.startTime
-          });
-        });
-      }
-      
-      // Add transactions
-      if (userData.transactions) {
-        Object.keys(userData.transactions).forEach(txId => {
-          const tx = userData.transactions[txId];
-          activities.push({
-            type: tx.type,
-            description: tx.type === 'deposit' ? 'Deposit' : 'Withdrawal',
-            amount: tx.amount,
-            timestamp: tx.timestamp,
-            status: tx.status
-          });
-        });
-      }
-      
-      // Sort by timestamp
-      activities.sort((a, b) => b.timestamp - a.timestamp);
-      
-      let html = '<div class="wallet-content">';
-      
-      if (activities.length === 0) {
-        html += `
-          <div class="empty-state">
-            <div class="empty-icon">📊</div>
-            <div class="empty-text">No activities yet.</div>
-          </div>
-        `;
-      } else {
-        activities.forEach(activity => {
-          const icon = activity.type === 'trade_purchase' ? '📈' : 
-                      activity.type === 'deposit' ? '💵' : '💸';
-          
-          html += `
-            <div class="transaction-item">
-              <div class="transaction-header">
-                <div class="transaction-type">
-                  ${icon} ${activity.description}
-                </div>
-                ${activity.status ? `
-                <div class="transaction-status ${activity.status}">
-                  ${activity.status}
-                </div>
-                ` : ''}
-              </div>
-              
-              <div class="transaction-details">
-                <div class="transaction-detail-row">
-                  <span class="transaction-detail-label">Amount:</span>
-                  <span class="transaction-detail-value">$${activity.amount.toFixed(2)}</span>
-                </div>
-                <div class="transaction-detail-row">
-                  <span class="transaction-detail-label">Time:</span>
-                  <span class="transaction-detail-value">${formatDate(activity.timestamp)}</span>
-                </div>
-              </div>
-            </div>
-          `;
-        });
-      }
-      
-      html += '</div>';
-      document.getElementById('walletContent').innerHTML = html;
-    }
-    
-    // Referral Section
-    function renderReferral() {
-      const referralLink = `http://t.me/SharkBountybot/myapp?start=${userId}`;
-      const totalReferrals = userData.totalReferrals || 0;
-      const totalEarnings = userData.totalReferralEarnings || 0;
-      
-      let html = `
-        <div class="referral-container">
-          <div class="section-header">
-            <div class="section-title">Referral Program</div>
-            <div class="section-subtitle">Invite friends and earn rewards</div>
-          </div>
-          
-          <div class="referral-rules">
-            <div class="rules-title">
-              <span>🎁</span>
-              <span>Referral Benefits</span>
-            </div>
-            
-            <div class="rule-item">
-              <div class="rule-icon">💰</div>
-              <div class="rule-text">
-                Earn <strong>$0.20</strong> for each friend who joins using your referral link
-              </div>
-            </div>
-            
-            <div class="rule-item">
-              <div class="rule-icon">📈</div>
-              <div class="rule-text">
-                Get <strong>20% commission</strong> on all your referrals' deposits and trading earnings
-              </div>
-            </div>
-            
-            <div class="rule-item">
-              <div class="rule-icon">🔄</div>
-              <div class="rule-text">
-                Commissions are added to your balance <strong>in real-time</strong>
-              </div>
-            </div>
-          </div>
-          
-          <div class="referral-stats-grid">
-            <div class="referral-stat-card">
-              <div class="referral-stat-icon">👥</div>
-              <div class="referral-stat-value">${totalReferrals}</div>
-              <div class="referral-stat-label">Total Referrals</div>
-            </div>
-            
-            <div class="referral-stat-card">
-              <div class="referral-stat-icon">💵</div>
-              <div class="referral-stat-value">$${totalEarnings.toFixed(2)}</div>
-              <div class="referral-stat-label">Total Earnings</div>
-            </div>
-          </div>
-          
-          <div class="referral-link-card">
-            <div class="card-title">Your Referral Link</div>
-            <div class="copy-box">
-              <div class="copy-text" style="font-size: 12px;">${referralLink}</div>
-              <button class="copy-btn" onclick="copyToClipboard('${referralLink}', 'Referral link')">Copy</button>
-            </div>
-            
-            <button class="share-telegram-btn" onclick="shareOnTelegram()">
-              <span>✈️</span>
-              <span>Share on Telegram</span>
-            </button>
-          </div>
-          
-          <div class="referral-link-card">
-            <div class="card-title">My Referrals</div>
-            <button class="btn-primary" onclick="showReferralList()">
-              View All Referrals
-            </button>
-          </div>
-        </div>
-      `;
-      
-      document.getElementById('main-content').innerHTML = html;
-    }
-    
-    function showReferralList() {
-      const referrals = userData.referrals || {};
-      const referralKeys = Object.keys(referrals);
-      
-      let html = '';
-      
-      if (referralKeys.length === 0) {
-        html = `
-          <div class="empty-state">
-            <div class="empty-icon">👥</div>
-            <div class="empty-text">No referrals yet.<br>Share your link to start earning!</div>
-          </div>
-        `;
-      } else {
-        referralKeys.forEach(refId => {
-          const ref = referrals[refId];
-          
-          html += `
-            <div class="referral-user-item">
-              <img src="${ref.avatar}" class="referral-user-avatar" alt="${ref.name}" />
-              <div class="referral-user-info">
-                <div class="referral-user-name">${ref.name}</div>
-                <div class="referral-user-balance">Joined: ${formatDate(ref.joinedAt)}</div>
-              </div>
-              <div class="referral-user-commission">
-                <div class="commission-amount">$${ref.totalCommission.toFixed(2)}</div>
-                <div class="commission-label">Commission</div>
-              </div>
-            </div>
-          `;
-        });
-      }
-      
-      document.getElementById('referralListContent').innerHTML = html;
-      document.getElementById('referralListModal').style.display = 'flex';
-    }
-    
-    function shareOnTelegram() {
-      const referralLink = `http://t.me/SharkBountybot/myapp?start=${userId}`;
-      const message = `🚀 Join me on Exotix - Professional Crypto Trading Platform!\n\n💰 Earn passive income through crypto trading\n📈 Multiple trading plans available\n🎁 Get bonus on signup!\n\n${referralLink}`;
-      
-      const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent(message)}`;
-      window.open(telegramUrl, '_blank');
-    }
-    
-    function awardReferralCommission(referrerId, amount, source) {
-      db.ref('users/' + referrerId).once('value').then(snap => {
-        if (snap.exists()) {
-          const referrerData = snap.val();
-          const newBalance = (referrerData.balance || 0) + amount;
-          const newTotalEarnings = (referrerData.totalReferralEarnings || 0) + amount;
-          const currentCommission = (referrerData.referrals && referrerData.referrals[userId]) ? 
-                                   referrerData.referrals[userId].totalCommission : 0;
-          
-          db.ref('users/' + referrerId).update({
-            balance: newBalance,
-            totalReferralEarnings: newTotalEarnings,
-            [`referrals/${userId}/totalCommission`]: currentCommission + amount
-          });
-          
-          // Send notification
-          sendTelegramNotification(referrerId, `💰 Referral commission earned! $${amount.toFixed(2)} from ${userName}'s ${source}`);
-        }
-      });
-    }
-    
-    // Profile Section
-    function renderProfile() {
-      const html = `
-        <div class="profile-container">
-          <div class="profile-header">
-            <div class="profile-avatar-container">
-              <div class="profile-avatar-glow"></div>
-              <img src="${userData.avatar}" class="profile-avatar" alt="Avatar" />
-            </div>
-            <div class="profile-name">${userData.name}</div>
-            <div class="profile-id">ID: ${userId}</div>
-          </div>
-          
-          <div class="redemption-card">
-            <div class="redemption-title">🎁 Redeem Code</div>
-            <input type="text" 
-                   class="redemption-input" 
-                   id="redemptionCode" 
-                   placeholder="XXXXXXXX" 
-                   maxlength="8" />
-            <button class="btn-primary" onclick="handleRedemption()">
-              Redeem Now
-            </button>
-          </div>
-        </div>
-      `;
-      
-      document.getElementById('main-content').innerHTML = html;
-    }
-    
-    function handleRedemption() {
-      const code = document.getElementById('redemptionCode').value.trim().toUpperCase();
-      
-      if (code.length !== 8) {
-        notify('Please enter a valid 8-digit code!', 'error', 3000);
-        return;
-      }
-      
-      db.ref('redemptionCodes/' + code).once('value').then(snap => {
-        if (snap.exists()) {
-          const codeData = snap.val();
-          
-          if (codeData.used) {
-            notify('This code has already been used!', 'error', 3000);
-            return;
-          }
-          
-          // Random reward between min and max
-          const reward = codeData.reward;
-          const newBalance = userBalance + reward;
-          
-          // Update user balance
-          updateUserData({ balance: newBalance });
-          
-          // Mark code as used
-          db.ref('redemptionCodes/' + code).update({
-            used: true,
-            usedBy: userId,
-            usedAt: now()
-          });
-          
-          // Log transaction
-          logTransaction('redemption', reward, 'approved', { code: code });
-          
-          notify(`Redeemed $${reward.toFixed(2)} successfully!`, 'success', 3000);
-          
-          document.getElementById('redemptionCode').value = '';
-        } else {
-          notify('Invalid redemption code!', 'error', 3000);
-        }
-      });
-    }
-    
-    // Helper Functions
-    function copyToClipboard(text, label) {
-      navigator.clipboard.writeText(text).then(() => {
-        notify(`${label} copied to clipboard!`, 'success', 2000);
-      }).catch(() => {
-        notify('Failed to copy!', 'error', 2000);
-      });
-    }
-    
-    function closeModal(modalId) {
-      document.getElementById(modalId).style.display = 'none';
-    }
-    
-    function logTransaction(type, amount, status, metadata = {}) {
-      const txId = `TX_${now()}_${Math.random().toString(36).substr(2, 9)}`;
-      
-      db.ref(`users/${userId}/transactionLog/${txId}`).set({
-        type: type,
-        amount: amount,
-        status: status,
-        metadata: metadata,
-        timestamp: now()
-      });
-    }
-    
-    // Navigation Event Listeners
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        showTab(this.dataset.tab);
-      });
-    });
-    
-    // Initialize App
-    async function initializeApp() {
-      if (getTelegramUserData()) {
-        await loadUserData();
-        startPriceUpdates();
-        
-        updateLoadingProgress('Starting app...');
-        
-        setTimeout(() => {
-          document.getElementById('loading-screen').style.display = 'none';
-          document.getElementById('app').style.display = 'block';
-          showTab('trade');
-        }, 1000);
-      } else {
-        notify('Failed to initialize Telegram user data', 'error');
-      }
-    }
-    
-    // Start the app
-    initializeApp();
-    
-    // Save data before leaving
-    window.addEventListener('beforeunload', () => {
-      if (userData) {
-        db.ref('users/' + userId).update({
-          lastSeen: now()
-        });
-      }
-    });
-  </script>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, set, get, update, push, onValue, query, orderByChild, equalTo } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBfR97veh6idxb81mH6N5_Gq8-CpW2D7bE",
+            authDomain: "jbhigfi.firebaseapp.com",
+            databaseURL: "https://jbhigfi-default-rtdb.firebaseio.com",
+            projectId: "jbhigfi",
+            storageBucket: "jbhigfi.firebasestorage.app",
+            messagingSenderId: "736760492095",
+            appId: "1:736760492095:web:47b94412495e21c561c88a",
+            measurementId: "G-ZZMHC9RTVT"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        window.db = database;
+        window.dbRef = ref;
+        window.dbSet = set;
+        window.dbGet = get;
+        window.dbUpdate = update;
+        window.dbPush = push;
+        window.dbOnValue = onValue;
+        window.dbQuery = query;
+        window.dbOrderByChild = orderByChild;
+        window.dbEqualTo = equalTo;
+    </script>
+
+    <script src="app.js"></script>
 </body>
 </html>
